@@ -1,0 +1,2505 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="RECZNE_Definitions" targetNamespace="https://example.org/harvester/openness" exporter="Codex" exporterVersion="1">
+  <bpmn:process id="RECZNE_Formularz" name="1. Edytor — zdefiniowanie i zapis zasobu" isExecutable="false">
+    <bpmn:documentation>Model biznesowy ręcznego dodania zasobu w panelu administracyjnym. Podstawa: lokalny snapshot mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree; resources/forms.py, admin.py, models.py i tasks. Analiza statyczna, bez uruchamiania aplikacji. Diagram agreguje dwie ścieżki wejścia w pojedynczy krok zgodnie z prośbą użytkownika. Zapis jako szkic nie uruchamia tego samego przebiegu co zapis opublikowanego zasobu.</bpmn:documentation>
+    <bpmn:startEvent id="RECZNE_Formularz_start" name="Rozpoczęcie dodawania zasobu">
+      <bpmn:outgoing>RECZNE_Formularz_F1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="RECZNE_Formularz_source" name="Wskaż plik z dysku lub URL">
+      <bpmn:documentation>AddResourceForm / LinkOrFileUploadForm: jedno wejście biznesowe, dwie ścieżki techniczne. Brak bramki wyboru źródła na diagramie zgodnie z wymaganiem.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Formularz_F1</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Formularz_F2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="RECZNE_Formularz_fields" name="Uzupełnij pozostałe pola i status zasobu">
+      <bpmn:documentation>M.in. zbiór, tytuł, opis, data danych i status. Szczegółowe wymagania zależą od rodzaju zasobu i uprawnień.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Formularz_F2</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Formularz_F3</bpmn:outgoing>
+      <bpmn:incoming>RECZNE_Formularz_F8</bpmn:incoming>
+    </bpmn:userTask>
+    <bpmn:userTask id="RECZNE_Formularz_click" name="Kliknij „Zapisz”">
+      <bpmn:incoming>RECZNE_Formularz_F3</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Formularz_F4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="RECZNE_Formularz_validate" name="Sprawdź formularz i reguły pól">
+      <bpmn:documentation>AddResourceForm.clean_link: HTTPS; clean_file: obsługiwane rozszerzenie i brak szyfrowanego archiwum. ResourceForm.clean i walidacja modelu: pozostałe reguły, m.in. flagi DGA/HVD. To nie jest jeszcze pełna kontrola pobranych danych.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Formularz_F4</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Formularz_F5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="RECZNE_Formularz_ok" name="Formularz poprawny?" gatewayDirection="Diverging">
+      <bpmn:incoming>RECZNE_Formularz_F5</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Formularz_F6</bpmn:outgoing>
+      <bpmn:outgoing>RECZNE_Formularz_F7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="RECZNE_Formularz_error" name="Pokaż błędy; popraw dane">
+      <bpmn:documentation>Błędy blokują zapis nowego zasobu; edytor poprawia dane i ponownie zapisuje formularz.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Formularz_F7</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Formularz_F8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="RECZNE_Formularz_save" name="Zapisz zasób i wskazany plik lub URL">
+      <bpmn:documentation>ResourceAdmin.save_model: obj.save(); plik z dysku → ResourceFile.objects.update_or_create(..., is_main=True). Dla nowego URL sygnał process_resource; dla utworzonego pliku głównego process_created_file.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Formularz_F6</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Formularz_F9</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="RECZNE_Formularz_status" name="Zasób jest opublikowany?" gatewayDirection="Diverging">
+      <bpmn:documentation>Zakres: utworzenie nowego zasobu. Dla nowego szkicu brak zlecenia przetwarzania; pierwsza publikacja szkicu może je uruchomić później.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Formularz_F9</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Formularz_F10</bpmn:outgoing>
+      <bpmn:outgoing>RECZNE_Formularz_F12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="RECZNE_Formularz_send" name="Zleć przygotowanie zasobu po zatwierdzeniu zapisu">
+      <bpmn:documentation>Plik z dysku: process_created_file → entrypoint_process_resource_file_validation_task. URL: process_resource → entrypoint_process_resource_validation_task. Oba apply_async_on_commit. Przyjęto zwykłe dodanie jednego źródła plik ALBO URL.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Formularz_F10</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Formularz_F11</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="RECZNE_Formularz_end" name="Zapis zakończony; praca w tle">
+      <bpmn:incoming>RECZNE_Formularz_F11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="RECZNE_Formularz_draft" name="Zapisano szkic; bez tego przetwarzania">
+      <bpmn:incoming>RECZNE_Formularz_F12</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="RECZNE_Formularz_F1" sourceRef="RECZNE_Formularz_start" targetRef="RECZNE_Formularz_source" />
+    <bpmn:sequenceFlow id="RECZNE_Formularz_F2" sourceRef="RECZNE_Formularz_source" targetRef="RECZNE_Formularz_fields" />
+    <bpmn:sequenceFlow id="RECZNE_Formularz_F3" sourceRef="RECZNE_Formularz_fields" targetRef="RECZNE_Formularz_click" />
+    <bpmn:sequenceFlow id="RECZNE_Formularz_F4" sourceRef="RECZNE_Formularz_click" targetRef="RECZNE_Formularz_validate" />
+    <bpmn:sequenceFlow id="RECZNE_Formularz_F5" sourceRef="RECZNE_Formularz_validate" targetRef="RECZNE_Formularz_ok" />
+    <bpmn:sequenceFlow id="RECZNE_Formularz_F6" sourceRef="RECZNE_Formularz_ok" targetRef="RECZNE_Formularz_save" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Formularz_F7" sourceRef="RECZNE_Formularz_ok" targetRef="RECZNE_Formularz_error" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Formularz_F8" sourceRef="RECZNE_Formularz_error" targetRef="RECZNE_Formularz_fields" name="Popraw i zapisz" />
+    <bpmn:sequenceFlow id="RECZNE_Formularz_F9" sourceRef="RECZNE_Formularz_save" targetRef="RECZNE_Formularz_status" />
+    <bpmn:sequenceFlow id="RECZNE_Formularz_F10" sourceRef="RECZNE_Formularz_status" targetRef="RECZNE_Formularz_send" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Formularz_F11" sourceRef="RECZNE_Formularz_send" targetRef="RECZNE_Formularz_end" />
+    <bpmn:sequenceFlow id="RECZNE_Formularz_F12" sourceRef="RECZNE_Formularz_status" targetRef="RECZNE_Formularz_draft" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmn:process id="RECZNE_Przetwarzanie" name="2. Portal — walidacja i nadanie stopnia otwartości w tle" isExecutable="false">
+    <bpmn:documentation>Model biznesowy ręcznego dodania zasobu w panelu administracyjnym. Podstawa: lokalny snapshot mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree; resources/forms.py, admin.py, models.py i tasks. Analiza statyczna, bez uruchamiania aplikacji. Diagram agreguje dwie ścieżki wejścia w pojedynczy krok zgodnie z prośbą użytkownika. Zapis jako szkic nie uruchamia tego samego przebiegu co zapis opublikowanego zasobu.</bpmn:documentation>
+    <bpmn:startEvent id="RECZNE_Przetwarzanie_start" name="Odebrano zlecenie przygotowania">
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F1</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="RECZNE_Przetwarzanie_start_MessageEvent" />
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="RECZNE_Przetwarzanie_url" name="Sprawdź URL i pobierz treść — jeżeli podano URL">
+      <bpmn:documentation>Dla URL: URLValidator, HTTPS po przekierowaniu, HTTP 200, Content-Type, rozpoznanie typu i formatu; dla pliku zapis kopii głównej. Dla pliku z dysku etap HTTP nie jest wykonywany: wejście trafia do entrypoint_res_file. Jest to skrót prezentacyjny, nie dodatkowe wywołanie w kodzie.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F1</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_needfile" name="Można wykonać wymaganą kontrolę pliku?" gatewayDirection="Diverging">
+      <bpmn:documentation>URL: etap adresu udany, brak odroczonego błędu, typ file albo API z forced_file_type; helper wymaga pliku głównego. Dysk: zapisany plik główny jest kierowany do kontroli. API/WWW bez pliku oraz nieudany URL pomijają kontrolę pliku i tabeli.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F2</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F3</bpmn:outgoing>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="RECZNE_Przetwarzanie_file" name="Zweryfikuj plik główny">
+      <bpmn:documentation>process_resource_res_file_task: analyze_file, format, MIME, kodowanie i archiwum; check_support, błąd nieznanego kodowania CSV. Dla pliku z dysku aktualizuje także link zasobu na adres portalu. Nie oznacza sprawdzenia prawdziwości danych.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F3</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_fileok" name="Kontrola pliku udana?" gatewayDirection="Diverging">
+      <bpmn:incoming>RECZNE_Przetwarzanie_F4</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F5</bpmn:outgoing>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_table" name="Dane kwalifikują się do przetwarzania?" gatewayDirection="Diverging">
+      <bpmn:documentation>Resource.is_data_processable: format CSV/TSV/XLS/XLSX/ODS/SHP (także wnętrze archiwum), istniejący plik główny, instytucja inna niż developer.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F5</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F6</bpmn:outgoing>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="RECZNE_Przetwarzanie_data" name="Sprawdź dane tabelaryczne i zindeksuj wiersze">
+      <bpmn:documentation>process_resource_file_data_task: ustal schemat, resource.data.validate(), resource.data.index(force=True). Wyniki i błędy są zapisywane. Indeks wierszy jest osobny od indeksu opisów zasobów.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F6</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_indexed" name="Zindeksowano dane?" gatewayDirection="Diverging">
+      <bpmn:documentation>Kod zleca konwersje, gdy success jest prawdziwe; może istnieć również licznik failed. Nie interpretujemy tej bramki jako gwarancji braku każdego błędu wiersza.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F7</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F8</bpmn:outgoing>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="RECZNE_Przetwarzanie_send" name="Zleć osobne zadanie plików pochodnych">
+      <bpmn:documentation>increase_openness_score_task.apply_async_on_commit po sukcesie indeksacji. Nie czekaj na konwersje. Bramka kwalifikacji konwersji jest w osobnym procesie.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F8</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F13</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_merge" name="Przejdź do oceny dostępnego stanu" gatewayDirection="Converging">
+      <bpmn:incoming>RECZNE_Przetwarzanie_F9</bpmn:incoming>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F10</bpmn:incoming>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F11</bpmn:incoming>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F12</bpmn:incoming>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F13</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F14</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:subProcess id="RECZNE_Przetwarzanie_score" name="NADAJ STOPIEŃ OTWARTOŚCI">
+      <bpmn:documentation>Tu obliczana jest pierwsza ocena. Wywołanie update_resource_openness_score po przewidzianych etapach URL/pliku/danych, również gdy wcześniejsza kontrola się nie powiodła. Wyjątek samego obliczenia może przerwać zadanie; nie wymuszamy 0 za każdy błąd.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F14</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F15</bpmn:outgoing>
+      <bpmn:startEvent id="RECZNE_Przetwarzanie_score_start" name="Dostępny stan zasobu po kontrolach">
+        <bpmn:outgoing>RECZNE_Przetwarzanie_score_F1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_fmt" name="Format zasobu = None?" gatewayDirection="Diverging">
+        <bpmn:incoming>RECZNE_Przetwarzanie_score_F1</bpmn:incoming>
+        <bpmn:outgoing>RECZNE_Przetwarzanie_score_F2</bpmn:outgoing>
+        <bpmn:outgoing>RECZNE_Przetwarzanie_score_F4</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_zero" name="Przyjmij stopień 0">
+        <bpmn:incoming>RECZNE_Przetwarzanie_score_F2</bpmn:incoming>
+        <bpmn:outgoing>RECZNE_Przetwarzanie_score_F3</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_main" name="Jest plik główny?" gatewayDirection="Diverging">
+        <bpmn:incoming>RECZNE_Przetwarzanie_score_F4</bpmn:incoming>
+        <bpmn:outgoing>RECZNE_Przetwarzanie_score_F5</bpmn:outgoing>
+        <bpmn:outgoing>RECZNE_Przetwarzanie_score_F6</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:subProcess id="RECZNE_Przetwarzanie_score_files" name="Oceń wszystkie pliki; wybierz maksimum">
+        <bpmn:documentation>Źródło: tab=ocena SECTION-ocena-5; XML O13; U-12. Plik główny i wszystkie pliki pochodne, także stare, jeżeli nadal istnieją. jsonstat jest liczony jak json.</bpmn:documentation>
+        <bpmn:startEvent id="RECZNE_Przetwarzanie_score_files_start" name="Lista plików zasobu">
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F1</bpmn:outgoing>
+        </bpmn:startEvent>
+        <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_files_next" name="Jest następny plik?" gatewayDirection="Mixed">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F1</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F2</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F3</bpmn:outgoing>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F18</bpmn:incoming>
+        </bpmn:exclusiveGateway>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_fmt" name="Ustal format zawartości pliku">
+          <bpmn:documentation>compressed_file_format ma pierwszeństwo przed format; jsonstat → json.</bpmn:documentation>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F2</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F4</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_files_has" name="Plik ma format?" gatewayDirection="Diverging">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F4</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F5</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F6</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_one" name="Przyjmij ocenę pliku 1">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F5</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F14</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_files_archive" name="Plik jest archiwum?" gatewayDirection="Diverging">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F6</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F7</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F8</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_inspect" name="Sprawdź archiwum i jego zawartość">
+          <bpmn:documentation>Źródło: tab=ocena SECTION-ocena-5. Zaszyfrowane → 0. Błąd odczytu → 1. Wiele plików → 1, wyjątki geotiff/shp. Jeden plik → oceniaj wnętrze.</bpmn:documentation>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F7</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F9</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_files_result" name="Jaki wynik kontroli archiwum?" gatewayDirection="Diverging">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F9</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F10</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F11</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F12</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_zero" name="Zaszyfrowane: ocena 0">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F10</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F15</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_bad" name="Błąd lub wiele plików: ocena 1">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F11</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F16</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_inner" name="Wybierz plik wewnętrzny lub geotiff/shp">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F12</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F13</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:subProcess id="RECZNE_Przetwarzanie_score_files_calc" name="Oblicz stopień według formatu i treści">
+          <bpmn:documentation>Źródło: tab=ocena, ROW-ocena-001..003 i SECTION-ocena-7. Rozwinięcie ma własny diagram. Dla linku format pochodzi z bazy; dla pliku jest efektywnym formatem ocenianej zawartości.</bpmn:documentation>
+          <bpmn:startEvent id="RECZNE_Przetwarzanie_score_files_calc_start" name="Treść i format do oceny">
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F1</bpmn:outgoing>
+          </bpmn:startEvent>
+          <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_files_calc_format" name="Który format oceniamy?" gatewayDirection="Diverging">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F1</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F2</bpmn:outgoing>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F3</bpmn:outgoing>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F4</bpmn:outgoing>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F5</bpmn:outgoing>
+          </bpmn:exclusiveGateway>
+          <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_files_calc_json" name="JSON: odczyt RDF daje niepusty graf?" gatewayDirection="Diverging">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F2</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F6</bpmn:outgoing>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F7</bpmn:outgoing>
+          </bpmn:exclusiveGateway>
+          <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_files_calc_xml" name="XML: wszystkie elementy mają przestrzenie nazw?" gatewayDirection="Diverging">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F3</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F10</bpmn:outgoing>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F11</bpmn:outgoing>
+          </bpmn:exclusiveGateway>
+          <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_files_calc_rdf" name="RDF: niepusty graf?" gatewayDirection="Diverging">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F4</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F14</bpmn:outgoing>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F15</bpmn:outgoing>
+          </bpmn:exclusiveGateway>
+          <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_calc_default" name="Inny format: użyj oceny z tabeli">
+            <bpmn:documentation>PDF/JPG/TXT → 1; XLS/XLSX → 2; CSV/HTML/ODS → 3; format spoza tabeli → 1. Pełna tabela w raporcie źródłowym.</bpmn:documentation>
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F5</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F27</bpmn:outgoing>
+          </bpmn:serviceTask>
+          <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_files_calc_jlinked" name="Graf łączy różne domeny?" gatewayDirection="Diverging">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F6</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F8</bpmn:outgoing>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F9</bpmn:outgoing>
+          </bpmn:exclusiveGateway>
+          <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_files_calc_xlinked" name="Poprawny RDF łączy różne domeny?" gatewayDirection="Diverging">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F10</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F12</bpmn:outgoing>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F13</bpmn:outgoing>
+          </bpmn:exclusiveGateway>
+          <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_files_calc_rlinked" name="Graf łączy różne domeny?" gatewayDirection="Diverging">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F14</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F16</bpmn:outgoing>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F17</bpmn:outgoing>
+          </bpmn:exclusiveGateway>
+          <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_calc_j3" name="Przyjmij stopień 3">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F7</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F18</bpmn:outgoing>
+          </bpmn:serviceTask>
+          <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_calc_j4" name="Przyjmij stopień 4">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F8</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F19</bpmn:outgoing>
+          </bpmn:serviceTask>
+          <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_calc_j5" name="Przyjmij stopień 5">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F9</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F20</bpmn:outgoing>
+          </bpmn:serviceTask>
+          <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_calc_x3" name="Przyjmij stopień 3">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F11</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F21</bpmn:outgoing>
+          </bpmn:serviceTask>
+          <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_calc_x4" name="Przyjmij stopień 4">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F12</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F22</bpmn:outgoing>
+          </bpmn:serviceTask>
+          <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_calc_x5" name="Przyjmij stopień 5">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F13</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F23</bpmn:outgoing>
+          </bpmn:serviceTask>
+          <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_calc_r4" name="Przyjmij stopień 4">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F15</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F24</bpmn:outgoing>
+          </bpmn:serviceTask>
+          <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_calc_r4b" name="Przyjmij stopień 4">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F16</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F25</bpmn:outgoing>
+          </bpmn:serviceTask>
+          <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_calc_r5" name="Przyjmij stopień 5">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F17</bpmn:incoming>
+            <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_calc_F26</bpmn:outgoing>
+          </bpmn:serviceTask>
+          <bpmn:endEvent id="RECZNE_Przetwarzanie_score_files_calc_end" name="Wynik pojedynczej oceny">
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F18</bpmn:incoming>
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F19</bpmn:incoming>
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F20</bpmn:incoming>
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F21</bpmn:incoming>
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F22</bpmn:incoming>
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F23</bpmn:incoming>
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F24</bpmn:incoming>
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F25</bpmn:incoming>
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F26</bpmn:incoming>
+            <bpmn:incoming>RECZNE_Przetwarzanie_score_files_calc_F27</bpmn:incoming>
+          </bpmn:endEvent>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F1" sourceRef="RECZNE_Przetwarzanie_score_files_calc_start" targetRef="RECZNE_Przetwarzanie_score_files_calc_format" />
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F2" sourceRef="RECZNE_Przetwarzanie_score_files_calc_format" targetRef="RECZNE_Przetwarzanie_score_files_calc_json" name="JSON">
+            <bpmn:conditionExpression>JSON</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F3" sourceRef="RECZNE_Przetwarzanie_score_files_calc_format" targetRef="RECZNE_Przetwarzanie_score_files_calc_xml" name="XML">
+            <bpmn:conditionExpression>XML</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F4" sourceRef="RECZNE_Przetwarzanie_score_files_calc_format" targetRef="RECZNE_Przetwarzanie_score_files_calc_rdf" name="RDF i pokrewne">
+            <bpmn:conditionExpression>RDF i pokrewne</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F5" sourceRef="RECZNE_Przetwarzanie_score_files_calc_format" targetRef="RECZNE_Przetwarzanie_score_files_calc_default" name="Pozostałe">
+            <bpmn:conditionExpression>Pozostałe</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F6" sourceRef="RECZNE_Przetwarzanie_score_files_calc_json" targetRef="RECZNE_Przetwarzanie_score_files_calc_jlinked" name="Tak">
+            <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F7" sourceRef="RECZNE_Przetwarzanie_score_files_calc_json" targetRef="RECZNE_Przetwarzanie_score_files_calc_j3" name="Nie">
+            <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F8" sourceRef="RECZNE_Przetwarzanie_score_files_calc_jlinked" targetRef="RECZNE_Przetwarzanie_score_files_calc_j4" name="Nie">
+            <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F9" sourceRef="RECZNE_Przetwarzanie_score_files_calc_jlinked" targetRef="RECZNE_Przetwarzanie_score_files_calc_j5" name="Tak">
+            <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F10" sourceRef="RECZNE_Przetwarzanie_score_files_calc_xml" targetRef="RECZNE_Przetwarzanie_score_files_calc_xlinked" name="Tak">
+            <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F11" sourceRef="RECZNE_Przetwarzanie_score_files_calc_xml" targetRef="RECZNE_Przetwarzanie_score_files_calc_x3" name="Nie">
+            <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F12" sourceRef="RECZNE_Przetwarzanie_score_files_calc_xlinked" targetRef="RECZNE_Przetwarzanie_score_files_calc_x4" name="Nie">
+            <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F13" sourceRef="RECZNE_Przetwarzanie_score_files_calc_xlinked" targetRef="RECZNE_Przetwarzanie_score_files_calc_x5" name="Tak">
+            <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F14" sourceRef="RECZNE_Przetwarzanie_score_files_calc_rdf" targetRef="RECZNE_Przetwarzanie_score_files_calc_rlinked" name="Tak">
+            <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F15" sourceRef="RECZNE_Przetwarzanie_score_files_calc_rdf" targetRef="RECZNE_Przetwarzanie_score_files_calc_r4" name="Nie">
+            <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F16" sourceRef="RECZNE_Przetwarzanie_score_files_calc_rlinked" targetRef="RECZNE_Przetwarzanie_score_files_calc_r4b" name="Nie">
+            <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F17" sourceRef="RECZNE_Przetwarzanie_score_files_calc_rlinked" targetRef="RECZNE_Przetwarzanie_score_files_calc_r5" name="Tak">
+            <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+          </bpmn:sequenceFlow>
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F18" sourceRef="RECZNE_Przetwarzanie_score_files_calc_j3" targetRef="RECZNE_Przetwarzanie_score_files_calc_end" />
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F19" sourceRef="RECZNE_Przetwarzanie_score_files_calc_j4" targetRef="RECZNE_Przetwarzanie_score_files_calc_end" />
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F20" sourceRef="RECZNE_Przetwarzanie_score_files_calc_j5" targetRef="RECZNE_Przetwarzanie_score_files_calc_end" />
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F21" sourceRef="RECZNE_Przetwarzanie_score_files_calc_x3" targetRef="RECZNE_Przetwarzanie_score_files_calc_end" />
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F22" sourceRef="RECZNE_Przetwarzanie_score_files_calc_x4" targetRef="RECZNE_Przetwarzanie_score_files_calc_end" />
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F23" sourceRef="RECZNE_Przetwarzanie_score_files_calc_x5" targetRef="RECZNE_Przetwarzanie_score_files_calc_end" />
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F24" sourceRef="RECZNE_Przetwarzanie_score_files_calc_r4" targetRef="RECZNE_Przetwarzanie_score_files_calc_end" />
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F25" sourceRef="RECZNE_Przetwarzanie_score_files_calc_r4b" targetRef="RECZNE_Przetwarzanie_score_files_calc_end" />
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F26" sourceRef="RECZNE_Przetwarzanie_score_files_calc_r5" targetRef="RECZNE_Przetwarzanie_score_files_calc_end" />
+          <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_calc_F27" sourceRef="RECZNE_Przetwarzanie_score_files_calc_default" targetRef="RECZNE_Przetwarzanie_score_files_calc_end" />
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F8</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F13</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F17</bpmn:outgoing>
+        </bpmn:subProcess>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_save" name="Zachowaj ocenę bieżącego pliku">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F14</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F15</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F16</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F17</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F18</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_files_max" name="Wybierz najwyższą ocenę wszystkich plików">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F3</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_files_F19</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:endEvent id="RECZNE_Przetwarzanie_score_files_end" name="Stopień zasobu = maksimum">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_files_F19</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F1" sourceRef="RECZNE_Przetwarzanie_score_files_start" targetRef="RECZNE_Przetwarzanie_score_files_next" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F2" sourceRef="RECZNE_Przetwarzanie_score_files_next" targetRef="RECZNE_Przetwarzanie_score_files_fmt" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F3" sourceRef="RECZNE_Przetwarzanie_score_files_next" targetRef="RECZNE_Przetwarzanie_score_files_max" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F4" sourceRef="RECZNE_Przetwarzanie_score_files_fmt" targetRef="RECZNE_Przetwarzanie_score_files_has" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F5" sourceRef="RECZNE_Przetwarzanie_score_files_has" targetRef="RECZNE_Przetwarzanie_score_files_one" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F6" sourceRef="RECZNE_Przetwarzanie_score_files_has" targetRef="RECZNE_Przetwarzanie_score_files_archive" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F7" sourceRef="RECZNE_Przetwarzanie_score_files_archive" targetRef="RECZNE_Przetwarzanie_score_files_inspect" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F8" sourceRef="RECZNE_Przetwarzanie_score_files_archive" targetRef="RECZNE_Przetwarzanie_score_files_calc" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F9" sourceRef="RECZNE_Przetwarzanie_score_files_inspect" targetRef="RECZNE_Przetwarzanie_score_files_result" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F10" sourceRef="RECZNE_Przetwarzanie_score_files_result" targetRef="RECZNE_Przetwarzanie_score_files_zero" name="Zaszyfrowane">
+          <bpmn:conditionExpression>Zaszyfrowane</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F11" sourceRef="RECZNE_Przetwarzanie_score_files_result" targetRef="RECZNE_Przetwarzanie_score_files_bad" name="Błąd / wiele">
+          <bpmn:conditionExpression>Błąd / wiele</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F12" sourceRef="RECZNE_Przetwarzanie_score_files_result" targetRef="RECZNE_Przetwarzanie_score_files_inner" name="Jeden / wyjątek">
+          <bpmn:conditionExpression>Jeden / wyjątek</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F13" sourceRef="RECZNE_Przetwarzanie_score_files_inner" targetRef="RECZNE_Przetwarzanie_score_files_calc" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F14" sourceRef="RECZNE_Przetwarzanie_score_files_one" targetRef="RECZNE_Przetwarzanie_score_files_save" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F15" sourceRef="RECZNE_Przetwarzanie_score_files_zero" targetRef="RECZNE_Przetwarzanie_score_files_save" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F16" sourceRef="RECZNE_Przetwarzanie_score_files_bad" targetRef="RECZNE_Przetwarzanie_score_files_save" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F17" sourceRef="RECZNE_Przetwarzanie_score_files_calc" targetRef="RECZNE_Przetwarzanie_score_files_save" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F18" sourceRef="RECZNE_Przetwarzanie_score_files_save" targetRef="RECZNE_Przetwarzanie_score_files_next" name="Kolejny" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_files_F19" sourceRef="RECZNE_Przetwarzanie_score_files_max" targetRef="RECZNE_Przetwarzanie_score_files_end" />
+        <bpmn:incoming>RECZNE_Przetwarzanie_score_F5</bpmn:incoming>
+        <bpmn:outgoing>RECZNE_Przetwarzanie_score_F9</bpmn:outgoing>
+      </bpmn:subProcess>
+      <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_link" name="Pobierz treść linku do oceny">
+        <bpmn:documentation>Przy braku pliku głównego i istnieniu linku; format zasobu z bazy. Brak formatu rozstrzygnięty wcześniej. Bez plików i bez linku wynik pozostaje 0; zwykły przebieg dodania wymaga pliku albo URL.</bpmn:documentation>
+        <bpmn:incoming>RECZNE_Przetwarzanie_score_F6</bpmn:incoming>
+        <bpmn:outgoing>RECZNE_Przetwarzanie_score_F7</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:subProcess id="RECZNE_Przetwarzanie_score_calc" name="Oblicz stopień według formatu i treści">
+        <bpmn:documentation>Źródło: tab=ocena, ROW-ocena-001..003 i SECTION-ocena-7. Rozwinięcie ma własny diagram. Dla linku format pochodzi z bazy; dla pliku jest efektywnym formatem ocenianej zawartości.</bpmn:documentation>
+        <bpmn:startEvent id="RECZNE_Przetwarzanie_score_calc_start" name="Treść i format do oceny">
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F1</bpmn:outgoing>
+        </bpmn:startEvent>
+        <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_calc_format" name="Który format oceniamy?" gatewayDirection="Diverging">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F1</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F2</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F3</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F4</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F5</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_calc_json" name="JSON: odczyt RDF daje niepusty graf?" gatewayDirection="Diverging">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F2</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F6</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F7</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_calc_xml" name="XML: wszystkie elementy mają przestrzenie nazw?" gatewayDirection="Diverging">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F3</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F10</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F11</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_calc_rdf" name="RDF: niepusty graf?" gatewayDirection="Diverging">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F4</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F14</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F15</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_calc_default" name="Inny format: użyj oceny z tabeli">
+          <bpmn:documentation>PDF/JPG/TXT → 1; XLS/XLSX → 2; CSV/HTML/ODS → 3; format spoza tabeli → 1. Pełna tabela w raporcie źródłowym.</bpmn:documentation>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F5</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F27</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_calc_jlinked" name="Graf łączy różne domeny?" gatewayDirection="Diverging">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F6</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F8</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F9</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_calc_xlinked" name="Poprawny RDF łączy różne domeny?" gatewayDirection="Diverging">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F10</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F12</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F13</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_calc_rlinked" name="Graf łączy różne domeny?" gatewayDirection="Diverging">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F14</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F16</bpmn:outgoing>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F17</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_calc_j3" name="Przyjmij stopień 3">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F7</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F18</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_calc_j4" name="Przyjmij stopień 4">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F8</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F19</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_calc_j5" name="Przyjmij stopień 5">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F9</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F20</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_calc_x3" name="Przyjmij stopień 3">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F11</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F21</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_calc_x4" name="Przyjmij stopień 4">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F12</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F22</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_calc_x5" name="Przyjmij stopień 5">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F13</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F23</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_calc_r4" name="Przyjmij stopień 4">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F15</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F24</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_calc_r4b" name="Przyjmij stopień 4">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F16</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F25</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_calc_r5" name="Przyjmij stopień 5">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F17</bpmn:incoming>
+          <bpmn:outgoing>RECZNE_Przetwarzanie_score_calc_F26</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:endEvent id="RECZNE_Przetwarzanie_score_calc_end" name="Wynik pojedynczej oceny">
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F18</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F19</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F20</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F21</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F22</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F23</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F24</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F25</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F26</bpmn:incoming>
+          <bpmn:incoming>RECZNE_Przetwarzanie_score_calc_F27</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F1" sourceRef="RECZNE_Przetwarzanie_score_calc_start" targetRef="RECZNE_Przetwarzanie_score_calc_format" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F2" sourceRef="RECZNE_Przetwarzanie_score_calc_format" targetRef="RECZNE_Przetwarzanie_score_calc_json" name="JSON">
+          <bpmn:conditionExpression>JSON</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F3" sourceRef="RECZNE_Przetwarzanie_score_calc_format" targetRef="RECZNE_Przetwarzanie_score_calc_xml" name="XML">
+          <bpmn:conditionExpression>XML</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F4" sourceRef="RECZNE_Przetwarzanie_score_calc_format" targetRef="RECZNE_Przetwarzanie_score_calc_rdf" name="RDF i pokrewne">
+          <bpmn:conditionExpression>RDF i pokrewne</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F5" sourceRef="RECZNE_Przetwarzanie_score_calc_format" targetRef="RECZNE_Przetwarzanie_score_calc_default" name="Pozostałe">
+          <bpmn:conditionExpression>Pozostałe</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F6" sourceRef="RECZNE_Przetwarzanie_score_calc_json" targetRef="RECZNE_Przetwarzanie_score_calc_jlinked" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F7" sourceRef="RECZNE_Przetwarzanie_score_calc_json" targetRef="RECZNE_Przetwarzanie_score_calc_j3" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F8" sourceRef="RECZNE_Przetwarzanie_score_calc_jlinked" targetRef="RECZNE_Przetwarzanie_score_calc_j4" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F9" sourceRef="RECZNE_Przetwarzanie_score_calc_jlinked" targetRef="RECZNE_Przetwarzanie_score_calc_j5" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F10" sourceRef="RECZNE_Przetwarzanie_score_calc_xml" targetRef="RECZNE_Przetwarzanie_score_calc_xlinked" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F11" sourceRef="RECZNE_Przetwarzanie_score_calc_xml" targetRef="RECZNE_Przetwarzanie_score_calc_x3" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F12" sourceRef="RECZNE_Przetwarzanie_score_calc_xlinked" targetRef="RECZNE_Przetwarzanie_score_calc_x4" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F13" sourceRef="RECZNE_Przetwarzanie_score_calc_xlinked" targetRef="RECZNE_Przetwarzanie_score_calc_x5" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F14" sourceRef="RECZNE_Przetwarzanie_score_calc_rdf" targetRef="RECZNE_Przetwarzanie_score_calc_rlinked" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F15" sourceRef="RECZNE_Przetwarzanie_score_calc_rdf" targetRef="RECZNE_Przetwarzanie_score_calc_r4" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F16" sourceRef="RECZNE_Przetwarzanie_score_calc_rlinked" targetRef="RECZNE_Przetwarzanie_score_calc_r4b" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F17" sourceRef="RECZNE_Przetwarzanie_score_calc_rlinked" targetRef="RECZNE_Przetwarzanie_score_calc_r5" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F18" sourceRef="RECZNE_Przetwarzanie_score_calc_j3" targetRef="RECZNE_Przetwarzanie_score_calc_end" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F19" sourceRef="RECZNE_Przetwarzanie_score_calc_j4" targetRef="RECZNE_Przetwarzanie_score_calc_end" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F20" sourceRef="RECZNE_Przetwarzanie_score_calc_j5" targetRef="RECZNE_Przetwarzanie_score_calc_end" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F21" sourceRef="RECZNE_Przetwarzanie_score_calc_x3" targetRef="RECZNE_Przetwarzanie_score_calc_end" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F22" sourceRef="RECZNE_Przetwarzanie_score_calc_x4" targetRef="RECZNE_Przetwarzanie_score_calc_end" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F23" sourceRef="RECZNE_Przetwarzanie_score_calc_x5" targetRef="RECZNE_Przetwarzanie_score_calc_end" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F24" sourceRef="RECZNE_Przetwarzanie_score_calc_r4" targetRef="RECZNE_Przetwarzanie_score_calc_end" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F25" sourceRef="RECZNE_Przetwarzanie_score_calc_r4b" targetRef="RECZNE_Przetwarzanie_score_calc_end" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F26" sourceRef="RECZNE_Przetwarzanie_score_calc_r5" targetRef="RECZNE_Przetwarzanie_score_calc_end" />
+        <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_calc_F27" sourceRef="RECZNE_Przetwarzanie_score_calc_default" targetRef="RECZNE_Przetwarzanie_score_calc_end" />
+        <bpmn:incoming>RECZNE_Przetwarzanie_score_F7</bpmn:incoming>
+        <bpmn:outgoing>RECZNE_Przetwarzanie_score_F8</bpmn:outgoing>
+      </bpmn:subProcess>
+      <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_score_merge" name="Wynik stopnia" gatewayDirection="Converging">
+        <bpmn:incoming>RECZNE_Przetwarzanie_score_F3</bpmn:incoming>
+        <bpmn:incoming>RECZNE_Przetwarzanie_score_F8</bpmn:incoming>
+        <bpmn:incoming>RECZNE_Przetwarzanie_score_F9</bpmn:incoming>
+        <bpmn:outgoing>RECZNE_Przetwarzanie_score_F10</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="RECZNE_Przetwarzanie_score_save" name="Zapisz stopień zasobu i oceny plików">
+        <bpmn:documentation>update_resource_openness_score: bezpośredni UPDATE zasobu i każdego ocenionego ResourceFile.</bpmn:documentation>
+        <bpmn:incoming>RECZNE_Przetwarzanie_score_F10</bpmn:incoming>
+        <bpmn:outgoing>RECZNE_Przetwarzanie_score_F11</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="RECZNE_Przetwarzanie_score_end" name="Ocena zapisana">
+        <bpmn:incoming>RECZNE_Przetwarzanie_score_F11</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_F1" sourceRef="RECZNE_Przetwarzanie_score_start" targetRef="RECZNE_Przetwarzanie_score_fmt" />
+      <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_F2" sourceRef="RECZNE_Przetwarzanie_score_fmt" targetRef="RECZNE_Przetwarzanie_score_zero" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_F3" sourceRef="RECZNE_Przetwarzanie_score_zero" targetRef="RECZNE_Przetwarzanie_score_merge" />
+      <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_F4" sourceRef="RECZNE_Przetwarzanie_score_fmt" targetRef="RECZNE_Przetwarzanie_score_main" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_F5" sourceRef="RECZNE_Przetwarzanie_score_main" targetRef="RECZNE_Przetwarzanie_score_files" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_F6" sourceRef="RECZNE_Przetwarzanie_score_main" targetRef="RECZNE_Przetwarzanie_score_link" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_F7" sourceRef="RECZNE_Przetwarzanie_score_link" targetRef="RECZNE_Przetwarzanie_score_calc" />
+      <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_F8" sourceRef="RECZNE_Przetwarzanie_score_calc" targetRef="RECZNE_Przetwarzanie_score_merge" />
+      <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_F9" sourceRef="RECZNE_Przetwarzanie_score_files" targetRef="RECZNE_Przetwarzanie_score_merge" />
+      <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_F10" sourceRef="RECZNE_Przetwarzanie_score_merge" targetRef="RECZNE_Przetwarzanie_score_save" />
+      <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_score_F11" sourceRef="RECZNE_Przetwarzanie_score_save" targetRef="RECZNE_Przetwarzanie_score_end" />
+    </bpmn:subProcess>
+    <bpmn:serviceTask id="RECZNE_Przetwarzanie_date" name="Zapisz datę weryfikacji, jeśli żądana">
+      <bpmn:documentation>Data weryfikacji nie stanowi potwierdzenia aktualności merytorycznej danych.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F15</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F16</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="RECZNE_Przetwarzanie_publishok" name="Przebieg udany i zasób nadal opublikowany?" gatewayDirection="Diverging">
+      <bpmn:documentation>Dla URL: sukces URL i wymaganej kontroli pliku, brak deferred_exceptions. Dla dysku: sukces pliku i brak deferred_exceptions. update_es_and_rdf_db dodatkowo wymaga is_published.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F16</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F17</bpmn:outgoing>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F19</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="RECZNE_Przetwarzanie_refresh" name="Zleć odświeżenie publikacji i oceny">
+      <bpmn:documentation>ES/RDF odczytają już zapisaną ocenę. Sygnały publikacji przy zapisie mogły wcześniej zlecić aktualizację opisów; nie oznacza to oczekiwania formularza na walidację.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F17</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F18</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="RECZNE_Przetwarzanie_problem" name="Obsłuż problem; bez końcowego odświeżenia">
+      <bpmn:documentation>Zaloguj status lub zgłoś odroczony wyjątek zależnie od przebiegu. Zapis zasobu nie jest automatycznie cofany. Sam wynik walidacji nie zmienia automatycznie statusu publikacji.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F19</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Przetwarzanie_F20</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="RECZNE_Przetwarzanie_end" name="Zadanie przygotowania zakończone">
+      <bpmn:incoming>RECZNE_Przetwarzanie_F18</bpmn:incoming>
+      <bpmn:incoming>RECZNE_Przetwarzanie_F20</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F1" sourceRef="RECZNE_Przetwarzanie_start" targetRef="RECZNE_Przetwarzanie_url" />
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F2" sourceRef="RECZNE_Przetwarzanie_url" targetRef="RECZNE_Przetwarzanie_needfile" />
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F3" sourceRef="RECZNE_Przetwarzanie_needfile" targetRef="RECZNE_Przetwarzanie_file" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F4" sourceRef="RECZNE_Przetwarzanie_file" targetRef="RECZNE_Przetwarzanie_fileok" />
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F5" sourceRef="RECZNE_Przetwarzanie_fileok" targetRef="RECZNE_Przetwarzanie_table" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F6" sourceRef="RECZNE_Przetwarzanie_table" targetRef="RECZNE_Przetwarzanie_data" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F7" sourceRef="RECZNE_Przetwarzanie_data" targetRef="RECZNE_Przetwarzanie_indexed" />
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F8" sourceRef="RECZNE_Przetwarzanie_indexed" targetRef="RECZNE_Przetwarzanie_send" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F9" sourceRef="RECZNE_Przetwarzanie_needfile" targetRef="RECZNE_Przetwarzanie_merge" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F10" sourceRef="RECZNE_Przetwarzanie_fileok" targetRef="RECZNE_Przetwarzanie_merge" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F11" sourceRef="RECZNE_Przetwarzanie_table" targetRef="RECZNE_Przetwarzanie_merge" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F12" sourceRef="RECZNE_Przetwarzanie_indexed" targetRef="RECZNE_Przetwarzanie_merge" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F13" sourceRef="RECZNE_Przetwarzanie_send" targetRef="RECZNE_Przetwarzanie_merge" />
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F14" sourceRef="RECZNE_Przetwarzanie_merge" targetRef="RECZNE_Przetwarzanie_score" />
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F15" sourceRef="RECZNE_Przetwarzanie_score" targetRef="RECZNE_Przetwarzanie_date" />
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F16" sourceRef="RECZNE_Przetwarzanie_date" targetRef="RECZNE_Przetwarzanie_publishok" />
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F17" sourceRef="RECZNE_Przetwarzanie_publishok" targetRef="RECZNE_Przetwarzanie_refresh" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F18" sourceRef="RECZNE_Przetwarzanie_refresh" targetRef="RECZNE_Przetwarzanie_end" />
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F19" sourceRef="RECZNE_Przetwarzanie_publishok" targetRef="RECZNE_Przetwarzanie_problem" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Przetwarzanie_F20" sourceRef="RECZNE_Przetwarzanie_problem" targetRef="RECZNE_Przetwarzanie_end" />
+  </bpmn:process>
+  <bpmn:process id="RECZNE_Konwersje" name="3. Portal — opcjonalne podniesienie oceny po konwersji" isExecutable="false">
+    <bpmn:documentation>Model biznesowy ręcznego dodania zasobu w panelu administracyjnym. Podstawa: lokalny snapshot mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree; resources/forms.py, admin.py, models.py i tasks. Analiza statyczna, bez uruchamiania aplikacji. Diagram agreguje dwie ścieżki wejścia w pojedynczy krok zgodnie z prośbą użytkownika. Zapis jako szkic nie uruchamia tego samego przebiegu co zapis opublikowanego zasobu.</bpmn:documentation>
+    <bpmn:startEvent id="RECZNE_Konwersje_start" name="Odebrano zlecenie konwersji">
+      <bpmn:outgoing>RECZNE_Konwersje_F1</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="RECZNE_Konwersje_start_MessageEvent" />
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="RECZNE_Konwersje_convert" name="Spróbuj utworzyć CSV lub JSON-LD">
+      <bpmn:documentation>Resource.increase_openness_score: XLS/XLSX, not is_linked i dane tabeli → CSV. Dostępny CSV poza archiwum → próba JSON-LD. Ręczny URL zewnętrzny oznacza is_linked=True, więc nie dostaje XLSX→CSV. Własny plik z dysku z linkiem wewnętrznym może dostać tę konwersję. Błędy nie gwarantują nowego pliku.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Konwersje_F1</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Konwersje_F2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="RECZNE_Konwersje_created" name="Powstał nowy plik pochodny?" gatewayDirection="Diverging">
+      <bpmn:incoming>RECZNE_Konwersje_F2</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Konwersje_F3</bpmn:outgoing>
+      <bpmn:outgoing>RECZNE_Konwersje_F6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="RECZNE_Konwersje_score" name="PONOWNIE oblicz i zapisz stopień otwartości">
+      <bpmn:documentation>Ten sam algorytm: ocena zasobu to maksimum ocen jego plików. Konwersja i pierwsze obliczenie nie mają gwarantowanej kolejności zakończenia.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Konwersje_F3</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Konwersje_F4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="RECZNE_Konwersje_refresh" name="Zleć odświeżenie publikacji z nową oceną">
+      <bpmn:documentation>update_es_and_rdf_db; tylko is_published. Pliki pochodne są dostępne na stronie zasobu i w formularzu edycji, gdy istnieją.</bpmn:documentation>
+      <bpmn:incoming>RECZNE_Konwersje_F4</bpmn:incoming>
+      <bpmn:outgoing>RECZNE_Konwersje_F5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="RECZNE_Konwersje_end" name="Koniec próby konwersji">
+      <bpmn:incoming>RECZNE_Konwersje_F5</bpmn:incoming>
+      <bpmn:incoming>RECZNE_Konwersje_F6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="RECZNE_Konwersje_F1" sourceRef="RECZNE_Konwersje_start" targetRef="RECZNE_Konwersje_convert" />
+    <bpmn:sequenceFlow id="RECZNE_Konwersje_F2" sourceRef="RECZNE_Konwersje_convert" targetRef="RECZNE_Konwersje_created" />
+    <bpmn:sequenceFlow id="RECZNE_Konwersje_F3" sourceRef="RECZNE_Konwersje_created" targetRef="RECZNE_Konwersje_score" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="RECZNE_Konwersje_F4" sourceRef="RECZNE_Konwersje_score" targetRef="RECZNE_Konwersje_refresh" />
+    <bpmn:sequenceFlow id="RECZNE_Konwersje_F5" sourceRef="RECZNE_Konwersje_refresh" targetRef="RECZNE_Konwersje_end" />
+    <bpmn:sequenceFlow id="RECZNE_Konwersje_F6" sourceRef="RECZNE_Konwersje_created" targetRef="RECZNE_Konwersje_end" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmn:collaboration id="RECZNE_Collaboration" name="Ręczne dodanie zasobu — zapis, walidacja i stopnie otwartości">
+    <bpmn:participant id="RECZNE_Formularz_Pool" name="Edytor i obsługa formularza" processRef="RECZNE_Formularz" />
+    <bpmn:participant id="RECZNE_Przetwarzanie_Pool" name="Portal — przygotowanie zasobu w tle" processRef="RECZNE_Przetwarzanie" />
+    <bpmn:participant id="RECZNE_Konwersje_Pool" name="Portal — pliki pochodne w tle" processRef="RECZNE_Konwersje" />
+    <bpmn:messageFlow id="RECZNE_Message1" sourceRef="RECZNE_Formularz_send" targetRef="RECZNE_Przetwarzanie_start" name="Zlecenie po zatwierdzeniu zapisu" />
+    <bpmn:messageFlow id="RECZNE_Message2" sourceRef="RECZNE_Przetwarzanie_send" targetRef="RECZNE_Konwersje_start" name="Zlecenie po udanej indeksacji; bez oczekiwania" />
+  </bpmn:collaboration>
+  <bpmndi:BPMNDiagram id="RECZNE_Overview" name="Ręczne dodanie — widok biznesowy">
+    <bpmndi:BPMNPlane id="RECZNE_Overview_Plane" bpmnElement="RECZNE_Collaboration">
+      <bpmndi:BPMNShape id="RECZNE_Formularz_Pool_di" bpmnElement="RECZNE_Formularz_Pool" isHorizontal="true">
+        <dc:Bounds x="40" y="80" width="2740" height="450" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_start_di_overview" bpmnElement="RECZNE_Formularz_start">
+        <dc:Bounds x="80" y="180" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2" y="234" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_source_di_overview" bpmnElement="RECZNE_Formularz_source">
+        <dc:Bounds x="250" y="160" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_fields_di_overview" bpmnElement="RECZNE_Formularz_fields">
+        <dc:Bounds x="560" y="160" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_click_di_overview" bpmnElement="RECZNE_Formularz_click">
+        <dc:Bounds x="870" y="160" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_validate_di_overview" bpmnElement="RECZNE_Formularz_validate">
+        <dc:Bounds x="1180" y="160" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_ok_di_overview" bpmnElement="RECZNE_Formularz_ok">
+        <dc:Bounds x="1490" y="170" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1412" y="242" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_error_di_overview" bpmnElement="RECZNE_Formularz_error">
+        <dc:Bounds x="1150" y="380" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_save_di_overview" bpmnElement="RECZNE_Formularz_save">
+        <dc:Bounds x="1710" y="160" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_status_di_overview" bpmnElement="RECZNE_Formularz_status">
+        <dc:Bounds x="2020" y="170" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1942" y="242" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_send_di_overview" bpmnElement="RECZNE_Formularz_send">
+        <dc:Bounds x="2250" y="160" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_end_di_overview" bpmnElement="RECZNE_Formularz_end">
+        <dc:Bounds x="2550" y="180" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2472" y="234" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_draft_di_overview" bpmnElement="RECZNE_Formularz_draft">
+        <dc:Bounds x="2050" y="400" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1972" y="454" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F1_di_overview" bpmnElement="RECZNE_Formularz_F1">
+        <di:waypoint x="126" y="203.0" />
+        <di:waypoint x="250" y="203.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F2_di_overview" bpmnElement="RECZNE_Formularz_F2">
+        <di:waypoint x="470" y="203.0" />
+        <di:waypoint x="560" y="203.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F3_di_overview" bpmnElement="RECZNE_Formularz_F3">
+        <di:waypoint x="780" y="203.0" />
+        <di:waypoint x="870" y="203.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F4_di_overview" bpmnElement="RECZNE_Formularz_F4">
+        <di:waypoint x="1090" y="203.0" />
+        <di:waypoint x="1180" y="203.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F5_di_overview" bpmnElement="RECZNE_Formularz_F5">
+        <di:waypoint x="1400" y="203.0" />
+        <di:waypoint x="1445.0" y="203.0" />
+        <di:waypoint x="1445.0" y="202.0" />
+        <di:waypoint x="1490" y="202.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F6_di_overview" bpmnElement="RECZNE_Formularz_F6">
+        <di:waypoint x="1554" y="202.0" />
+        <di:waypoint x="1632.0" y="202.0" />
+        <di:waypoint x="1632.0" y="203.0" />
+        <di:waypoint x="1710" y="203.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1562.0" y="175.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F7_di_overview" bpmnElement="RECZNE_Formularz_F7">
+        <di:waypoint x="1522.0" y="234" />
+        <di:waypoint x="1522.0" y="355" />
+        <di:waypoint x="1260.0" y="355" />
+        <di:waypoint x="1260.0" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1190.0" y="327" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F8_di_overview" bpmnElement="RECZNE_Formularz_F8">
+        <di:waypoint x="1150" y="423" />
+        <di:waypoint x="670" y="423" />
+        <di:waypoint x="670" y="246" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="600" y="395" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F9_di_overview" bpmnElement="RECZNE_Formularz_F9">
+        <di:waypoint x="1930" y="203.0" />
+        <di:waypoint x="1975.0" y="203.0" />
+        <di:waypoint x="1975.0" y="202.0" />
+        <di:waypoint x="2020" y="202.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F10_di_overview" bpmnElement="RECZNE_Formularz_F10">
+        <di:waypoint x="2084" y="202.0" />
+        <di:waypoint x="2167.0" y="202.0" />
+        <di:waypoint x="2167.0" y="203.0" />
+        <di:waypoint x="2250" y="203.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2097.0" y="175.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F11_di_overview" bpmnElement="RECZNE_Formularz_F11">
+        <di:waypoint x="2470" y="203.0" />
+        <di:waypoint x="2550" y="203.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F12_di_overview" bpmnElement="RECZNE_Formularz_F12">
+        <di:waypoint x="2052.0" y="234" />
+        <di:waypoint x="2052.0" y="375" />
+        <di:waypoint x="2073.0" y="375" />
+        <di:waypoint x="2073.0" y="400" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2003.0" y="347" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_Pool_di" bpmnElement="RECZNE_Przetwarzanie_Pool" isHorizontal="true">
+        <dc:Bounds x="40" y="610" width="2740" height="760" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_start_di_overview" bpmnElement="RECZNE_Przetwarzanie_start">
+        <dc:Bounds x="80" y="720" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2" y="774" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_url_di_overview" bpmnElement="RECZNE_Przetwarzanie_url">
+        <dc:Bounds x="250" y="700" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_needfile_di_overview" bpmnElement="RECZNE_Przetwarzanie_needfile">
+        <dc:Bounds x="570" y="710" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="492" y="782" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_file_di_overview" bpmnElement="RECZNE_Przetwarzanie_file">
+        <dc:Bounds x="790" y="700" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_fileok_di_overview" bpmnElement="RECZNE_Przetwarzanie_fileok">
+        <dc:Bounds x="1110" y="710" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1032" y="782" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_table_di_overview" bpmnElement="RECZNE_Przetwarzanie_table">
+        <dc:Bounds x="1380" y="710" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1302" y="782" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_data_di_overview" bpmnElement="RECZNE_Przetwarzanie_data">
+        <dc:Bounds x="1620" y="700" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_indexed_di_overview" bpmnElement="RECZNE_Przetwarzanie_indexed">
+        <dc:Bounds x="1940" y="710" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1862" y="782" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_send_di_overview" bpmnElement="RECZNE_Przetwarzanie_send">
+        <dc:Bounds x="2170" y="700" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_merge_di_overview" bpmnElement="RECZNE_Przetwarzanie_merge">
+        <dc:Bounds x="1230" y="1040" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1152" y="1112" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_di_overview" bpmnElement="RECZNE_Przetwarzanie_score" isExpanded="false" bioc:fill="#fff1cb" bioc:stroke="#c76c0e">
+        <dc:Bounds x="1470" y="1030" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_date_di_overview" bpmnElement="RECZNE_Przetwarzanie_date">
+        <dc:Bounds x="1800" y="1030" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_publishok_di_overview" bpmnElement="RECZNE_Przetwarzanie_publishok">
+        <dc:Bounds x="2120" y="1040" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2042" y="1112" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_refresh_di_overview" bpmnElement="RECZNE_Przetwarzanie_refresh">
+        <dc:Bounds x="2350" y="1030" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_problem_di_overview" bpmnElement="RECZNE_Przetwarzanie_problem">
+        <dc:Bounds x="2010" y="1240" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_end_di_overview" bpmnElement="RECZNE_Przetwarzanie_end">
+        <dc:Bounds x="2640" y="1050" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2562" y="1104" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F1_di_overview" bpmnElement="RECZNE_Przetwarzanie_F1">
+        <di:waypoint x="126" y="743.0" />
+        <di:waypoint x="250" y="743.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F2_di_overview" bpmnElement="RECZNE_Przetwarzanie_F2">
+        <di:waypoint x="470" y="743.0" />
+        <di:waypoint x="520.0" y="743.0" />
+        <di:waypoint x="520.0" y="742.0" />
+        <di:waypoint x="570" y="742.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F3_di_overview" bpmnElement="RECZNE_Przetwarzanie_F3">
+        <di:waypoint x="634" y="742.0" />
+        <di:waypoint x="712.0" y="742.0" />
+        <di:waypoint x="712.0" y="743.0" />
+        <di:waypoint x="790" y="743.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="642.0" y="715.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F4_di_overview" bpmnElement="RECZNE_Przetwarzanie_F4">
+        <di:waypoint x="1010" y="743.0" />
+        <di:waypoint x="1060.0" y="743.0" />
+        <di:waypoint x="1060.0" y="742.0" />
+        <di:waypoint x="1110" y="742.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F5_di_overview" bpmnElement="RECZNE_Przetwarzanie_F5">
+        <di:waypoint x="1174" y="742.0" />
+        <di:waypoint x="1380" y="742.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1310" y="714.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F6_di_overview" bpmnElement="RECZNE_Przetwarzanie_F6">
+        <di:waypoint x="1444" y="742.0" />
+        <di:waypoint x="1532.0" y="742.0" />
+        <di:waypoint x="1532.0" y="743.0" />
+        <di:waypoint x="1620" y="743.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1462.0" y="715.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F7_di_overview" bpmnElement="RECZNE_Przetwarzanie_F7">
+        <di:waypoint x="1840" y="743.0" />
+        <di:waypoint x="1890.0" y="743.0" />
+        <di:waypoint x="1890.0" y="742.0" />
+        <di:waypoint x="1940" y="742.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F8_di_overview" bpmnElement="RECZNE_Przetwarzanie_F8">
+        <di:waypoint x="2004" y="742.0" />
+        <di:waypoint x="2087.0" y="742.0" />
+        <di:waypoint x="2087.0" y="743.0" />
+        <di:waypoint x="2170" y="743.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2017.0" y="715.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F9_di_overview" bpmnElement="RECZNE_Przetwarzanie_F9">
+        <di:waypoint x="602.0" y="774" />
+        <di:waypoint x="602.0" y="930" />
+        <di:waypoint x="1262" y="930" />
+        <di:waypoint x="1262" y="1040" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="612" y="835" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F10_di_overview" bpmnElement="RECZNE_Przetwarzanie_F10">
+        <di:waypoint x="1142.0" y="774" />
+        <di:waypoint x="1142.0" y="930" />
+        <di:waypoint x="1262" y="930" />
+        <di:waypoint x="1262" y="1040" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1152" y="835" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F11_di_overview" bpmnElement="RECZNE_Przetwarzanie_F11">
+        <di:waypoint x="1412.0" y="774" />
+        <di:waypoint x="1412.0" y="930" />
+        <di:waypoint x="1262" y="930" />
+        <di:waypoint x="1262" y="1040" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1422" y="835" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F12_di_overview" bpmnElement="RECZNE_Przetwarzanie_F12">
+        <di:waypoint x="1972.0" y="774" />
+        <di:waypoint x="1972.0" y="930" />
+        <di:waypoint x="1262" y="930" />
+        <di:waypoint x="1262" y="1040" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1982" y="835" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F13_di_overview" bpmnElement="RECZNE_Przetwarzanie_F13">
+        <di:waypoint x="2280.0" y="786" />
+        <di:waypoint x="2280.0" y="930" />
+        <di:waypoint x="1262" y="930" />
+        <di:waypoint x="1262" y="1040" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F14_di_overview" bpmnElement="RECZNE_Przetwarzanie_F14">
+        <di:waypoint x="1294" y="1072.0" />
+        <di:waypoint x="1382.0" y="1072.0" />
+        <di:waypoint x="1382.0" y="1073.0" />
+        <di:waypoint x="1470" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F15_di_overview" bpmnElement="RECZNE_Przetwarzanie_F15">
+        <di:waypoint x="1690" y="1073.0" />
+        <di:waypoint x="1800" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F16_di_overview" bpmnElement="RECZNE_Przetwarzanie_F16">
+        <di:waypoint x="2020" y="1073.0" />
+        <di:waypoint x="2070.0" y="1073.0" />
+        <di:waypoint x="2070.0" y="1072.0" />
+        <di:waypoint x="2120" y="1072.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F17_di_overview" bpmnElement="RECZNE_Przetwarzanie_F17">
+        <di:waypoint x="2184" y="1072.0" />
+        <di:waypoint x="2267.0" y="1072.0" />
+        <di:waypoint x="2267.0" y="1073.0" />
+        <di:waypoint x="2350" y="1073.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2197.0" y="1045.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F18_di_overview" bpmnElement="RECZNE_Przetwarzanie_F18">
+        <di:waypoint x="2570" y="1073.0" />
+        <di:waypoint x="2640" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F19_di_overview" bpmnElement="RECZNE_Przetwarzanie_F19">
+        <di:waypoint x="2152.0" y="1104" />
+        <di:waypoint x="2152.0" y="1215" />
+        <di:waypoint x="2120.0" y="1215" />
+        <di:waypoint x="2120.0" y="1240" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2050.0" y="1187" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F20_di_overview" bpmnElement="RECZNE_Przetwarzanie_F20">
+        <di:waypoint x="2230" y="1283" />
+        <di:waypoint x="2663" y="1283" />
+        <di:waypoint x="2663" y="1096" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_Pool_di" bpmnElement="RECZNE_Konwersje_Pool" isHorizontal="true">
+        <dc:Bounds x="40" y="1450" width="2740" height="400" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_start_di_overview" bpmnElement="RECZNE_Konwersje_start">
+        <dc:Bounds x="80" y="1580" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2" y="1634" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_convert_di_overview" bpmnElement="RECZNE_Konwersje_convert">
+        <dc:Bounds x="300" y="1560" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_created_di_overview" bpmnElement="RECZNE_Konwersje_created">
+        <dc:Bounds x="680" y="1570" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="602" y="1642" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_score_di_overview" bpmnElement="RECZNE_Konwersje_score" bioc:fill="#fff1cb" bioc:stroke="#c76c0e">
+        <dc:Bounds x="970" y="1560" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_refresh_di_overview" bpmnElement="RECZNE_Konwersje_refresh">
+        <dc:Bounds x="1330" y="1560" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_end_di_overview" bpmnElement="RECZNE_Konwersje_end">
+        <dc:Bounds x="1720" y="1580" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1642" y="1634" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="RECZNE_Konwersje_F1_di_overview" bpmnElement="RECZNE_Konwersje_F1">
+        <di:waypoint x="126" y="1603.0" />
+        <di:waypoint x="300" y="1603.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Konwersje_F2_di_overview" bpmnElement="RECZNE_Konwersje_F2">
+        <di:waypoint x="520" y="1603.0" />
+        <di:waypoint x="600.0" y="1603.0" />
+        <di:waypoint x="600.0" y="1602.0" />
+        <di:waypoint x="680" y="1602.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Konwersje_F3_di_overview" bpmnElement="RECZNE_Konwersje_F3">
+        <di:waypoint x="744" y="1602.0" />
+        <di:waypoint x="857.0" y="1602.0" />
+        <di:waypoint x="857.0" y="1603.0" />
+        <di:waypoint x="970" y="1603.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="787.0" y="1575.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Konwersje_F4_di_overview" bpmnElement="RECZNE_Konwersje_F4">
+        <di:waypoint x="1190" y="1603.0" />
+        <di:waypoint x="1330" y="1603.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Konwersje_F5_di_overview" bpmnElement="RECZNE_Konwersje_F5">
+        <di:waypoint x="1550" y="1603.0" />
+        <di:waypoint x="1720" y="1603.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Konwersje_F6_di_overview" bpmnElement="RECZNE_Konwersje_F6">
+        <di:waypoint x="712" y="1634" />
+        <di:waypoint x="712" y="1780" />
+        <di:waypoint x="1743" y="1780" />
+        <di:waypoint x="1743" y="1626" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1673" y="1752" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Message1_di" bpmnElement="RECZNE_Message1">
+        <di:waypoint x="2360" y="246" />
+        <di:waypoint x="2360" y="570" />
+        <di:waypoint x="103" y="570" />
+        <di:waypoint x="103" y="720" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="800" y="545" width="700" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Message2_di" bpmnElement="RECZNE_Message2">
+        <di:waypoint x="2280" y="786" />
+        <di:waypoint x="2745" y="786" />
+        <di:waypoint x="2745" y="1410" />
+        <di:waypoint x="103" y="1410" />
+        <di:waypoint x="103" y="1580" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="800" y="1385" width="700" height="22" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="RECZNE_Formularz_Diagram" name="1. Edytor — zdefiniowanie i zapis zasobu">
+    <bpmndi:BPMNPlane id="RECZNE_Formularz_Plane" bpmnElement="RECZNE_Formularz">
+      <bpmndi:BPMNShape id="RECZNE_Formularz_start_di" bpmnElement="RECZNE_Formularz_start">
+        <dc:Bounds x="80" y="180" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2" y="234" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_source_di" bpmnElement="RECZNE_Formularz_source">
+        <dc:Bounds x="250" y="160" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_fields_di" bpmnElement="RECZNE_Formularz_fields">
+        <dc:Bounds x="560" y="160" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_click_di" bpmnElement="RECZNE_Formularz_click">
+        <dc:Bounds x="870" y="160" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_validate_di" bpmnElement="RECZNE_Formularz_validate">
+        <dc:Bounds x="1180" y="160" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_ok_di" bpmnElement="RECZNE_Formularz_ok">
+        <dc:Bounds x="1490" y="170" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1412" y="242" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_error_di" bpmnElement="RECZNE_Formularz_error">
+        <dc:Bounds x="1150" y="380" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_save_di" bpmnElement="RECZNE_Formularz_save">
+        <dc:Bounds x="1710" y="160" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_status_di" bpmnElement="RECZNE_Formularz_status">
+        <dc:Bounds x="2020" y="170" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1942" y="242" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_send_di" bpmnElement="RECZNE_Formularz_send">
+        <dc:Bounds x="2250" y="160" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_end_di" bpmnElement="RECZNE_Formularz_end">
+        <dc:Bounds x="2550" y="180" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2472" y="234" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Formularz_draft_di" bpmnElement="RECZNE_Formularz_draft">
+        <dc:Bounds x="2050" y="400" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1972" y="454" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F1_di" bpmnElement="RECZNE_Formularz_F1">
+        <di:waypoint x="126" y="203.0" />
+        <di:waypoint x="250" y="203.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F2_di" bpmnElement="RECZNE_Formularz_F2">
+        <di:waypoint x="470" y="203.0" />
+        <di:waypoint x="560" y="203.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F3_di" bpmnElement="RECZNE_Formularz_F3">
+        <di:waypoint x="780" y="203.0" />
+        <di:waypoint x="870" y="203.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F4_di" bpmnElement="RECZNE_Formularz_F4">
+        <di:waypoint x="1090" y="203.0" />
+        <di:waypoint x="1180" y="203.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F5_di" bpmnElement="RECZNE_Formularz_F5">
+        <di:waypoint x="1400" y="203.0" />
+        <di:waypoint x="1445.0" y="203.0" />
+        <di:waypoint x="1445.0" y="202.0" />
+        <di:waypoint x="1490" y="202.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F6_di" bpmnElement="RECZNE_Formularz_F6">
+        <di:waypoint x="1554" y="202.0" />
+        <di:waypoint x="1632.0" y="202.0" />
+        <di:waypoint x="1632.0" y="203.0" />
+        <di:waypoint x="1710" y="203.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1562.0" y="175.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F7_di" bpmnElement="RECZNE_Formularz_F7">
+        <di:waypoint x="1522.0" y="234" />
+        <di:waypoint x="1522.0" y="355" />
+        <di:waypoint x="1260.0" y="355" />
+        <di:waypoint x="1260.0" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1190.0" y="327" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F8_di" bpmnElement="RECZNE_Formularz_F8">
+        <di:waypoint x="1150" y="423" />
+        <di:waypoint x="670" y="423" />
+        <di:waypoint x="670" y="246" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="600" y="395" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F9_di" bpmnElement="RECZNE_Formularz_F9">
+        <di:waypoint x="1930" y="203.0" />
+        <di:waypoint x="1975.0" y="203.0" />
+        <di:waypoint x="1975.0" y="202.0" />
+        <di:waypoint x="2020" y="202.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F10_di" bpmnElement="RECZNE_Formularz_F10">
+        <di:waypoint x="2084" y="202.0" />
+        <di:waypoint x="2167.0" y="202.0" />
+        <di:waypoint x="2167.0" y="203.0" />
+        <di:waypoint x="2250" y="203.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2097.0" y="175.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F11_di" bpmnElement="RECZNE_Formularz_F11">
+        <di:waypoint x="2470" y="203.0" />
+        <di:waypoint x="2550" y="203.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Formularz_F12_di" bpmnElement="RECZNE_Formularz_F12">
+        <di:waypoint x="2052.0" y="234" />
+        <di:waypoint x="2052.0" y="375" />
+        <di:waypoint x="2073.0" y="375" />
+        <di:waypoint x="2073.0" y="400" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2003.0" y="347" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="RECZNE_Przetwarzanie_Diagram" name="2. Portal — walidacja i nadanie stopnia otwartości w tle">
+    <bpmndi:BPMNPlane id="RECZNE_Przetwarzanie_Plane" bpmnElement="RECZNE_Przetwarzanie">
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_start_di" bpmnElement="RECZNE_Przetwarzanie_start">
+        <dc:Bounds x="80" y="720" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2" y="774" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_url_di" bpmnElement="RECZNE_Przetwarzanie_url">
+        <dc:Bounds x="250" y="700" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_needfile_di" bpmnElement="RECZNE_Przetwarzanie_needfile">
+        <dc:Bounds x="570" y="710" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="492" y="782" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_file_di" bpmnElement="RECZNE_Przetwarzanie_file">
+        <dc:Bounds x="790" y="700" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_fileok_di" bpmnElement="RECZNE_Przetwarzanie_fileok">
+        <dc:Bounds x="1110" y="710" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1032" y="782" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_table_di" bpmnElement="RECZNE_Przetwarzanie_table">
+        <dc:Bounds x="1380" y="710" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1302" y="782" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_data_di" bpmnElement="RECZNE_Przetwarzanie_data">
+        <dc:Bounds x="1620" y="700" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_indexed_di" bpmnElement="RECZNE_Przetwarzanie_indexed">
+        <dc:Bounds x="1940" y="710" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1862" y="782" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_send_di" bpmnElement="RECZNE_Przetwarzanie_send">
+        <dc:Bounds x="2170" y="700" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_merge_di" bpmnElement="RECZNE_Przetwarzanie_merge">
+        <dc:Bounds x="1230" y="1040" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1152" y="1112" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_di" bpmnElement="RECZNE_Przetwarzanie_score" isExpanded="false" bioc:fill="#fff1cb" bioc:stroke="#c76c0e">
+        <dc:Bounds x="1470" y="1030" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_date_di" bpmnElement="RECZNE_Przetwarzanie_date">
+        <dc:Bounds x="1800" y="1030" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_publishok_di" bpmnElement="RECZNE_Przetwarzanie_publishok">
+        <dc:Bounds x="2120" y="1040" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2042" y="1112" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_refresh_di" bpmnElement="RECZNE_Przetwarzanie_refresh">
+        <dc:Bounds x="2350" y="1030" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_problem_di" bpmnElement="RECZNE_Przetwarzanie_problem">
+        <dc:Bounds x="2010" y="1240" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_end_di" bpmnElement="RECZNE_Przetwarzanie_end">
+        <dc:Bounds x="2640" y="1050" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2562" y="1104" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F1_di" bpmnElement="RECZNE_Przetwarzanie_F1">
+        <di:waypoint x="126" y="743.0" />
+        <di:waypoint x="250" y="743.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F2_di" bpmnElement="RECZNE_Przetwarzanie_F2">
+        <di:waypoint x="470" y="743.0" />
+        <di:waypoint x="520.0" y="743.0" />
+        <di:waypoint x="520.0" y="742.0" />
+        <di:waypoint x="570" y="742.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F3_di" bpmnElement="RECZNE_Przetwarzanie_F3">
+        <di:waypoint x="634" y="742.0" />
+        <di:waypoint x="712.0" y="742.0" />
+        <di:waypoint x="712.0" y="743.0" />
+        <di:waypoint x="790" y="743.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="642.0" y="715.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F4_di" bpmnElement="RECZNE_Przetwarzanie_F4">
+        <di:waypoint x="1010" y="743.0" />
+        <di:waypoint x="1060.0" y="743.0" />
+        <di:waypoint x="1060.0" y="742.0" />
+        <di:waypoint x="1110" y="742.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F5_di" bpmnElement="RECZNE_Przetwarzanie_F5">
+        <di:waypoint x="1174" y="742.0" />
+        <di:waypoint x="1380" y="742.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1310" y="714.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F6_di" bpmnElement="RECZNE_Przetwarzanie_F6">
+        <di:waypoint x="1444" y="742.0" />
+        <di:waypoint x="1532.0" y="742.0" />
+        <di:waypoint x="1532.0" y="743.0" />
+        <di:waypoint x="1620" y="743.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1462.0" y="715.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F7_di" bpmnElement="RECZNE_Przetwarzanie_F7">
+        <di:waypoint x="1840" y="743.0" />
+        <di:waypoint x="1890.0" y="743.0" />
+        <di:waypoint x="1890.0" y="742.0" />
+        <di:waypoint x="1940" y="742.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F8_di" bpmnElement="RECZNE_Przetwarzanie_F8">
+        <di:waypoint x="2004" y="742.0" />
+        <di:waypoint x="2087.0" y="742.0" />
+        <di:waypoint x="2087.0" y="743.0" />
+        <di:waypoint x="2170" y="743.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2017.0" y="715.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F9_di" bpmnElement="RECZNE_Przetwarzanie_F9">
+        <di:waypoint x="602.0" y="774" />
+        <di:waypoint x="602.0" y="930" />
+        <di:waypoint x="1262" y="930" />
+        <di:waypoint x="1262" y="1040" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="612" y="835" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F10_di" bpmnElement="RECZNE_Przetwarzanie_F10">
+        <di:waypoint x="1142.0" y="774" />
+        <di:waypoint x="1142.0" y="930" />
+        <di:waypoint x="1262" y="930" />
+        <di:waypoint x="1262" y="1040" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1152" y="835" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F11_di" bpmnElement="RECZNE_Przetwarzanie_F11">
+        <di:waypoint x="1412.0" y="774" />
+        <di:waypoint x="1412.0" y="930" />
+        <di:waypoint x="1262" y="930" />
+        <di:waypoint x="1262" y="1040" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1422" y="835" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F12_di" bpmnElement="RECZNE_Przetwarzanie_F12">
+        <di:waypoint x="1972.0" y="774" />
+        <di:waypoint x="1972.0" y="930" />
+        <di:waypoint x="1262" y="930" />
+        <di:waypoint x="1262" y="1040" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1982" y="835" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F13_di" bpmnElement="RECZNE_Przetwarzanie_F13">
+        <di:waypoint x="2280.0" y="786" />
+        <di:waypoint x="2280.0" y="930" />
+        <di:waypoint x="1262" y="930" />
+        <di:waypoint x="1262" y="1040" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F14_di" bpmnElement="RECZNE_Przetwarzanie_F14">
+        <di:waypoint x="1294" y="1072.0" />
+        <di:waypoint x="1382.0" y="1072.0" />
+        <di:waypoint x="1382.0" y="1073.0" />
+        <di:waypoint x="1470" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F15_di" bpmnElement="RECZNE_Przetwarzanie_F15">
+        <di:waypoint x="1690" y="1073.0" />
+        <di:waypoint x="1800" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F16_di" bpmnElement="RECZNE_Przetwarzanie_F16">
+        <di:waypoint x="2020" y="1073.0" />
+        <di:waypoint x="2070.0" y="1073.0" />
+        <di:waypoint x="2070.0" y="1072.0" />
+        <di:waypoint x="2120" y="1072.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F17_di" bpmnElement="RECZNE_Przetwarzanie_F17">
+        <di:waypoint x="2184" y="1072.0" />
+        <di:waypoint x="2267.0" y="1072.0" />
+        <di:waypoint x="2267.0" y="1073.0" />
+        <di:waypoint x="2350" y="1073.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2197.0" y="1045.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F18_di" bpmnElement="RECZNE_Przetwarzanie_F18">
+        <di:waypoint x="2570" y="1073.0" />
+        <di:waypoint x="2640" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F19_di" bpmnElement="RECZNE_Przetwarzanie_F19">
+        <di:waypoint x="2152.0" y="1104" />
+        <di:waypoint x="2152.0" y="1215" />
+        <di:waypoint x="2120.0" y="1215" />
+        <di:waypoint x="2120.0" y="1240" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2050.0" y="1187" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_F20_di" bpmnElement="RECZNE_Przetwarzanie_F20">
+        <di:waypoint x="2230" y="1283" />
+        <di:waypoint x="2663" y="1283" />
+        <di:waypoint x="2663" y="1096" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="RECZNE_Przetwarzanie_score_Diagram" name="NADAJ STOPIEŃ OTWARTOŚCI">
+    <bpmndi:BPMNPlane id="RECZNE_Przetwarzanie_score_Plane" bpmnElement="RECZNE_Przetwarzanie_score">
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_start_di" bpmnElement="RECZNE_Przetwarzanie_score_start">
+        <dc:Bounds x="80" y="150" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2" y="204" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_fmt_di" bpmnElement="RECZNE_Przetwarzanie_score_fmt">
+        <dc:Bounds x="360" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="282" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_zero_di" bpmnElement="RECZNE_Przetwarzanie_score_zero">
+        <dc:Bounds x="650" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_main_di" bpmnElement="RECZNE_Przetwarzanie_score_main">
+        <dc:Bounds x="620" y="430" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="542" y="502" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_di" bpmnElement="RECZNE_Przetwarzanie_score_files" isExpanded="false">
+        <dc:Bounds x="930" y="570" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_link_di" bpmnElement="RECZNE_Przetwarzanie_score_link">
+        <dc:Bounds x="260" y="570" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_di" bpmnElement="RECZNE_Przetwarzanie_score_calc" isExpanded="false">
+        <dc:Bounds x="260" y="800" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_merge_di" bpmnElement="RECZNE_Przetwarzanie_score_merge">
+        <dc:Bounds x="1260" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1182" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_save_di" bpmnElement="RECZNE_Przetwarzanie_score_save">
+        <dc:Bounds x="1480" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_end_di" bpmnElement="RECZNE_Przetwarzanie_score_end">
+        <dc:Bounds x="1810" y="150" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1732" y="204" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_F1_di" bpmnElement="RECZNE_Przetwarzanie_score_F1">
+        <di:waypoint x="126" y="173.0" />
+        <di:waypoint x="243.0" y="173.0" />
+        <di:waypoint x="243.0" y="172.0" />
+        <di:waypoint x="360" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_F2_di" bpmnElement="RECZNE_Przetwarzanie_score_F2">
+        <di:waypoint x="424" y="172.0" />
+        <di:waypoint x="537.0" y="172.0" />
+        <di:waypoint x="537.0" y="173.0" />
+        <di:waypoint x="650" y="173.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="467.0" y="145.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_F3_di" bpmnElement="RECZNE_Przetwarzanie_score_F3">
+        <di:waypoint x="870" y="173.0" />
+        <di:waypoint x="1065.0" y="173.0" />
+        <di:waypoint x="1065.0" y="172.0" />
+        <di:waypoint x="1260" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_F4_di" bpmnElement="RECZNE_Przetwarzanie_score_F4">
+        <di:waypoint x="424" y="172.0" />
+        <di:waypoint x="522.0" y="172.0" />
+        <di:waypoint x="522.0" y="462.0" />
+        <di:waypoint x="620" y="462.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="452.0" y="434.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_F5_di" bpmnElement="RECZNE_Przetwarzanie_score_F5">
+        <di:waypoint x="684" y="462.0" />
+        <di:waypoint x="807.0" y="462.0" />
+        <di:waypoint x="807.0" y="613.0" />
+        <di:waypoint x="930" y="613.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="737.0" y="585.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_F6_di" bpmnElement="RECZNE_Przetwarzanie_score_F6">
+        <di:waypoint x="620" y="462" />
+        <di:waypoint x="370" y="462" />
+        <di:waypoint x="370" y="570" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="300" y="434" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_F7_di" bpmnElement="RECZNE_Przetwarzanie_score_F7">
+        <di:waypoint x="370.0" y="656" />
+        <di:waypoint x="370.0" y="775" />
+        <di:waypoint x="370.0" y="775" />
+        <di:waypoint x="370.0" y="800" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_F8_di" bpmnElement="RECZNE_Przetwarzanie_score_F8">
+        <di:waypoint x="480" y="843" />
+        <di:waypoint x="1330" y="843" />
+        <di:waypoint x="1330" y="280" />
+        <di:waypoint x="1292" y="280" />
+        <di:waypoint x="1292" y="204" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_F9_di" bpmnElement="RECZNE_Przetwarzanie_score_F9">
+        <di:waypoint x="1150" y="613" />
+        <di:waypoint x="1370" y="613" />
+        <di:waypoint x="1370" y="250" />
+        <di:waypoint x="1292" y="250" />
+        <di:waypoint x="1292" y="204" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_F10_di" bpmnElement="RECZNE_Przetwarzanie_score_F10">
+        <di:waypoint x="1324" y="172.0" />
+        <di:waypoint x="1402.0" y="172.0" />
+        <di:waypoint x="1402.0" y="173.0" />
+        <di:waypoint x="1480" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_F11_di" bpmnElement="RECZNE_Przetwarzanie_score_F11">
+        <di:waypoint x="1700" y="173.0" />
+        <di:waypoint x="1810" y="173.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="RECZNE_Przetwarzanie_score_files_Diagram" name="Oceń wszystkie pliki; wybierz maksimum">
+    <bpmndi:BPMNPlane id="RECZNE_Przetwarzanie_score_files_Plane" bpmnElement="RECZNE_Przetwarzanie_score_files">
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_start_di" bpmnElement="RECZNE_Przetwarzanie_score_files_start">
+        <dc:Bounds x="60" y="130" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-18" y="184" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_next_di" bpmnElement="RECZNE_Przetwarzanie_score_files_next">
+        <dc:Bounds x="260" y="120" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="182" y="192" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_fmt_di" bpmnElement="RECZNE_Przetwarzanie_score_files_fmt">
+        <dc:Bounds x="440" y="110" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_has_di" bpmnElement="RECZNE_Przetwarzanie_score_files_has">
+        <dc:Bounds x="760" y="120" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682" y="192" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_one_di" bpmnElement="RECZNE_Przetwarzanie_score_files_one">
+        <dc:Bounds x="740" y="340" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_archive_di" bpmnElement="RECZNE_Przetwarzanie_score_files_archive">
+        <dc:Bounds x="1040" y="120" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="962" y="192" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_inspect_di" bpmnElement="RECZNE_Przetwarzanie_score_files_inspect">
+        <dc:Bounds x="1250" y="110" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_result_di" bpmnElement="RECZNE_Przetwarzanie_score_files_result">
+        <dc:Bounds x="1550" y="120" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1472" y="192" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_zero_di" bpmnElement="RECZNE_Przetwarzanie_score_files_zero">
+        <dc:Bounds x="1800" y="110" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_bad_di" bpmnElement="RECZNE_Przetwarzanie_score_files_bad">
+        <dc:Bounds x="1800" y="340" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_inner_di" bpmnElement="RECZNE_Przetwarzanie_score_files_inner">
+        <dc:Bounds x="1470" y="570" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc" isExpanded="false">
+        <dc:Bounds x="1050" y="570" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_save_di" bpmnElement="RECZNE_Przetwarzanie_score_files_save">
+        <dc:Bounds x="740" y="570" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_max_di" bpmnElement="RECZNE_Przetwarzanie_score_files_max">
+        <dc:Bounds x="170" y="820" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_end_di" bpmnElement="RECZNE_Przetwarzanie_score_files_end">
+        <dc:Bounds x="520" y="840" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="442" y="894" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F1_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F1">
+        <di:waypoint x="106" y="153.0" />
+        <di:waypoint x="183.0" y="153.0" />
+        <di:waypoint x="183.0" y="152.0" />
+        <di:waypoint x="260" y="152.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F2_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F2">
+        <di:waypoint x="324" y="152.0" />
+        <di:waypoint x="382.0" y="152.0" />
+        <di:waypoint x="382.0" y="153.0" />
+        <di:waypoint x="440" y="153.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="312.0" y="125.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F3_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F3">
+        <di:waypoint x="260" y="152" />
+        <di:waypoint x="170" y="152" />
+        <di:waypoint x="170" y="780" />
+        <di:waypoint x="280" y="780" />
+        <di:waypoint x="280" y="820" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="100" y="752" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F4_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F4">
+        <di:waypoint x="660" y="153.0" />
+        <di:waypoint x="710.0" y="153.0" />
+        <di:waypoint x="710.0" y="152.0" />
+        <di:waypoint x="760" y="152.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F5_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F5">
+        <di:waypoint x="792.0" y="184" />
+        <di:waypoint x="792.0" y="315" />
+        <di:waypoint x="850.0" y="315" />
+        <di:waypoint x="850.0" y="340" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="780.0" y="287" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F6_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F6">
+        <di:waypoint x="824" y="152.0" />
+        <di:waypoint x="1040" y="152.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="970" y="124.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F7_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F7">
+        <di:waypoint x="1104" y="152.0" />
+        <di:waypoint x="1177.0" y="152.0" />
+        <di:waypoint x="1177.0" y="153.0" />
+        <di:waypoint x="1250" y="153.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1107.0" y="125.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F8_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F8">
+        <di:waypoint x="1072" y="184" />
+        <di:waypoint x="1072" y="500" />
+        <di:waypoint x="1160" y="500" />
+        <di:waypoint x="1160" y="570" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1090" y="472" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F9_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F9">
+        <di:waypoint x="1470" y="153.0" />
+        <di:waypoint x="1510.0" y="153.0" />
+        <di:waypoint x="1510.0" y="152.0" />
+        <di:waypoint x="1550" y="152.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F10_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F10">
+        <di:waypoint x="1614" y="152.0" />
+        <di:waypoint x="1707.0" y="152.0" />
+        <di:waypoint x="1707.0" y="153.0" />
+        <di:waypoint x="1800" y="153.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1637.0" y="125.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F11_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F11">
+        <di:waypoint x="1614" y="152.0" />
+        <di:waypoint x="1707.0" y="152.0" />
+        <di:waypoint x="1707.0" y="383.0" />
+        <di:waypoint x="1800" y="383.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1637.0" y="355.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F12_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F12">
+        <di:waypoint x="1582.0" y="184" />
+        <di:waypoint x="1582.0" y="545" />
+        <di:waypoint x="1580.0" y="545" />
+        <di:waypoint x="1580.0" y="570" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1510.0" y="517" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F13_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F13">
+        <di:waypoint x="1470" y="613.0" />
+        <di:waypoint x="1270" y="613.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F14_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F14">
+        <di:waypoint x="850" y="426" />
+        <di:waypoint x="850" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F15_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F15">
+        <di:waypoint x="2020" y="153.0" />
+        <di:waypoint x="2060" y="153.0" />
+        <di:waypoint x="2060" y="730" />
+        <di:waypoint x="850" y="730" />
+        <di:waypoint x="850" y="656" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F16_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F16">
+        <di:waypoint x="2020" y="383.0" />
+        <di:waypoint x="2060" y="383.0" />
+        <di:waypoint x="2060" y="730" />
+        <di:waypoint x="850" y="730" />
+        <di:waypoint x="850" y="656" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F17_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F17">
+        <di:waypoint x="1050" y="613.0" />
+        <di:waypoint x="960" y="613.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F18_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F18">
+        <di:waypoint x="740" y="613" />
+        <di:waypoint x="130" y="613" />
+        <di:waypoint x="130" y="45" />
+        <di:waypoint x="292" y="45" />
+        <di:waypoint x="292" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="60" y="17" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_F19_di" bpmnElement="RECZNE_Przetwarzanie_score_files_F19">
+        <di:waypoint x="390" y="863.0" />
+        <di:waypoint x="520" y="863.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="RECZNE_Przetwarzanie_score_files_calc_Diagram" name="Oblicz stopień według formatu i treści">
+    <bpmndi:BPMNPlane id="RECZNE_Przetwarzanie_score_files_calc_Plane" bpmnElement="RECZNE_Przetwarzanie_score_files_calc">
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_start_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_start">
+        <dc:Bounds x="80" y="170" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2" y="224" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_format_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_format">
+        <dc:Bounds x="280" y="160" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="202" y="232" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_json_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_json">
+        <dc:Bounds x="560" y="80" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="152" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_xml_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_xml">
+        <dc:Bounds x="560" y="410" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="482" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_rdf_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_rdf">
+        <dc:Bounds x="560" y="740" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="812" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_default_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_default">
+        <dc:Bounds x="490" y="1060" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_jlinked_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_jlinked">
+        <dc:Bounds x="920" y="80" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="152" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_xlinked_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_xlinked">
+        <dc:Bounds x="920" y="410" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="482" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_rlinked_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_rlinked">
+        <dc:Bounds x="920" y="740" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="812" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_j3_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_j3">
+        <dc:Bounds x="880" y="250" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_j4_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_j4">
+        <dc:Bounds x="1240" y="80" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_j5_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_j5">
+        <dc:Bounds x="1240" y="250" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_x3_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_x3">
+        <dc:Bounds x="880" y="580" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_x4_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_x4">
+        <dc:Bounds x="1240" y="410" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_x5_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_x5">
+        <dc:Bounds x="1240" y="580" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_r4_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_r4">
+        <dc:Bounds x="880" y="910" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_r4b_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_r4b">
+        <dc:Bounds x="1240" y="740" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_r5_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_r5">
+        <dc:Bounds x="1240" y="910" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_files_calc_end_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_end">
+        <dc:Bounds x="1700" y="1065" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1622" y="1119" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F1_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F1">
+        <di:waypoint x="126" y="193.0" />
+        <di:waypoint x="203.0" y="193.0" />
+        <di:waypoint x="203.0" y="192.0" />
+        <di:waypoint x="280" y="192.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F2_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F2">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="112.0" />
+        <di:waypoint x="560" y="112.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="84.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F3_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F3">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="442.0" />
+        <di:waypoint x="560" y="442.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="414.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F4_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F4">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="772.0" />
+        <di:waypoint x="560" y="772.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="744.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F5_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F5">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="417.0" y="192.0" />
+        <di:waypoint x="417.0" y="1103.0" />
+        <di:waypoint x="490" y="1103.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="347.0" y="1075.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F6_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F6">
+        <di:waypoint x="624" y="112.0" />
+        <di:waypoint x="920" y="112.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="84.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F7_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F7">
+        <di:waypoint x="624" y="112.0" />
+        <di:waypoint x="752.0" y="112.0" />
+        <di:waypoint x="752.0" y="293.0" />
+        <di:waypoint x="880" y="293.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="265.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F8_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F8">
+        <di:waypoint x="984" y="112.0" />
+        <di:waypoint x="1112.0" y="112.0" />
+        <di:waypoint x="1112.0" y="123.0" />
+        <di:waypoint x="1240" y="123.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="95.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F9_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F9">
+        <di:waypoint x="984" y="112.0" />
+        <di:waypoint x="1112.0" y="112.0" />
+        <di:waypoint x="1112.0" y="293.0" />
+        <di:waypoint x="1240" y="293.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="265.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F10_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F10">
+        <di:waypoint x="624" y="442.0" />
+        <di:waypoint x="920" y="442.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="414.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F11_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F11">
+        <di:waypoint x="624" y="442.0" />
+        <di:waypoint x="752.0" y="442.0" />
+        <di:waypoint x="752.0" y="623.0" />
+        <di:waypoint x="880" y="623.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="595.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F12_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F12">
+        <di:waypoint x="984" y="442.0" />
+        <di:waypoint x="1112.0" y="442.0" />
+        <di:waypoint x="1112.0" y="453.0" />
+        <di:waypoint x="1240" y="453.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="425.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F13_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F13">
+        <di:waypoint x="984" y="442.0" />
+        <di:waypoint x="1112.0" y="442.0" />
+        <di:waypoint x="1112.0" y="623.0" />
+        <di:waypoint x="1240" y="623.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="595.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F14_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F14">
+        <di:waypoint x="624" y="772.0" />
+        <di:waypoint x="920" y="772.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="744.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F15_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F15">
+        <di:waypoint x="624" y="772.0" />
+        <di:waypoint x="752.0" y="772.0" />
+        <di:waypoint x="752.0" y="953.0" />
+        <di:waypoint x="880" y="953.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="925.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F16_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F16">
+        <di:waypoint x="984" y="772.0" />
+        <di:waypoint x="1112.0" y="772.0" />
+        <di:waypoint x="1112.0" y="783.0" />
+        <di:waypoint x="1240" y="783.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="755.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F17_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F17">
+        <di:waypoint x="984" y="772.0" />
+        <di:waypoint x="1112.0" y="772.0" />
+        <di:waypoint x="1112.0" y="953.0" />
+        <di:waypoint x="1240" y="953.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="925.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F18_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F18">
+        <di:waypoint x="990.0" y="336" />
+        <di:waypoint x="990.0" y="361" />
+        <di:waypoint x="1580" y="361" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F19_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F19">
+        <di:waypoint x="1460" y="123.0" />
+        <di:waypoint x="1580" y="123.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F20_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F20">
+        <di:waypoint x="1460" y="293.0" />
+        <di:waypoint x="1580" y="293.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F21_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F21">
+        <di:waypoint x="990.0" y="666" />
+        <di:waypoint x="990.0" y="691" />
+        <di:waypoint x="1580" y="691" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F22_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F22">
+        <di:waypoint x="1460" y="453.0" />
+        <di:waypoint x="1580" y="453.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F23_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F23">
+        <di:waypoint x="1460" y="623.0" />
+        <di:waypoint x="1580" y="623.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F24_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F24">
+        <di:waypoint x="990.0" y="996" />
+        <di:waypoint x="990.0" y="1021" />
+        <di:waypoint x="1580" y="1021" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F25_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F25">
+        <di:waypoint x="1460" y="783.0" />
+        <di:waypoint x="1580" y="783.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F26_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F26">
+        <di:waypoint x="1460" y="953.0" />
+        <di:waypoint x="1580" y="953.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_files_calc_F27_di" bpmnElement="RECZNE_Przetwarzanie_score_files_calc_F27">
+        <di:waypoint x="710" y="1103.0" />
+        <di:waypoint x="1580" y="1103.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="RECZNE_Przetwarzanie_score_calc_Diagram" name="Oblicz stopień według formatu i treści">
+    <bpmndi:BPMNPlane id="RECZNE_Przetwarzanie_score_calc_Plane" bpmnElement="RECZNE_Przetwarzanie_score_calc">
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_start_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_start">
+        <dc:Bounds x="80" y="170" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2" y="224" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_format_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_format">
+        <dc:Bounds x="280" y="160" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="202" y="232" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_json_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_json">
+        <dc:Bounds x="560" y="80" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="152" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_xml_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_xml">
+        <dc:Bounds x="560" y="410" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="482" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_rdf_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_rdf">
+        <dc:Bounds x="560" y="740" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="812" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_default_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_default">
+        <dc:Bounds x="490" y="1060" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_jlinked_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_jlinked">
+        <dc:Bounds x="920" y="80" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="152" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_xlinked_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_xlinked">
+        <dc:Bounds x="920" y="410" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="482" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_rlinked_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_rlinked">
+        <dc:Bounds x="920" y="740" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="812" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_j3_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_j3">
+        <dc:Bounds x="880" y="250" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_j4_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_j4">
+        <dc:Bounds x="1240" y="80" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_j5_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_j5">
+        <dc:Bounds x="1240" y="250" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_x3_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_x3">
+        <dc:Bounds x="880" y="580" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_x4_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_x4">
+        <dc:Bounds x="1240" y="410" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_x5_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_x5">
+        <dc:Bounds x="1240" y="580" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_r4_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_r4">
+        <dc:Bounds x="880" y="910" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_r4b_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_r4b">
+        <dc:Bounds x="1240" y="740" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_r5_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_r5">
+        <dc:Bounds x="1240" y="910" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Przetwarzanie_score_calc_end_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_end">
+        <dc:Bounds x="1700" y="1065" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1622" y="1119" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F1_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F1">
+        <di:waypoint x="126" y="193.0" />
+        <di:waypoint x="203.0" y="193.0" />
+        <di:waypoint x="203.0" y="192.0" />
+        <di:waypoint x="280" y="192.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F2_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F2">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="112.0" />
+        <di:waypoint x="560" y="112.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="84.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F3_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F3">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="442.0" />
+        <di:waypoint x="560" y="442.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="414.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F4_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F4">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="772.0" />
+        <di:waypoint x="560" y="772.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="744.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F5_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F5">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="417.0" y="192.0" />
+        <di:waypoint x="417.0" y="1103.0" />
+        <di:waypoint x="490" y="1103.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="347.0" y="1075.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F6_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F6">
+        <di:waypoint x="624" y="112.0" />
+        <di:waypoint x="920" y="112.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="84.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F7_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F7">
+        <di:waypoint x="624" y="112.0" />
+        <di:waypoint x="752.0" y="112.0" />
+        <di:waypoint x="752.0" y="293.0" />
+        <di:waypoint x="880" y="293.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="265.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F8_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F8">
+        <di:waypoint x="984" y="112.0" />
+        <di:waypoint x="1112.0" y="112.0" />
+        <di:waypoint x="1112.0" y="123.0" />
+        <di:waypoint x="1240" y="123.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="95.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F9_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F9">
+        <di:waypoint x="984" y="112.0" />
+        <di:waypoint x="1112.0" y="112.0" />
+        <di:waypoint x="1112.0" y="293.0" />
+        <di:waypoint x="1240" y="293.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="265.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F10_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F10">
+        <di:waypoint x="624" y="442.0" />
+        <di:waypoint x="920" y="442.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="414.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F11_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F11">
+        <di:waypoint x="624" y="442.0" />
+        <di:waypoint x="752.0" y="442.0" />
+        <di:waypoint x="752.0" y="623.0" />
+        <di:waypoint x="880" y="623.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="595.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F12_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F12">
+        <di:waypoint x="984" y="442.0" />
+        <di:waypoint x="1112.0" y="442.0" />
+        <di:waypoint x="1112.0" y="453.0" />
+        <di:waypoint x="1240" y="453.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="425.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F13_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F13">
+        <di:waypoint x="984" y="442.0" />
+        <di:waypoint x="1112.0" y="442.0" />
+        <di:waypoint x="1112.0" y="623.0" />
+        <di:waypoint x="1240" y="623.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="595.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F14_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F14">
+        <di:waypoint x="624" y="772.0" />
+        <di:waypoint x="920" y="772.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="744.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F15_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F15">
+        <di:waypoint x="624" y="772.0" />
+        <di:waypoint x="752.0" y="772.0" />
+        <di:waypoint x="752.0" y="953.0" />
+        <di:waypoint x="880" y="953.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="925.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F16_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F16">
+        <di:waypoint x="984" y="772.0" />
+        <di:waypoint x="1112.0" y="772.0" />
+        <di:waypoint x="1112.0" y="783.0" />
+        <di:waypoint x="1240" y="783.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="755.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F17_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F17">
+        <di:waypoint x="984" y="772.0" />
+        <di:waypoint x="1112.0" y="772.0" />
+        <di:waypoint x="1112.0" y="953.0" />
+        <di:waypoint x="1240" y="953.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="925.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F18_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F18">
+        <di:waypoint x="990.0" y="336" />
+        <di:waypoint x="990.0" y="361" />
+        <di:waypoint x="1580" y="361" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F19_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F19">
+        <di:waypoint x="1460" y="123.0" />
+        <di:waypoint x="1580" y="123.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F20_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F20">
+        <di:waypoint x="1460" y="293.0" />
+        <di:waypoint x="1580" y="293.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F21_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F21">
+        <di:waypoint x="990.0" y="666" />
+        <di:waypoint x="990.0" y="691" />
+        <di:waypoint x="1580" y="691" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F22_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F22">
+        <di:waypoint x="1460" y="453.0" />
+        <di:waypoint x="1580" y="453.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F23_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F23">
+        <di:waypoint x="1460" y="623.0" />
+        <di:waypoint x="1580" y="623.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F24_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F24">
+        <di:waypoint x="990.0" y="996" />
+        <di:waypoint x="990.0" y="1021" />
+        <di:waypoint x="1580" y="1021" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F25_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F25">
+        <di:waypoint x="1460" y="783.0" />
+        <di:waypoint x="1580" y="783.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F26_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F26">
+        <di:waypoint x="1460" y="953.0" />
+        <di:waypoint x="1580" y="953.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Przetwarzanie_score_calc_F27_di" bpmnElement="RECZNE_Przetwarzanie_score_calc_F27">
+        <di:waypoint x="710" y="1103.0" />
+        <di:waypoint x="1580" y="1103.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="RECZNE_Konwersje_Diagram" name="3. Portal — opcjonalne podniesienie oceny po konwersji">
+    <bpmndi:BPMNPlane id="RECZNE_Konwersje_Plane" bpmnElement="RECZNE_Konwersje">
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_start_di" bpmnElement="RECZNE_Konwersje_start">
+        <dc:Bounds x="80" y="1580" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2" y="1634" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_convert_di" bpmnElement="RECZNE_Konwersje_convert">
+        <dc:Bounds x="300" y="1560" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_created_di" bpmnElement="RECZNE_Konwersje_created">
+        <dc:Bounds x="680" y="1570" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="602" y="1642" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_score_di" bpmnElement="RECZNE_Konwersje_score" bioc:fill="#fff1cb" bioc:stroke="#c76c0e">
+        <dc:Bounds x="970" y="1560" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_refresh_di" bpmnElement="RECZNE_Konwersje_refresh">
+        <dc:Bounds x="1330" y="1560" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="RECZNE_Konwersje_end_di" bpmnElement="RECZNE_Konwersje_end">
+        <dc:Bounds x="1720" y="1580" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1642" y="1634" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="RECZNE_Konwersje_F1_di" bpmnElement="RECZNE_Konwersje_F1">
+        <di:waypoint x="126" y="1603.0" />
+        <di:waypoint x="300" y="1603.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Konwersje_F2_di" bpmnElement="RECZNE_Konwersje_F2">
+        <di:waypoint x="520" y="1603.0" />
+        <di:waypoint x="600.0" y="1603.0" />
+        <di:waypoint x="600.0" y="1602.0" />
+        <di:waypoint x="680" y="1602.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Konwersje_F3_di" bpmnElement="RECZNE_Konwersje_F3">
+        <di:waypoint x="744" y="1602.0" />
+        <di:waypoint x="857.0" y="1602.0" />
+        <di:waypoint x="857.0" y="1603.0" />
+        <di:waypoint x="970" y="1603.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="787.0" y="1575.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Konwersje_F4_di" bpmnElement="RECZNE_Konwersje_F4">
+        <di:waypoint x="1190" y="1603.0" />
+        <di:waypoint x="1330" y="1603.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Konwersje_F5_di" bpmnElement="RECZNE_Konwersje_F5">
+        <di:waypoint x="1550" y="1603.0" />
+        <di:waypoint x="1720" y="1603.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="RECZNE_Konwersje_F6_di" bpmnElement="RECZNE_Konwersje_F6">
+        <di:waypoint x="712" y="1634" />
+        <di:waypoint x="712" y="1780" />
+        <di:waypoint x="1743" y="1780" />
+        <di:waypoint x="1743" y="1626" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1673" y="1752" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

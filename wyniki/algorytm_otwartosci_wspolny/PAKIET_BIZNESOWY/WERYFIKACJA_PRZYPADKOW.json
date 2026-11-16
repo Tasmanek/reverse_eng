@@ -1,0 +1,115 @@
+{
+  "method": "Wykonano funkcje wyodrębnione AST z lokalnego kodu. Żądania HTTP, parser RDF, MIME i czytnik archiwum zastąpiono kontrolowanymi atrapami; lokalny odczyt pliku i parser XML są rzeczywiste. Bez sieci i bez uruchamiania Django/Celery. Testy potwierdzają sterowanie błędami, nie poprawność zewnętrznych bibliotek ani bieżącą produkcję.",
+  "cases": [
+    {
+      "case": "RequestException przy ocenie linku: 'pdf'",
+      "result": 1,
+      "expected": 1
+    },
+    {
+      "case": "RequestException przy ocenie linku: 'xlsx'",
+      "result": 2,
+      "expected": 2
+    },
+    {
+      "case": "RequestException przy ocenie linku: 'csv'",
+      "result": 3,
+      "expected": 3
+    },
+    {
+      "case": "RequestException przy ocenie linku: 'json'",
+      "result": 3,
+      "expected": 3
+    },
+    {
+      "case": "RequestException przy ocenie linku: 'xml'",
+      "result": 3,
+      "expected": 3
+    },
+    {
+      "case": "RequestException przy ocenie linku: 'rdf'",
+      "result": 4,
+      "expected": 4
+    },
+    {
+      "case": "RequestException przy ocenie linku: 'jsonld'",
+      "result": 4,
+      "expected": 4
+    },
+    {
+      "case": "RequestException przy ocenie linku: 'UNKNOWN'",
+      "result": 1,
+      "expected": 1
+    },
+    {
+      "case": "RequestException przy ocenie linku: ''",
+      "result": 1,
+      "expected": 1
+    },
+    {
+      "case": "HTTP 404 bez raise_for_status, format CSV",
+      "result": 3,
+      "expected": 3
+    },
+    {
+      "case": "HTTP 404 bez raise_for_status, format PDF",
+      "result": 1,
+      "expected": 1
+    },
+    {
+      "case": "Format zasobu None",
+      "result": 0,
+      "expected": 0
+    },
+    {
+      "case": "Format zasobu jest, brak linku i plików",
+      "result": 0,
+      "expected": 0
+    },
+    {
+      "case": "Plik bez formatu: 1 bez odczytu ścieżki",
+      "result": 1,
+      "expected": 1
+    },
+    {
+      "case": "Maksimum PDF 1 i CSV 3",
+      "result": 3,
+      "expected": 3
+    },
+    {
+      "case": "Lokalne archiwum: encrypted",
+      "result": 0,
+      "expected": 0
+    },
+    {
+      "case": "Lokalne archiwum: broken",
+      "result": 1,
+      "expected": 1
+    },
+    {
+      "case": "Lokalne archiwum: multi",
+      "result": 1,
+      "expected": 1
+    },
+    {
+      "case": "Lokalne archiwum: empty",
+      "result": 1,
+      "expected": 1
+    },
+    {
+      "case": "Nieistniejący lokalny plik: wyjątek poza try archiwum",
+      "result": "FileNotFoundError",
+      "expected": "FileNotFoundError"
+    },
+    {
+      "case": "Jeden brakujący plik przerywa ocenę całego zasobu",
+      "result": "FileNotFoundError",
+      "expected": "FileNotFoundError"
+    },
+    {
+      "case": "XML: pojedynczy element z namespace, bez dzieci",
+      "result": 3,
+      "expected": 3
+    }
+  ]
+}

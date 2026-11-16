@@ -1,0 +1,670 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="CKAN_Definitions" targetNamespace="https://example.org/harvester/openness" exporter="Codex" exporterVersion="1">
+  <bpmn:process id="CKAN_Ocena" name="CKAN — nadanie stopnia otwartości zasobu" isExecutable="false">
+    <bpmn:documentation>Odwzorowanie AS-IS raportu ../harvester_walidacje_ckan_xml.html (mcod 2.62.3; raport 2026-11-08). Nie potwierdzono bieżącej produkcji. Model biznesowy niewykonywalny. Ocena dotyczy zasobu, nie wyniku importu ani jakości danych.</bpmn:documentation>
+    <bpmn:startEvent id="CKAN_Ocena_start" name="Odebrano zlecenie przygotowania zasobu">
+      <bpmn:documentation>Zapis Resource uruchamia sygnał. Nowy publikowany zasób lub zmiana wymagająca przetwarzania → zlecenie po commicie. Sam zapis metadanych nie zawsze przelicza ocenę. Źródło: O2, O3; U-3.</bpmn:documentation>
+      <bpmn:outgoing>CKAN_Ocena_F1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="CKAN_Ocena_prep" name="Przygotuj zasób do oceny">
+      <bpmn:documentation>CKAN: etap URL nie tworzy kopii głównej; brak kontroli zawartości lokalnego pliku i danych tabeli. Pobranie do oceny jest osobnym krokiem.</bpmn:documentation>
+      <bpmn:incoming>CKAN_Ocena_F1</bpmn:incoming>
+      <bpmn:outgoing>CKAN_Ocena_F2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="CKAN_Ocena_fmt" name="Format zasobu = brak (None)?" gatewayDirection="Diverging">
+      <bpmn:documentation>Brak formatu zasobu → 0. Nie mylić z brakiem formatu pojedynczego pliku → 1. Źródło: O10.</bpmn:documentation>
+      <bpmn:incoming>CKAN_Ocena_F2</bpmn:incoming>
+      <bpmn:outgoing>CKAN_Ocena_F3</bpmn:outgoing>
+      <bpmn:outgoing>CKAN_Ocena_F11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="CKAN_Ocena_zero" name="Ustal stopień zasobu 0">
+      <bpmn:incoming>CKAN_Ocena_F3</bpmn:incoming>
+      <bpmn:outgoing>CKAN_Ocena_F4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="CKAN_Ocena_link" name="Pobierz treść spod linku do oceny">
+      <bpmn:documentation>Treść w pamięci; format z bazy (deklaracja CKAN lub wynik wcześniejszego rozpoznania, także U-1). Brak tworzenia pliku głównego i rozpakowywania archiwum. Źródło O12, SC-307.</bpmn:documentation>
+      <bpmn:incoming>CKAN_Ocena_F11</bpmn:incoming>
+      <bpmn:outgoing>CKAN_Ocena_F12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:subProcess id="CKAN_Ocena_calc" name="Oblicz stopień według formatu i treści">
+      <bpmn:documentation>Źródło: tab=ocena, ROW-ocena-001..003 i SECTION-ocena-7. Rozwinięcie ma własny diagram. Dla linku format pochodzi z bazy; dla pliku jest efektywnym formatem ocenianej zawartości.</bpmn:documentation>
+      <bpmn:startEvent id="CKAN_Ocena_calc_start" name="Treść i format do oceny">
+        <bpmn:outgoing>CKAN_Ocena_calc_F1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:exclusiveGateway id="CKAN_Ocena_calc_format" name="Który format oceniamy?" gatewayDirection="Diverging">
+        <bpmn:incoming>CKAN_Ocena_calc_F1</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F2</bpmn:outgoing>
+        <bpmn:outgoing>CKAN_Ocena_calc_F3</bpmn:outgoing>
+        <bpmn:outgoing>CKAN_Ocena_calc_F4</bpmn:outgoing>
+        <bpmn:outgoing>CKAN_Ocena_calc_F5</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="CKAN_Ocena_calc_json" name="JSON: odczyt RDF daje niepusty graf?" gatewayDirection="Diverging">
+        <bpmn:incoming>CKAN_Ocena_calc_F2</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F6</bpmn:outgoing>
+        <bpmn:outgoing>CKAN_Ocena_calc_F7</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="CKAN_Ocena_calc_xml" name="XML: wszystkie elementy mają przestrzenie nazw?" gatewayDirection="Diverging">
+        <bpmn:incoming>CKAN_Ocena_calc_F3</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F10</bpmn:outgoing>
+        <bpmn:outgoing>CKAN_Ocena_calc_F11</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="CKAN_Ocena_calc_rdf" name="RDF: niepusty graf?" gatewayDirection="Diverging">
+        <bpmn:incoming>CKAN_Ocena_calc_F4</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F14</bpmn:outgoing>
+        <bpmn:outgoing>CKAN_Ocena_calc_F15</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="CKAN_Ocena_calc_default" name="Inny format: użyj oceny z tabeli">
+        <bpmn:documentation>PDF/JPG/TXT → 1; XLS/XLSX → 2; CSV/HTML/ODS → 3; format spoza tabeli → 1. Pełna tabela w raporcie źródłowym.</bpmn:documentation>
+        <bpmn:incoming>CKAN_Ocena_calc_F5</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F27</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="CKAN_Ocena_calc_jlinked" name="Graf łączy różne domeny?" gatewayDirection="Diverging">
+        <bpmn:incoming>CKAN_Ocena_calc_F6</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F8</bpmn:outgoing>
+        <bpmn:outgoing>CKAN_Ocena_calc_F9</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="CKAN_Ocena_calc_xlinked" name="Poprawny RDF łączy różne domeny?" gatewayDirection="Diverging">
+        <bpmn:incoming>CKAN_Ocena_calc_F10</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F12</bpmn:outgoing>
+        <bpmn:outgoing>CKAN_Ocena_calc_F13</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="CKAN_Ocena_calc_rlinked" name="Graf łączy różne domeny?" gatewayDirection="Diverging">
+        <bpmn:incoming>CKAN_Ocena_calc_F14</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F16</bpmn:outgoing>
+        <bpmn:outgoing>CKAN_Ocena_calc_F17</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="CKAN_Ocena_calc_j3" name="Przyjmij stopień 3">
+        <bpmn:incoming>CKAN_Ocena_calc_F7</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="CKAN_Ocena_calc_j4" name="Przyjmij stopień 4">
+        <bpmn:incoming>CKAN_Ocena_calc_F8</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="CKAN_Ocena_calc_j5" name="Przyjmij stopień 5">
+        <bpmn:incoming>CKAN_Ocena_calc_F9</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="CKAN_Ocena_calc_x3" name="Przyjmij stopień 3">
+        <bpmn:incoming>CKAN_Ocena_calc_F11</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="CKAN_Ocena_calc_x4" name="Przyjmij stopień 4">
+        <bpmn:incoming>CKAN_Ocena_calc_F12</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F22</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="CKAN_Ocena_calc_x5" name="Przyjmij stopień 5">
+        <bpmn:incoming>CKAN_Ocena_calc_F13</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F23</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="CKAN_Ocena_calc_r4" name="Przyjmij stopień 4">
+        <bpmn:incoming>CKAN_Ocena_calc_F15</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F24</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="CKAN_Ocena_calc_r4b" name="Przyjmij stopień 4">
+        <bpmn:incoming>CKAN_Ocena_calc_F16</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F25</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="CKAN_Ocena_calc_r5" name="Przyjmij stopień 5">
+        <bpmn:incoming>CKAN_Ocena_calc_F17</bpmn:incoming>
+        <bpmn:outgoing>CKAN_Ocena_calc_F26</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="CKAN_Ocena_calc_end" name="Wynik pojedynczej oceny">
+        <bpmn:incoming>CKAN_Ocena_calc_F18</bpmn:incoming>
+        <bpmn:incoming>CKAN_Ocena_calc_F19</bpmn:incoming>
+        <bpmn:incoming>CKAN_Ocena_calc_F20</bpmn:incoming>
+        <bpmn:incoming>CKAN_Ocena_calc_F21</bpmn:incoming>
+        <bpmn:incoming>CKAN_Ocena_calc_F22</bpmn:incoming>
+        <bpmn:incoming>CKAN_Ocena_calc_F23</bpmn:incoming>
+        <bpmn:incoming>CKAN_Ocena_calc_F24</bpmn:incoming>
+        <bpmn:incoming>CKAN_Ocena_calc_F25</bpmn:incoming>
+        <bpmn:incoming>CKAN_Ocena_calc_F26</bpmn:incoming>
+        <bpmn:incoming>CKAN_Ocena_calc_F27</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F1" sourceRef="CKAN_Ocena_calc_start" targetRef="CKAN_Ocena_calc_format" />
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F2" sourceRef="CKAN_Ocena_calc_format" targetRef="CKAN_Ocena_calc_json" name="JSON">
+        <bpmn:conditionExpression>JSON</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F3" sourceRef="CKAN_Ocena_calc_format" targetRef="CKAN_Ocena_calc_xml" name="XML">
+        <bpmn:conditionExpression>XML</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F4" sourceRef="CKAN_Ocena_calc_format" targetRef="CKAN_Ocena_calc_rdf" name="RDF i pokrewne">
+        <bpmn:conditionExpression>RDF i pokrewne</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F5" sourceRef="CKAN_Ocena_calc_format" targetRef="CKAN_Ocena_calc_default" name="Pozostałe">
+        <bpmn:conditionExpression>Pozostałe</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F6" sourceRef="CKAN_Ocena_calc_json" targetRef="CKAN_Ocena_calc_jlinked" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F7" sourceRef="CKAN_Ocena_calc_json" targetRef="CKAN_Ocena_calc_j3" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F8" sourceRef="CKAN_Ocena_calc_jlinked" targetRef="CKAN_Ocena_calc_j4" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F9" sourceRef="CKAN_Ocena_calc_jlinked" targetRef="CKAN_Ocena_calc_j5" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F10" sourceRef="CKAN_Ocena_calc_xml" targetRef="CKAN_Ocena_calc_xlinked" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F11" sourceRef="CKAN_Ocena_calc_xml" targetRef="CKAN_Ocena_calc_x3" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F12" sourceRef="CKAN_Ocena_calc_xlinked" targetRef="CKAN_Ocena_calc_x4" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F13" sourceRef="CKAN_Ocena_calc_xlinked" targetRef="CKAN_Ocena_calc_x5" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F14" sourceRef="CKAN_Ocena_calc_rdf" targetRef="CKAN_Ocena_calc_rlinked" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F15" sourceRef="CKAN_Ocena_calc_rdf" targetRef="CKAN_Ocena_calc_r4" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F16" sourceRef="CKAN_Ocena_calc_rlinked" targetRef="CKAN_Ocena_calc_r4b" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F17" sourceRef="CKAN_Ocena_calc_rlinked" targetRef="CKAN_Ocena_calc_r5" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F18" sourceRef="CKAN_Ocena_calc_j3" targetRef="CKAN_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F19" sourceRef="CKAN_Ocena_calc_j4" targetRef="CKAN_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F20" sourceRef="CKAN_Ocena_calc_j5" targetRef="CKAN_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F21" sourceRef="CKAN_Ocena_calc_x3" targetRef="CKAN_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F22" sourceRef="CKAN_Ocena_calc_x4" targetRef="CKAN_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F23" sourceRef="CKAN_Ocena_calc_x5" targetRef="CKAN_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F24" sourceRef="CKAN_Ocena_calc_r4" targetRef="CKAN_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F25" sourceRef="CKAN_Ocena_calc_r4b" targetRef="CKAN_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F26" sourceRef="CKAN_Ocena_calc_r5" targetRef="CKAN_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="CKAN_Ocena_calc_F27" sourceRef="CKAN_Ocena_calc_default" targetRef="CKAN_Ocena_calc_end" />
+      <bpmn:incoming>CKAN_Ocena_F12</bpmn:incoming>
+      <bpmn:outgoing>CKAN_Ocena_F13</bpmn:outgoing>
+    </bpmn:subProcess>
+    <bpmn:exclusiveGateway id="CKAN_Ocena_merge" name="Wynik do zapisu" gatewayDirection="Converging">
+      <bpmn:incoming>CKAN_Ocena_F4</bpmn:incoming>
+      <bpmn:outgoing>CKAN_Ocena_F5</bpmn:outgoing>
+      <bpmn:incoming>CKAN_Ocena_F13</bpmn:incoming>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="CKAN_Ocena_save" name="Zapisz stopień otwartości zasobu">
+      <bpmn:documentation>O9: zapis w bazie; dla XML także oceny plików. Następnie data weryfikacji, tylko jeżeli żądana. Zapis oceny nie oznacza jeszcze odświeżenia jej widocznej publikacji.</bpmn:documentation>
+      <bpmn:incoming>CKAN_Ocena_F5</bpmn:incoming>
+      <bpmn:outgoing>CKAN_Ocena_F6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="CKAN_Ocena_ok" name="Przygotowanie udane i zasób nadal opublikowany?" gatewayDirection="Diverging">
+      <bpmn:documentation>URL i wszystkie wymagane kontrole zakończone sukcesem, brak odroczonych wyjątków; zasób opublikowany i nieusunięty. Źródło OALL, PB4.</bpmn:documentation>
+      <bpmn:incoming>CKAN_Ocena_F6</bpmn:incoming>
+      <bpmn:outgoing>CKAN_Ocena_F7</bpmn:outgoing>
+      <bpmn:outgoing>CKAN_Ocena_F9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="CKAN_Ocena_publish" name="Zleć odświeżenie widocznej oceny">
+      <bpmn:documentation>Asynchroniczne odświeżenie dokumentu wyszukiwarki (ES) i opisu katalogowego (RDF). Nie mylić publikacji RDF z testem RDF treści danych przy ocenie.</bpmn:documentation>
+      <bpmn:incoming>CKAN_Ocena_F7</bpmn:incoming>
+      <bpmn:outgoing>CKAN_Ocena_F8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="CKAN_Ocena_norefresh" name="Pozostaw zapis; obsłuż ewentualny problem">
+      <bpmn:documentation>Brak końcowego odświeżenia ES/RDF. Odpowiednio log lub zgłoszenie odroczonego wyjątku. Ocena mogła już zostać zapisana. Nie każdy przypadek tej gałęzi jest błędem: zasób może być nieopublikowany.</bpmn:documentation>
+      <bpmn:incoming>CKAN_Ocena_F9</bpmn:incoming>
+      <bpmn:outgoing>CKAN_Ocena_F10</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="CKAN_Ocena_end" name="Zadanie oceny zakończone">
+      <bpmn:incoming>CKAN_Ocena_F8</bpmn:incoming>
+      <bpmn:incoming>CKAN_Ocena_F10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="CKAN_Ocena_F1" sourceRef="CKAN_Ocena_start" targetRef="CKAN_Ocena_prep" />
+    <bpmn:sequenceFlow id="CKAN_Ocena_F2" sourceRef="CKAN_Ocena_prep" targetRef="CKAN_Ocena_fmt" />
+    <bpmn:sequenceFlow id="CKAN_Ocena_F3" sourceRef="CKAN_Ocena_fmt" targetRef="CKAN_Ocena_zero" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="CKAN_Ocena_F4" sourceRef="CKAN_Ocena_zero" targetRef="CKAN_Ocena_merge" />
+    <bpmn:sequenceFlow id="CKAN_Ocena_F5" sourceRef="CKAN_Ocena_merge" targetRef="CKAN_Ocena_save" />
+    <bpmn:sequenceFlow id="CKAN_Ocena_F6" sourceRef="CKAN_Ocena_save" targetRef="CKAN_Ocena_ok" />
+    <bpmn:sequenceFlow id="CKAN_Ocena_F7" sourceRef="CKAN_Ocena_ok" targetRef="CKAN_Ocena_publish" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="CKAN_Ocena_F8" sourceRef="CKAN_Ocena_publish" targetRef="CKAN_Ocena_end" />
+    <bpmn:sequenceFlow id="CKAN_Ocena_F9" sourceRef="CKAN_Ocena_ok" targetRef="CKAN_Ocena_norefresh" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="CKAN_Ocena_F10" sourceRef="CKAN_Ocena_norefresh" targetRef="CKAN_Ocena_end" />
+    <bpmn:sequenceFlow id="CKAN_Ocena_F11" sourceRef="CKAN_Ocena_fmt" targetRef="CKAN_Ocena_link" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="CKAN_Ocena_F12" sourceRef="CKAN_Ocena_link" targetRef="CKAN_Ocena_calc" />
+    <bpmn:sequenceFlow id="CKAN_Ocena_F13" sourceRef="CKAN_Ocena_calc" targetRef="CKAN_Ocena_merge" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="CKAN_Ocena_Diagram" name="CKAN — nadanie stopnia otwartości zasobu">
+    <bpmndi:BPMNPlane id="CKAN_Ocena_Plane" bpmnElement="CKAN_Ocena">
+      <bpmndi:BPMNShape id="CKAN_Ocena_start_di" bpmnElement="CKAN_Ocena_start">
+        <dc:Bounds x="70" y="150" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-8" y="204" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_prep_di" bpmnElement="CKAN_Ocena_prep">
+        <dc:Bounds x="260" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_fmt_di" bpmnElement="CKAN_Ocena_fmt">
+        <dc:Bounds x="590" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="512" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_zero_di" bpmnElement="CKAN_Ocena_zero">
+        <dc:Bounds x="820" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_link_di" bpmnElement="CKAN_Ocena_link">
+        <dc:Bounds x="540" y="430" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_di" bpmnElement="CKAN_Ocena_calc" isExpanded="false">
+        <dc:Bounds x="860" y="430" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_merge_di" bpmnElement="CKAN_Ocena_merge">
+        <dc:Bounds x="1260" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1182" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_save_di" bpmnElement="CKAN_Ocena_save">
+        <dc:Bounds x="1490" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_ok_di" bpmnElement="CKAN_Ocena_ok">
+        <dc:Bounds x="1780" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1702" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_publish_di" bpmnElement="CKAN_Ocena_publish">
+        <dc:Bounds x="2030" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_norefresh_di" bpmnElement="CKAN_Ocena_norefresh">
+        <dc:Bounds x="1740" y="430" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_end_di" bpmnElement="CKAN_Ocena_end">
+        <dc:Bounds x="2360" y="150" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2282" y="204" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F1_di" bpmnElement="CKAN_Ocena_F1">
+        <di:waypoint x="116" y="173.0" />
+        <di:waypoint x="260" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F2_di" bpmnElement="CKAN_Ocena_F2">
+        <di:waypoint x="480" y="173.0" />
+        <di:waypoint x="535.0" y="173.0" />
+        <di:waypoint x="535.0" y="172.0" />
+        <di:waypoint x="590" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F3_di" bpmnElement="CKAN_Ocena_F3">
+        <di:waypoint x="654" y="172.0" />
+        <di:waypoint x="737.0" y="172.0" />
+        <di:waypoint x="737.0" y="173.0" />
+        <di:waypoint x="820" y="173.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="667.0" y="145.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F4_di" bpmnElement="CKAN_Ocena_F4">
+        <di:waypoint x="1040" y="173.0" />
+        <di:waypoint x="1150.0" y="173.0" />
+        <di:waypoint x="1150.0" y="172.0" />
+        <di:waypoint x="1260" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F5_di" bpmnElement="CKAN_Ocena_F5">
+        <di:waypoint x="1324" y="172.0" />
+        <di:waypoint x="1407.0" y="172.0" />
+        <di:waypoint x="1407.0" y="173.0" />
+        <di:waypoint x="1490" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F6_di" bpmnElement="CKAN_Ocena_F6">
+        <di:waypoint x="1710" y="173.0" />
+        <di:waypoint x="1745.0" y="173.0" />
+        <di:waypoint x="1745.0" y="172.0" />
+        <di:waypoint x="1780" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F7_di" bpmnElement="CKAN_Ocena_F7">
+        <di:waypoint x="1844" y="172.0" />
+        <di:waypoint x="1937.0" y="172.0" />
+        <di:waypoint x="1937.0" y="173.0" />
+        <di:waypoint x="2030" y="173.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1867.0" y="145.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F8_di" bpmnElement="CKAN_Ocena_F8">
+        <di:waypoint x="2250" y="173.0" />
+        <di:waypoint x="2360" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F9_di" bpmnElement="CKAN_Ocena_F9">
+        <di:waypoint x="1812.0" y="204" />
+        <di:waypoint x="1812.0" y="405" />
+        <di:waypoint x="1850.0" y="405" />
+        <di:waypoint x="1850.0" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1780.0" y="377" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F10_di" bpmnElement="CKAN_Ocena_F10">
+        <di:waypoint x="1960" y="473" />
+        <di:waypoint x="2383" y="473" />
+        <di:waypoint x="2383" y="196" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F11_di" bpmnElement="CKAN_Ocena_F11">
+        <di:waypoint x="622.0" y="204" />
+        <di:waypoint x="622.0" y="405" />
+        <di:waypoint x="650.0" y="405" />
+        <di:waypoint x="650.0" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="580.0" y="377" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F12_di" bpmnElement="CKAN_Ocena_F12">
+        <di:waypoint x="760" y="473.0" />
+        <di:waypoint x="860" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_F13_di" bpmnElement="CKAN_Ocena_F13">
+        <di:waypoint x="1080" y="473" />
+        <di:waypoint x="1292" y="473" />
+        <di:waypoint x="1292" y="204" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="CKAN_Ocena_calc_Diagram" name="Oblicz stopień według formatu i treści">
+    <bpmndi:BPMNPlane id="CKAN_Ocena_calc_Plane" bpmnElement="CKAN_Ocena_calc">
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_start_di" bpmnElement="CKAN_Ocena_calc_start">
+        <dc:Bounds x="80" y="170" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2" y="224" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_format_di" bpmnElement="CKAN_Ocena_calc_format">
+        <dc:Bounds x="280" y="160" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="202" y="232" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_json_di" bpmnElement="CKAN_Ocena_calc_json">
+        <dc:Bounds x="560" y="80" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="152" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_xml_di" bpmnElement="CKAN_Ocena_calc_xml">
+        <dc:Bounds x="560" y="410" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="482" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_rdf_di" bpmnElement="CKAN_Ocena_calc_rdf">
+        <dc:Bounds x="560" y="740" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="812" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_default_di" bpmnElement="CKAN_Ocena_calc_default">
+        <dc:Bounds x="490" y="1060" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_jlinked_di" bpmnElement="CKAN_Ocena_calc_jlinked">
+        <dc:Bounds x="920" y="80" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="152" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_xlinked_di" bpmnElement="CKAN_Ocena_calc_xlinked">
+        <dc:Bounds x="920" y="410" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="482" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_rlinked_di" bpmnElement="CKAN_Ocena_calc_rlinked">
+        <dc:Bounds x="920" y="740" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="812" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_j3_di" bpmnElement="CKAN_Ocena_calc_j3">
+        <dc:Bounds x="880" y="250" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_j4_di" bpmnElement="CKAN_Ocena_calc_j4">
+        <dc:Bounds x="1240" y="80" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_j5_di" bpmnElement="CKAN_Ocena_calc_j5">
+        <dc:Bounds x="1240" y="250" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_x3_di" bpmnElement="CKAN_Ocena_calc_x3">
+        <dc:Bounds x="880" y="580" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_x4_di" bpmnElement="CKAN_Ocena_calc_x4">
+        <dc:Bounds x="1240" y="410" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_x5_di" bpmnElement="CKAN_Ocena_calc_x5">
+        <dc:Bounds x="1240" y="580" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_r4_di" bpmnElement="CKAN_Ocena_calc_r4">
+        <dc:Bounds x="880" y="910" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_r4b_di" bpmnElement="CKAN_Ocena_calc_r4b">
+        <dc:Bounds x="1240" y="740" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_r5_di" bpmnElement="CKAN_Ocena_calc_r5">
+        <dc:Bounds x="1240" y="910" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CKAN_Ocena_calc_end_di" bpmnElement="CKAN_Ocena_calc_end">
+        <dc:Bounds x="1700" y="1065" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1622" y="1119" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F1_di" bpmnElement="CKAN_Ocena_calc_F1">
+        <di:waypoint x="126" y="193.0" />
+        <di:waypoint x="203.0" y="193.0" />
+        <di:waypoint x="203.0" y="192.0" />
+        <di:waypoint x="280" y="192.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F2_di" bpmnElement="CKAN_Ocena_calc_F2">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="112.0" />
+        <di:waypoint x="560" y="112.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="84.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F3_di" bpmnElement="CKAN_Ocena_calc_F3">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="442.0" />
+        <di:waypoint x="560" y="442.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="414.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F4_di" bpmnElement="CKAN_Ocena_calc_F4">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="772.0" />
+        <di:waypoint x="560" y="772.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="744.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F5_di" bpmnElement="CKAN_Ocena_calc_F5">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="417.0" y="192.0" />
+        <di:waypoint x="417.0" y="1103.0" />
+        <di:waypoint x="490" y="1103.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="347.0" y="1075.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F6_di" bpmnElement="CKAN_Ocena_calc_F6">
+        <di:waypoint x="624" y="112.0" />
+        <di:waypoint x="920" y="112.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="84.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F7_di" bpmnElement="CKAN_Ocena_calc_F7">
+        <di:waypoint x="624" y="112.0" />
+        <di:waypoint x="752.0" y="112.0" />
+        <di:waypoint x="752.0" y="293.0" />
+        <di:waypoint x="880" y="293.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="265.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F8_di" bpmnElement="CKAN_Ocena_calc_F8">
+        <di:waypoint x="984" y="112.0" />
+        <di:waypoint x="1112.0" y="112.0" />
+        <di:waypoint x="1112.0" y="123.0" />
+        <di:waypoint x="1240" y="123.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="95.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F9_di" bpmnElement="CKAN_Ocena_calc_F9">
+        <di:waypoint x="984" y="112.0" />
+        <di:waypoint x="1112.0" y="112.0" />
+        <di:waypoint x="1112.0" y="293.0" />
+        <di:waypoint x="1240" y="293.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="265.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F10_di" bpmnElement="CKAN_Ocena_calc_F10">
+        <di:waypoint x="624" y="442.0" />
+        <di:waypoint x="920" y="442.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="414.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F11_di" bpmnElement="CKAN_Ocena_calc_F11">
+        <di:waypoint x="624" y="442.0" />
+        <di:waypoint x="752.0" y="442.0" />
+        <di:waypoint x="752.0" y="623.0" />
+        <di:waypoint x="880" y="623.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="595.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F12_di" bpmnElement="CKAN_Ocena_calc_F12">
+        <di:waypoint x="984" y="442.0" />
+        <di:waypoint x="1112.0" y="442.0" />
+        <di:waypoint x="1112.0" y="453.0" />
+        <di:waypoint x="1240" y="453.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="425.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F13_di" bpmnElement="CKAN_Ocena_calc_F13">
+        <di:waypoint x="984" y="442.0" />
+        <di:waypoint x="1112.0" y="442.0" />
+        <di:waypoint x="1112.0" y="623.0" />
+        <di:waypoint x="1240" y="623.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="595.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F14_di" bpmnElement="CKAN_Ocena_calc_F14">
+        <di:waypoint x="624" y="772.0" />
+        <di:waypoint x="920" y="772.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="744.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F15_di" bpmnElement="CKAN_Ocena_calc_F15">
+        <di:waypoint x="624" y="772.0" />
+        <di:waypoint x="752.0" y="772.0" />
+        <di:waypoint x="752.0" y="953.0" />
+        <di:waypoint x="880" y="953.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="925.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F16_di" bpmnElement="CKAN_Ocena_calc_F16">
+        <di:waypoint x="984" y="772.0" />
+        <di:waypoint x="1112.0" y="772.0" />
+        <di:waypoint x="1112.0" y="783.0" />
+        <di:waypoint x="1240" y="783.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="755.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F17_di" bpmnElement="CKAN_Ocena_calc_F17">
+        <di:waypoint x="984" y="772.0" />
+        <di:waypoint x="1112.0" y="772.0" />
+        <di:waypoint x="1112.0" y="953.0" />
+        <di:waypoint x="1240" y="953.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="925.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F18_di" bpmnElement="CKAN_Ocena_calc_F18">
+        <di:waypoint x="990.0" y="336" />
+        <di:waypoint x="990.0" y="361" />
+        <di:waypoint x="1580" y="361" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F19_di" bpmnElement="CKAN_Ocena_calc_F19">
+        <di:waypoint x="1460" y="123.0" />
+        <di:waypoint x="1580" y="123.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F20_di" bpmnElement="CKAN_Ocena_calc_F20">
+        <di:waypoint x="1460" y="293.0" />
+        <di:waypoint x="1580" y="293.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F21_di" bpmnElement="CKAN_Ocena_calc_F21">
+        <di:waypoint x="990.0" y="666" />
+        <di:waypoint x="990.0" y="691" />
+        <di:waypoint x="1580" y="691" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F22_di" bpmnElement="CKAN_Ocena_calc_F22">
+        <di:waypoint x="1460" y="453.0" />
+        <di:waypoint x="1580" y="453.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F23_di" bpmnElement="CKAN_Ocena_calc_F23">
+        <di:waypoint x="1460" y="623.0" />
+        <di:waypoint x="1580" y="623.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F24_di" bpmnElement="CKAN_Ocena_calc_F24">
+        <di:waypoint x="990.0" y="996" />
+        <di:waypoint x="990.0" y="1021" />
+        <di:waypoint x="1580" y="1021" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F25_di" bpmnElement="CKAN_Ocena_calc_F25">
+        <di:waypoint x="1460" y="783.0" />
+        <di:waypoint x="1580" y="783.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F26_di" bpmnElement="CKAN_Ocena_calc_F26">
+        <di:waypoint x="1460" y="953.0" />
+        <di:waypoint x="1580" y="953.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="CKAN_Ocena_calc_F27_di" bpmnElement="CKAN_Ocena_calc_F27">
+        <di:waypoint x="710" y="1103.0" />
+        <di:waypoint x="1580" y="1103.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

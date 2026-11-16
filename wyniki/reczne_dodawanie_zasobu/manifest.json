@@ -1,0 +1,30 @@
+[
+  {
+    "title": "1. Edytor — zdefiniowanie i zapis zasobu",
+    "svg": "reczne_01.svg"
+  },
+  {
+    "title": "2. Portal — walidacja i nadanie stopnia otwartości w tle",
+    "svg": "reczne_02.svg"
+  },
+  {
+    "title": "NADAJ STOPIEŃ OTWARTOŚCI",
+    "svg": "reczne_03.svg"
+  },
+  {
+    "title": "Oceń wszystkie pliki; wybierz maksimum",
+    "svg": "reczne_04.svg"
+  },
+  {
+    "title": "Oblicz stopień według formatu i treści",
+    "svg": "reczne_05.svg"
+  },
+  {
+    "title": "Oblicz stopień według formatu i treści",
+    "svg": "reczne_06.svg"
+  },
+  {
+    "title": "3. Portal — opcjonalne podniesienie oceny po konwersji",
+    "svg": "reczne_07.svg"
+  }
+]

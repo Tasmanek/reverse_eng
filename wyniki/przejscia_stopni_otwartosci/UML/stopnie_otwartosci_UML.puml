@@ -1,0 +1,43 @@
+@startuml
+title UML — maszyna stanów oceny otwartości istniejącego zasobu
+hide empty description
+skinparam state {
+  BackgroundColor #EDF4FC
+  BorderColor #315C88
+}
+state "Ocena zapisana w bazie" as OcenaZapisana {
+  state "Ocena 0" as S0
+  S0 : Brak stopnia 1–5
+  state "Ocena 1" as S1
+  state "Ocena 2" as S2
+  state "Ocena 3" as S3
+  state "Ocena 4" as S4
+  state "Ocena 5" as S5
+}
+state "Ponowne obliczanie" as Obliczanie
+Obliczanie : do / oblicz wynik 0–5
+state "Zapisywanie oceny" as Zapisywanie
+Zapisywanie : do / zapisz ocenę zasobu i oceny plików
+state Wynik <<choice>>
+state "Zapis niepotwierdzony" as Niepewny
+Niepewny : do / sprawdź rzeczywisty stan bazy
+OcenaZapisana --> Obliczanie : żądaniePrzeliczenia [wyzwalacz spełniony]
+Obliczanie --> Zapisywanie : obliczono
+Obliczanie --> OcenaZapisana[H] : błądObliczenia [przed UPDATE]\n/ pozostaw poprzednią ocenę
+Zapisywanie --> Wynik : zapis udany
+Wynik --> S0 : [wynik = 0]
+Wynik --> S1 : [wynik = 1]
+Wynik --> S2 : [wynik = 2]
+Wynik --> S3 : [wynik = 3]
+Wynik --> S4 : [wynik = 4]
+Wynik --> S5 : [wynik = 5]
+Zapisywanie --> Niepewny : błądZapisu
+Niepewny --> Wynik : stanUstalony\n/ wynik := ocena odczytana z bazy
+note bottom of OcenaZapisana
+  Fragment cyklu życia istniejącego zasobu.
+  Stan wejściowy wynika z oceny zapisanej w bazie.
+  H oznacza historię płytką: poprzednią ocenę.
+  Status publikacji jest niezależny od oceny.
+  Możliwe: published z oceną 0.
+end note
+@enduml

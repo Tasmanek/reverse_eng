@@ -1,0 +1,1697 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="XML_Definitions" targetNamespace="https://example.org/harvester/openness" exporter="Codex" exporterVersion="1">
+  <bpmn:process id="XML_Ocena" name="XML — nadanie stopnia otwartości zasobu" isExecutable="false">
+    <bpmn:documentation>Odwzorowanie AS-IS raportu ../harvester_walidacje_ckan_xml.html (mcod 2.62.3; raport 2026-11-08). Nie potwierdzono bieżącej produkcji. Model biznesowy niewykonywalny. Ocena dotyczy zasobu, nie wyniku importu ani jakości danych.</bpmn:documentation>
+    <bpmn:startEvent id="XML_Ocena_start" name="Odebrano zlecenie przygotowania zasobu">
+      <bpmn:documentation>Zapis Resource uruchamia sygnał. Nowy publikowany zasób lub zmiana wymagająca przetwarzania → zlecenie po commicie. Sam zapis metadanych nie zawsze przelicza ocenę. Źródło: O2, O3; U-3.</bpmn:documentation>
+      <bpmn:outgoing>XML_Ocena_F1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="XML_Ocena_prep" name="Przygotuj zasób do oceny">
+      <bpmn:documentation>XML: sprawdź URL i rozpoznaj typ/format; dla pliku zapisz kopię główną i wykonaj wymagane kontrole. Dla API/WWW może nie być pliku. Błąd poprzedniego etapu nie musi pomijać obliczenia oceny. Po udanej indeksacji danych osobno zlecane są konwersje; ocena na nie nie czeka.</bpmn:documentation>
+      <bpmn:incoming>XML_Ocena_F1</bpmn:incoming>
+      <bpmn:outgoing>XML_Ocena_F2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="XML_Ocena_fmt" name="Format zasobu = brak (None)?" gatewayDirection="Diverging">
+      <bpmn:documentation>Brak formatu zasobu → 0. Nie mylić z brakiem formatu pojedynczego pliku → 1. Źródło: O10.</bpmn:documentation>
+      <bpmn:incoming>XML_Ocena_F2</bpmn:incoming>
+      <bpmn:outgoing>XML_Ocena_F3</bpmn:outgoing>
+      <bpmn:outgoing>XML_Ocena_F11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="XML_Ocena_zero" name="Ustal stopień zasobu 0">
+      <bpmn:incoming>XML_Ocena_F3</bpmn:incoming>
+      <bpmn:outgoing>XML_Ocena_F4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="XML_Ocena_main" name="Istnieje plik główny?" gatewayDirection="Diverging">
+      <bpmn:incoming>XML_Ocena_F11</bpmn:incoming>
+      <bpmn:outgoing>XML_Ocena_F12</bpmn:outgoing>
+      <bpmn:outgoing>XML_Ocena_F13</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:subProcess id="XML_Ocena_files" name="Oceń wszystkie pliki; wybierz maksimum">
+      <bpmn:documentation>Źródło: tab=ocena SECTION-ocena-5; XML O13; U-12. Plik główny i wszystkie pliki pochodne, także stare, jeżeli nadal istnieją. jsonstat jest liczony jak json.</bpmn:documentation>
+      <bpmn:startEvent id="XML_Ocena_files_start" name="Lista plików zasobu">
+        <bpmn:outgoing>XML_Ocena_files_F1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:exclusiveGateway id="XML_Ocena_files_next" name="Jest następny plik?" gatewayDirection="Mixed">
+        <bpmn:incoming>XML_Ocena_files_F1</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F2</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_files_F3</bpmn:outgoing>
+        <bpmn:incoming>XML_Ocena_files_F18</bpmn:incoming>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="XML_Ocena_files_fmt" name="Ustal format zawartości pliku">
+        <bpmn:documentation>compressed_file_format ma pierwszeństwo przed format; jsonstat → json.</bpmn:documentation>
+        <bpmn:incoming>XML_Ocena_files_F2</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F4</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="XML_Ocena_files_has" name="Plik ma format?" gatewayDirection="Diverging">
+        <bpmn:incoming>XML_Ocena_files_F4</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F5</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_files_F6</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="XML_Ocena_files_one" name="Przyjmij ocenę pliku 1">
+        <bpmn:incoming>XML_Ocena_files_F5</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F14</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="XML_Ocena_files_archive" name="Plik jest archiwum?" gatewayDirection="Diverging">
+        <bpmn:incoming>XML_Ocena_files_F6</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F7</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_files_F8</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="XML_Ocena_files_inspect" name="Sprawdź archiwum i jego zawartość">
+        <bpmn:documentation>Źródło: tab=ocena SECTION-ocena-5. Zaszyfrowane → 0. Błąd odczytu → 1. Wiele plików → 1, wyjątki geotiff/shp. Jeden plik → oceniaj wnętrze.</bpmn:documentation>
+        <bpmn:incoming>XML_Ocena_files_F7</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F9</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="XML_Ocena_files_result" name="Jaki wynik kontroli archiwum?" gatewayDirection="Diverging">
+        <bpmn:incoming>XML_Ocena_files_F9</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F10</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_files_F11</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_files_F12</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="XML_Ocena_files_zero" name="Zaszyfrowane: ocena 0">
+        <bpmn:incoming>XML_Ocena_files_F10</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F15</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="XML_Ocena_files_bad" name="Błąd lub wiele plików: ocena 1">
+        <bpmn:incoming>XML_Ocena_files_F11</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F16</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="XML_Ocena_files_inner" name="Wybierz plik wewnętrzny lub geotiff/shp">
+        <bpmn:incoming>XML_Ocena_files_F12</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F13</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:subProcess id="XML_Ocena_files_calc" name="Oblicz stopień według formatu i treści">
+        <bpmn:documentation>Źródło: tab=ocena, ROW-ocena-001..003 i SECTION-ocena-7. Rozwinięcie ma własny diagram. Dla linku format pochodzi z bazy; dla pliku jest efektywnym formatem ocenianej zawartości.</bpmn:documentation>
+        <bpmn:startEvent id="XML_Ocena_files_calc_start" name="Treść i format do oceny">
+          <bpmn:outgoing>XML_Ocena_files_calc_F1</bpmn:outgoing>
+        </bpmn:startEvent>
+        <bpmn:exclusiveGateway id="XML_Ocena_files_calc_format" name="Który format oceniamy?" gatewayDirection="Diverging">
+          <bpmn:incoming>XML_Ocena_files_calc_F1</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F2</bpmn:outgoing>
+          <bpmn:outgoing>XML_Ocena_files_calc_F3</bpmn:outgoing>
+          <bpmn:outgoing>XML_Ocena_files_calc_F4</bpmn:outgoing>
+          <bpmn:outgoing>XML_Ocena_files_calc_F5</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:exclusiveGateway id="XML_Ocena_files_calc_json" name="JSON: odczyt RDF daje niepusty graf?" gatewayDirection="Diverging">
+          <bpmn:incoming>XML_Ocena_files_calc_F2</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F6</bpmn:outgoing>
+          <bpmn:outgoing>XML_Ocena_files_calc_F7</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:exclusiveGateway id="XML_Ocena_files_calc_xml" name="XML: wszystkie elementy mają przestrzenie nazw?" gatewayDirection="Diverging">
+          <bpmn:incoming>XML_Ocena_files_calc_F3</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F10</bpmn:outgoing>
+          <bpmn:outgoing>XML_Ocena_files_calc_F11</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:exclusiveGateway id="XML_Ocena_files_calc_rdf" name="RDF: niepusty graf?" gatewayDirection="Diverging">
+          <bpmn:incoming>XML_Ocena_files_calc_F4</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F14</bpmn:outgoing>
+          <bpmn:outgoing>XML_Ocena_files_calc_F15</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:serviceTask id="XML_Ocena_files_calc_default" name="Inny format: użyj oceny z tabeli">
+          <bpmn:documentation>PDF/JPG/TXT → 1; XLS/XLSX → 2; CSV/HTML/ODS → 3; format spoza tabeli → 1. Pełna tabela w raporcie źródłowym.</bpmn:documentation>
+          <bpmn:incoming>XML_Ocena_files_calc_F5</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F27</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:exclusiveGateway id="XML_Ocena_files_calc_jlinked" name="Graf łączy różne domeny?" gatewayDirection="Diverging">
+          <bpmn:incoming>XML_Ocena_files_calc_F6</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F8</bpmn:outgoing>
+          <bpmn:outgoing>XML_Ocena_files_calc_F9</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:exclusiveGateway id="XML_Ocena_files_calc_xlinked" name="Poprawny RDF łączy różne domeny?" gatewayDirection="Diverging">
+          <bpmn:incoming>XML_Ocena_files_calc_F10</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F12</bpmn:outgoing>
+          <bpmn:outgoing>XML_Ocena_files_calc_F13</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:exclusiveGateway id="XML_Ocena_files_calc_rlinked" name="Graf łączy różne domeny?" gatewayDirection="Diverging">
+          <bpmn:incoming>XML_Ocena_files_calc_F14</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F16</bpmn:outgoing>
+          <bpmn:outgoing>XML_Ocena_files_calc_F17</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:serviceTask id="XML_Ocena_files_calc_j3" name="Przyjmij stopień 3">
+          <bpmn:incoming>XML_Ocena_files_calc_F7</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F18</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="XML_Ocena_files_calc_j4" name="Przyjmij stopień 4">
+          <bpmn:incoming>XML_Ocena_files_calc_F8</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F19</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="XML_Ocena_files_calc_j5" name="Przyjmij stopień 5">
+          <bpmn:incoming>XML_Ocena_files_calc_F9</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F20</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="XML_Ocena_files_calc_x3" name="Przyjmij stopień 3">
+          <bpmn:incoming>XML_Ocena_files_calc_F11</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F21</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="XML_Ocena_files_calc_x4" name="Przyjmij stopień 4">
+          <bpmn:incoming>XML_Ocena_files_calc_F12</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F22</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="XML_Ocena_files_calc_x5" name="Przyjmij stopień 5">
+          <bpmn:incoming>XML_Ocena_files_calc_F13</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F23</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="XML_Ocena_files_calc_r4" name="Przyjmij stopień 4">
+          <bpmn:incoming>XML_Ocena_files_calc_F15</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F24</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="XML_Ocena_files_calc_r4b" name="Przyjmij stopień 4">
+          <bpmn:incoming>XML_Ocena_files_calc_F16</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F25</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="XML_Ocena_files_calc_r5" name="Przyjmij stopień 5">
+          <bpmn:incoming>XML_Ocena_files_calc_F17</bpmn:incoming>
+          <bpmn:outgoing>XML_Ocena_files_calc_F26</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:endEvent id="XML_Ocena_files_calc_end" name="Wynik pojedynczej oceny">
+          <bpmn:incoming>XML_Ocena_files_calc_F18</bpmn:incoming>
+          <bpmn:incoming>XML_Ocena_files_calc_F19</bpmn:incoming>
+          <bpmn:incoming>XML_Ocena_files_calc_F20</bpmn:incoming>
+          <bpmn:incoming>XML_Ocena_files_calc_F21</bpmn:incoming>
+          <bpmn:incoming>XML_Ocena_files_calc_F22</bpmn:incoming>
+          <bpmn:incoming>XML_Ocena_files_calc_F23</bpmn:incoming>
+          <bpmn:incoming>XML_Ocena_files_calc_F24</bpmn:incoming>
+          <bpmn:incoming>XML_Ocena_files_calc_F25</bpmn:incoming>
+          <bpmn:incoming>XML_Ocena_files_calc_F26</bpmn:incoming>
+          <bpmn:incoming>XML_Ocena_files_calc_F27</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F1" sourceRef="XML_Ocena_files_calc_start" targetRef="XML_Ocena_files_calc_format" />
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F2" sourceRef="XML_Ocena_files_calc_format" targetRef="XML_Ocena_files_calc_json" name="JSON">
+          <bpmn:conditionExpression>JSON</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F3" sourceRef="XML_Ocena_files_calc_format" targetRef="XML_Ocena_files_calc_xml" name="XML">
+          <bpmn:conditionExpression>XML</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F4" sourceRef="XML_Ocena_files_calc_format" targetRef="XML_Ocena_files_calc_rdf" name="RDF i pokrewne">
+          <bpmn:conditionExpression>RDF i pokrewne</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F5" sourceRef="XML_Ocena_files_calc_format" targetRef="XML_Ocena_files_calc_default" name="Pozostałe">
+          <bpmn:conditionExpression>Pozostałe</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F6" sourceRef="XML_Ocena_files_calc_json" targetRef="XML_Ocena_files_calc_jlinked" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F7" sourceRef="XML_Ocena_files_calc_json" targetRef="XML_Ocena_files_calc_j3" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F8" sourceRef="XML_Ocena_files_calc_jlinked" targetRef="XML_Ocena_files_calc_j4" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F9" sourceRef="XML_Ocena_files_calc_jlinked" targetRef="XML_Ocena_files_calc_j5" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F10" sourceRef="XML_Ocena_files_calc_xml" targetRef="XML_Ocena_files_calc_xlinked" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F11" sourceRef="XML_Ocena_files_calc_xml" targetRef="XML_Ocena_files_calc_x3" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F12" sourceRef="XML_Ocena_files_calc_xlinked" targetRef="XML_Ocena_files_calc_x4" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F13" sourceRef="XML_Ocena_files_calc_xlinked" targetRef="XML_Ocena_files_calc_x5" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F14" sourceRef="XML_Ocena_files_calc_rdf" targetRef="XML_Ocena_files_calc_rlinked" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F15" sourceRef="XML_Ocena_files_calc_rdf" targetRef="XML_Ocena_files_calc_r4" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F16" sourceRef="XML_Ocena_files_calc_rlinked" targetRef="XML_Ocena_files_calc_r4b" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F17" sourceRef="XML_Ocena_files_calc_rlinked" targetRef="XML_Ocena_files_calc_r5" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F18" sourceRef="XML_Ocena_files_calc_j3" targetRef="XML_Ocena_files_calc_end" />
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F19" sourceRef="XML_Ocena_files_calc_j4" targetRef="XML_Ocena_files_calc_end" />
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F20" sourceRef="XML_Ocena_files_calc_j5" targetRef="XML_Ocena_files_calc_end" />
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F21" sourceRef="XML_Ocena_files_calc_x3" targetRef="XML_Ocena_files_calc_end" />
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F22" sourceRef="XML_Ocena_files_calc_x4" targetRef="XML_Ocena_files_calc_end" />
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F23" sourceRef="XML_Ocena_files_calc_x5" targetRef="XML_Ocena_files_calc_end" />
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F24" sourceRef="XML_Ocena_files_calc_r4" targetRef="XML_Ocena_files_calc_end" />
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F25" sourceRef="XML_Ocena_files_calc_r4b" targetRef="XML_Ocena_files_calc_end" />
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F26" sourceRef="XML_Ocena_files_calc_r5" targetRef="XML_Ocena_files_calc_end" />
+        <bpmn:sequenceFlow id="XML_Ocena_files_calc_F27" sourceRef="XML_Ocena_files_calc_default" targetRef="XML_Ocena_files_calc_end" />
+        <bpmn:incoming>XML_Ocena_files_F8</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_files_F13</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F17</bpmn:outgoing>
+      </bpmn:subProcess>
+      <bpmn:serviceTask id="XML_Ocena_files_save" name="Zachowaj ocenę bieżącego pliku">
+        <bpmn:incoming>XML_Ocena_files_F14</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_files_F15</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_files_F16</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_files_F17</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="XML_Ocena_files_max" name="Wybierz najwyższą ocenę wszystkich plików">
+        <bpmn:incoming>XML_Ocena_files_F3</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_files_F19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="XML_Ocena_files_end" name="Stopień zasobu = maksimum">
+        <bpmn:incoming>XML_Ocena_files_F19</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="XML_Ocena_files_F1" sourceRef="XML_Ocena_files_start" targetRef="XML_Ocena_files_next" />
+      <bpmn:sequenceFlow id="XML_Ocena_files_F2" sourceRef="XML_Ocena_files_next" targetRef="XML_Ocena_files_fmt" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_files_F3" sourceRef="XML_Ocena_files_next" targetRef="XML_Ocena_files_max" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_files_F4" sourceRef="XML_Ocena_files_fmt" targetRef="XML_Ocena_files_has" />
+      <bpmn:sequenceFlow id="XML_Ocena_files_F5" sourceRef="XML_Ocena_files_has" targetRef="XML_Ocena_files_one" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_files_F6" sourceRef="XML_Ocena_files_has" targetRef="XML_Ocena_files_archive" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_files_F7" sourceRef="XML_Ocena_files_archive" targetRef="XML_Ocena_files_inspect" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_files_F8" sourceRef="XML_Ocena_files_archive" targetRef="XML_Ocena_files_calc" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_files_F9" sourceRef="XML_Ocena_files_inspect" targetRef="XML_Ocena_files_result" />
+      <bpmn:sequenceFlow id="XML_Ocena_files_F10" sourceRef="XML_Ocena_files_result" targetRef="XML_Ocena_files_zero" name="Zaszyfrowane">
+        <bpmn:conditionExpression>Zaszyfrowane</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_files_F11" sourceRef="XML_Ocena_files_result" targetRef="XML_Ocena_files_bad" name="Błąd / wiele">
+        <bpmn:conditionExpression>Błąd / wiele</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_files_F12" sourceRef="XML_Ocena_files_result" targetRef="XML_Ocena_files_inner" name="Jeden / wyjątek">
+        <bpmn:conditionExpression>Jeden / wyjątek</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_files_F13" sourceRef="XML_Ocena_files_inner" targetRef="XML_Ocena_files_calc" />
+      <bpmn:sequenceFlow id="XML_Ocena_files_F14" sourceRef="XML_Ocena_files_one" targetRef="XML_Ocena_files_save" />
+      <bpmn:sequenceFlow id="XML_Ocena_files_F15" sourceRef="XML_Ocena_files_zero" targetRef="XML_Ocena_files_save" />
+      <bpmn:sequenceFlow id="XML_Ocena_files_F16" sourceRef="XML_Ocena_files_bad" targetRef="XML_Ocena_files_save" />
+      <bpmn:sequenceFlow id="XML_Ocena_files_F17" sourceRef="XML_Ocena_files_calc" targetRef="XML_Ocena_files_save" />
+      <bpmn:sequenceFlow id="XML_Ocena_files_F18" sourceRef="XML_Ocena_files_save" targetRef="XML_Ocena_files_next" name="Kolejny" />
+      <bpmn:sequenceFlow id="XML_Ocena_files_F19" sourceRef="XML_Ocena_files_max" targetRef="XML_Ocena_files_end" />
+      <bpmn:incoming>XML_Ocena_F12</bpmn:incoming>
+      <bpmn:outgoing>XML_Ocena_F16</bpmn:outgoing>
+    </bpmn:subProcess>
+    <bpmn:serviceTask id="XML_Ocena_link" name="Pobierz treść spod linku do oceny">
+      <bpmn:documentation>Brak pliku głównego: pobierz treść w pamięci i użyj formatu zasobu zapisanego w bazie. Nie rozpoznawaj archiwum jak lokalnego pliku. Źródło: O12.</bpmn:documentation>
+      <bpmn:incoming>XML_Ocena_F13</bpmn:incoming>
+      <bpmn:outgoing>XML_Ocena_F14</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:subProcess id="XML_Ocena_calc" name="Oblicz stopień według formatu i treści">
+      <bpmn:documentation>Źródło: tab=ocena, ROW-ocena-001..003 i SECTION-ocena-7. Rozwinięcie ma własny diagram. Dla linku format pochodzi z bazy; dla pliku jest efektywnym formatem ocenianej zawartości.</bpmn:documentation>
+      <bpmn:startEvent id="XML_Ocena_calc_start" name="Treść i format do oceny">
+        <bpmn:outgoing>XML_Ocena_calc_F1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:exclusiveGateway id="XML_Ocena_calc_format" name="Który format oceniamy?" gatewayDirection="Diverging">
+        <bpmn:incoming>XML_Ocena_calc_F1</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F2</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_calc_F3</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_calc_F4</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_calc_F5</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="XML_Ocena_calc_json" name="JSON: odczyt RDF daje niepusty graf?" gatewayDirection="Diverging">
+        <bpmn:incoming>XML_Ocena_calc_F2</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F6</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_calc_F7</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="XML_Ocena_calc_xml" name="XML: wszystkie elementy mają przestrzenie nazw?" gatewayDirection="Diverging">
+        <bpmn:incoming>XML_Ocena_calc_F3</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F10</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_calc_F11</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="XML_Ocena_calc_rdf" name="RDF: niepusty graf?" gatewayDirection="Diverging">
+        <bpmn:incoming>XML_Ocena_calc_F4</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F14</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_calc_F15</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="XML_Ocena_calc_default" name="Inny format: użyj oceny z tabeli">
+        <bpmn:documentation>PDF/JPG/TXT → 1; XLS/XLSX → 2; CSV/HTML/ODS → 3; format spoza tabeli → 1. Pełna tabela w raporcie źródłowym.</bpmn:documentation>
+        <bpmn:incoming>XML_Ocena_calc_F5</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F27</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="XML_Ocena_calc_jlinked" name="Graf łączy różne domeny?" gatewayDirection="Diverging">
+        <bpmn:incoming>XML_Ocena_calc_F6</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F8</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_calc_F9</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="XML_Ocena_calc_xlinked" name="Poprawny RDF łączy różne domeny?" gatewayDirection="Diverging">
+        <bpmn:incoming>XML_Ocena_calc_F10</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F12</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_calc_F13</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="XML_Ocena_calc_rlinked" name="Graf łączy różne domeny?" gatewayDirection="Diverging">
+        <bpmn:incoming>XML_Ocena_calc_F14</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F16</bpmn:outgoing>
+        <bpmn:outgoing>XML_Ocena_calc_F17</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="XML_Ocena_calc_j3" name="Przyjmij stopień 3">
+        <bpmn:incoming>XML_Ocena_calc_F7</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="XML_Ocena_calc_j4" name="Przyjmij stopień 4">
+        <bpmn:incoming>XML_Ocena_calc_F8</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="XML_Ocena_calc_j5" name="Przyjmij stopień 5">
+        <bpmn:incoming>XML_Ocena_calc_F9</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="XML_Ocena_calc_x3" name="Przyjmij stopień 3">
+        <bpmn:incoming>XML_Ocena_calc_F11</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="XML_Ocena_calc_x4" name="Przyjmij stopień 4">
+        <bpmn:incoming>XML_Ocena_calc_F12</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F22</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="XML_Ocena_calc_x5" name="Przyjmij stopień 5">
+        <bpmn:incoming>XML_Ocena_calc_F13</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F23</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="XML_Ocena_calc_r4" name="Przyjmij stopień 4">
+        <bpmn:incoming>XML_Ocena_calc_F15</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F24</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="XML_Ocena_calc_r4b" name="Przyjmij stopień 4">
+        <bpmn:incoming>XML_Ocena_calc_F16</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F25</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="XML_Ocena_calc_r5" name="Przyjmij stopień 5">
+        <bpmn:incoming>XML_Ocena_calc_F17</bpmn:incoming>
+        <bpmn:outgoing>XML_Ocena_calc_F26</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="XML_Ocena_calc_end" name="Wynik pojedynczej oceny">
+        <bpmn:incoming>XML_Ocena_calc_F18</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_calc_F19</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_calc_F20</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_calc_F21</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_calc_F22</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_calc_F23</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_calc_F24</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_calc_F25</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_calc_F26</bpmn:incoming>
+        <bpmn:incoming>XML_Ocena_calc_F27</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F1" sourceRef="XML_Ocena_calc_start" targetRef="XML_Ocena_calc_format" />
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F2" sourceRef="XML_Ocena_calc_format" targetRef="XML_Ocena_calc_json" name="JSON">
+        <bpmn:conditionExpression>JSON</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F3" sourceRef="XML_Ocena_calc_format" targetRef="XML_Ocena_calc_xml" name="XML">
+        <bpmn:conditionExpression>XML</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F4" sourceRef="XML_Ocena_calc_format" targetRef="XML_Ocena_calc_rdf" name="RDF i pokrewne">
+        <bpmn:conditionExpression>RDF i pokrewne</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F5" sourceRef="XML_Ocena_calc_format" targetRef="XML_Ocena_calc_default" name="Pozostałe">
+        <bpmn:conditionExpression>Pozostałe</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F6" sourceRef="XML_Ocena_calc_json" targetRef="XML_Ocena_calc_jlinked" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F7" sourceRef="XML_Ocena_calc_json" targetRef="XML_Ocena_calc_j3" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F8" sourceRef="XML_Ocena_calc_jlinked" targetRef="XML_Ocena_calc_j4" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F9" sourceRef="XML_Ocena_calc_jlinked" targetRef="XML_Ocena_calc_j5" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F10" sourceRef="XML_Ocena_calc_xml" targetRef="XML_Ocena_calc_xlinked" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F11" sourceRef="XML_Ocena_calc_xml" targetRef="XML_Ocena_calc_x3" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F12" sourceRef="XML_Ocena_calc_xlinked" targetRef="XML_Ocena_calc_x4" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F13" sourceRef="XML_Ocena_calc_xlinked" targetRef="XML_Ocena_calc_x5" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F14" sourceRef="XML_Ocena_calc_rdf" targetRef="XML_Ocena_calc_rlinked" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F15" sourceRef="XML_Ocena_calc_rdf" targetRef="XML_Ocena_calc_r4" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F16" sourceRef="XML_Ocena_calc_rlinked" targetRef="XML_Ocena_calc_r4b" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F17" sourceRef="XML_Ocena_calc_rlinked" targetRef="XML_Ocena_calc_r5" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F18" sourceRef="XML_Ocena_calc_j3" targetRef="XML_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F19" sourceRef="XML_Ocena_calc_j4" targetRef="XML_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F20" sourceRef="XML_Ocena_calc_j5" targetRef="XML_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F21" sourceRef="XML_Ocena_calc_x3" targetRef="XML_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F22" sourceRef="XML_Ocena_calc_x4" targetRef="XML_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F23" sourceRef="XML_Ocena_calc_x5" targetRef="XML_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F24" sourceRef="XML_Ocena_calc_r4" targetRef="XML_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F25" sourceRef="XML_Ocena_calc_r4b" targetRef="XML_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F26" sourceRef="XML_Ocena_calc_r5" targetRef="XML_Ocena_calc_end" />
+      <bpmn:sequenceFlow id="XML_Ocena_calc_F27" sourceRef="XML_Ocena_calc_default" targetRef="XML_Ocena_calc_end" />
+      <bpmn:incoming>XML_Ocena_F14</bpmn:incoming>
+      <bpmn:outgoing>XML_Ocena_F15</bpmn:outgoing>
+    </bpmn:subProcess>
+    <bpmn:exclusiveGateway id="XML_Ocena_merge" name="Wynik do zapisu" gatewayDirection="Converging">
+      <bpmn:incoming>XML_Ocena_F4</bpmn:incoming>
+      <bpmn:outgoing>XML_Ocena_F5</bpmn:outgoing>
+      <bpmn:incoming>XML_Ocena_F15</bpmn:incoming>
+      <bpmn:incoming>XML_Ocena_F16</bpmn:incoming>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="XML_Ocena_save" name="Zapisz stopień otwartości zasobu">
+      <bpmn:documentation>O9: zapis w bazie; dla XML także oceny plików. Następnie data weryfikacji, tylko jeżeli żądana. Zapis oceny nie oznacza jeszcze odświeżenia jej widocznej publikacji.</bpmn:documentation>
+      <bpmn:incoming>XML_Ocena_F5</bpmn:incoming>
+      <bpmn:outgoing>XML_Ocena_F6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="XML_Ocena_ok" name="Przygotowanie udane i zasób nadal opublikowany?" gatewayDirection="Diverging">
+      <bpmn:documentation>URL i wszystkie wymagane kontrole zakończone sukcesem, brak odroczonych wyjątków; zasób opublikowany i nieusunięty. Źródło OALL, PB4.</bpmn:documentation>
+      <bpmn:incoming>XML_Ocena_F6</bpmn:incoming>
+      <bpmn:outgoing>XML_Ocena_F7</bpmn:outgoing>
+      <bpmn:outgoing>XML_Ocena_F9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="XML_Ocena_publish" name="Zleć odświeżenie widocznej oceny">
+      <bpmn:documentation>Asynchroniczne odświeżenie dokumentu wyszukiwarki (ES) i opisu katalogowego (RDF). Nie mylić publikacji RDF z testem RDF treści danych przy ocenie.</bpmn:documentation>
+      <bpmn:incoming>XML_Ocena_F7</bpmn:incoming>
+      <bpmn:outgoing>XML_Ocena_F8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="XML_Ocena_norefresh" name="Pozostaw zapis; obsłuż ewentualny problem">
+      <bpmn:documentation>Brak końcowego odświeżenia ES/RDF. Odpowiednio log lub zgłoszenie odroczonego wyjątku. Ocena mogła już zostać zapisana. Nie każdy przypadek tej gałęzi jest błędem: zasób może być nieopublikowany.</bpmn:documentation>
+      <bpmn:incoming>XML_Ocena_F9</bpmn:incoming>
+      <bpmn:outgoing>XML_Ocena_F10</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="XML_Ocena_end" name="Zadanie oceny zakończone">
+      <bpmn:incoming>XML_Ocena_F8</bpmn:incoming>
+      <bpmn:incoming>XML_Ocena_F10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="XML_Ocena_F1" sourceRef="XML_Ocena_start" targetRef="XML_Ocena_prep" />
+    <bpmn:sequenceFlow id="XML_Ocena_F2" sourceRef="XML_Ocena_prep" targetRef="XML_Ocena_fmt" />
+    <bpmn:sequenceFlow id="XML_Ocena_F3" sourceRef="XML_Ocena_fmt" targetRef="XML_Ocena_zero" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="XML_Ocena_F4" sourceRef="XML_Ocena_zero" targetRef="XML_Ocena_merge" />
+    <bpmn:sequenceFlow id="XML_Ocena_F5" sourceRef="XML_Ocena_merge" targetRef="XML_Ocena_save" />
+    <bpmn:sequenceFlow id="XML_Ocena_F6" sourceRef="XML_Ocena_save" targetRef="XML_Ocena_ok" />
+    <bpmn:sequenceFlow id="XML_Ocena_F7" sourceRef="XML_Ocena_ok" targetRef="XML_Ocena_publish" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="XML_Ocena_F8" sourceRef="XML_Ocena_publish" targetRef="XML_Ocena_end" />
+    <bpmn:sequenceFlow id="XML_Ocena_F9" sourceRef="XML_Ocena_ok" targetRef="XML_Ocena_norefresh" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="XML_Ocena_F10" sourceRef="XML_Ocena_norefresh" targetRef="XML_Ocena_end" />
+    <bpmn:sequenceFlow id="XML_Ocena_F11" sourceRef="XML_Ocena_fmt" targetRef="XML_Ocena_main" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="XML_Ocena_F12" sourceRef="XML_Ocena_main" targetRef="XML_Ocena_files" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="XML_Ocena_F13" sourceRef="XML_Ocena_main" targetRef="XML_Ocena_link" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="XML_Ocena_F14" sourceRef="XML_Ocena_link" targetRef="XML_Ocena_calc" />
+    <bpmn:sequenceFlow id="XML_Ocena_F15" sourceRef="XML_Ocena_calc" targetRef="XML_Ocena_merge" />
+    <bpmn:sequenceFlow id="XML_Ocena_F16" sourceRef="XML_Ocena_files" targetRef="XML_Ocena_merge" />
+  </bpmn:process>
+  <bpmn:process id="XML_Konwersje" name="XML — późniejsze podniesienie stopnia przez pliki pochodne" isExecutable="false">
+    <bpmn:documentation>Odwzorowanie AS-IS raportu ../harvester_walidacje_ckan_xml.html (mcod 2.62.3; raport 2026-11-08). Nie potwierdzono bieżącej produkcji. Model biznesowy niewykonywalny. Ocena dotyczy zasobu, nie wyniku importu ani jakości danych.</bpmn:documentation>
+    <bpmn:startEvent id="XML_Konwersje_start" name="Odebrano osobne zlecenie po udanej indeksacji danych">
+      <bpmn:outgoing>XML_Konwersje_F1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="XML_Konwersje_csv" name="Główny XLS/XLSX, nie linked, dostępna tabela?" gatewayDirection="Diverging">
+      <bpmn:incoming>XML_Konwersje_F1</bpmn:incoming>
+      <bpmn:outgoing>XML_Konwersje_F2</bpmn:outgoing>
+      <bpmn:outgoing>XML_Konwersje_F4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="XML_Konwersje_makecsv" name="Utwórz dodatkowy CSV">
+      <bpmn:documentation>CSV z danych tabeli, UTF-8, plik pochodny. To nie zmienia pliku głównego.</bpmn:documentation>
+      <bpmn:incoming>XML_Konwersje_F2</bpmn:incoming>
+      <bpmn:outgoing>XML_Konwersje_F3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="XML_Konwersje_merge" name="Przejdź do próby JSON-LD" gatewayDirection="Converging">
+      <bpmn:incoming>XML_Konwersje_F3</bpmn:incoming>
+      <bpmn:incoming>XML_Konwersje_F4</bpmn:incoming>
+      <bpmn:outgoing>XML_Konwersje_F5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="XML_Konwersje_json" name="Dostępny CSV poza archiwum?" gatewayDirection="Diverging">
+      <bpmn:incoming>XML_Konwersje_F5</bpmn:incoming>
+      <bpmn:outgoing>XML_Konwersje_F6</bpmn:outgoing>
+      <bpmn:outgoing>XML_Konwersje_F8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="XML_Konwersje_makejson" name="Spróbuj utworzyć dodatkowy JSON-LD">
+      <bpmn:documentation>CSV główny albo pochodny. Błąd konwersji jest logowany i nie daje nowego pliku. Powodzenia tej konwersji nie potwierdzono w teście B. Próba może dotyczyć XML remote: SCEN-10, SECTION-pliki-7; rozbieżność V-03 w README.</bpmn:documentation>
+      <bpmn:incoming>XML_Konwersje_F6</bpmn:incoming>
+      <bpmn:outgoing>XML_Konwersje_F7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="XML_Konwersje_created" name="Powstał nowy plik pochodny?" gatewayDirection="Diverging">
+      <bpmn:incoming>XML_Konwersje_F7</bpmn:incoming>
+      <bpmn:incoming>XML_Konwersje_F8</bpmn:incoming>
+      <bpmn:outgoing>XML_Konwersje_F9</bpmn:outgoing>
+      <bpmn:outgoing>XML_Konwersje_F10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="XML_Konwersje_score" name="Ponownie oceń pliki i zapisz ich maksimum">
+      <bpmn:documentation>Te same reguły co w diagramie głównym XML i jego podprocesach. XLSX 2 → z CSV maks. 3 → z JSON-LD maks. 4–5, o ile konwersje się powiodą.</bpmn:documentation>
+      <bpmn:incoming>XML_Konwersje_F9</bpmn:incoming>
+      <bpmn:outgoing>XML_Konwersje_F11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="XML_Konwersje_publish" name="Zleć odświeżenie publikacji z nową oceną">
+      <bpmn:documentation>update_es_and_rdf_db: warunki publikacji/nieusunięcia nadal obowiązują. Zlecenia ES/RDF są asynchroniczne.</bpmn:documentation>
+      <bpmn:incoming>XML_Konwersje_F11</bpmn:incoming>
+      <bpmn:outgoing>XML_Konwersje_F12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="XML_Konwersje_end" name="Koniec próby podniesienia stopnia">
+      <bpmn:incoming>XML_Konwersje_F10</bpmn:incoming>
+      <bpmn:incoming>XML_Konwersje_F12</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="XML_Konwersje_F1" sourceRef="XML_Konwersje_start" targetRef="XML_Konwersje_csv" />
+    <bpmn:sequenceFlow id="XML_Konwersje_F2" sourceRef="XML_Konwersje_csv" targetRef="XML_Konwersje_makecsv" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="XML_Konwersje_F3" sourceRef="XML_Konwersje_makecsv" targetRef="XML_Konwersje_merge" />
+    <bpmn:sequenceFlow id="XML_Konwersje_F4" sourceRef="XML_Konwersje_csv" targetRef="XML_Konwersje_merge" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="XML_Konwersje_F5" sourceRef="XML_Konwersje_merge" targetRef="XML_Konwersje_json" />
+    <bpmn:sequenceFlow id="XML_Konwersje_F6" sourceRef="XML_Konwersje_json" targetRef="XML_Konwersje_makejson" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="XML_Konwersje_F7" sourceRef="XML_Konwersje_makejson" targetRef="XML_Konwersje_created" />
+    <bpmn:sequenceFlow id="XML_Konwersje_F8" sourceRef="XML_Konwersje_json" targetRef="XML_Konwersje_created" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="XML_Konwersje_F9" sourceRef="XML_Konwersje_created" targetRef="XML_Konwersje_score" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="XML_Konwersje_F10" sourceRef="XML_Konwersje_created" targetRef="XML_Konwersje_end" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="XML_Konwersje_F11" sourceRef="XML_Konwersje_score" targetRef="XML_Konwersje_publish" />
+    <bpmn:sequenceFlow id="XML_Konwersje_F12" sourceRef="XML_Konwersje_publish" targetRef="XML_Konwersje_end" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="XML_Ocena_Diagram" name="XML — nadanie stopnia otwartości zasobu">
+    <bpmndi:BPMNPlane id="XML_Ocena_Plane" bpmnElement="XML_Ocena">
+      <bpmndi:BPMNShape id="XML_Ocena_start_di" bpmnElement="XML_Ocena_start">
+        <dc:Bounds x="70" y="150" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-8" y="204" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_prep_di" bpmnElement="XML_Ocena_prep">
+        <dc:Bounds x="260" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_fmt_di" bpmnElement="XML_Ocena_fmt">
+        <dc:Bounds x="590" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="512" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_zero_di" bpmnElement="XML_Ocena_zero">
+        <dc:Bounds x="820" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_main_di" bpmnElement="XML_Ocena_main">
+        <dc:Bounds x="620" y="430" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="542" y="502" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_di" bpmnElement="XML_Ocena_files" isExpanded="false">
+        <dc:Bounds x="930" y="570" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_link_di" bpmnElement="XML_Ocena_link">
+        <dc:Bounds x="260" y="570" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_di" bpmnElement="XML_Ocena_calc" isExpanded="false">
+        <dc:Bounds x="260" y="800" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_merge_di" bpmnElement="XML_Ocena_merge">
+        <dc:Bounds x="1260" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1182" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_save_di" bpmnElement="XML_Ocena_save">
+        <dc:Bounds x="1490" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_ok_di" bpmnElement="XML_Ocena_ok">
+        <dc:Bounds x="1780" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1702" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_publish_di" bpmnElement="XML_Ocena_publish">
+        <dc:Bounds x="2030" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_norefresh_di" bpmnElement="XML_Ocena_norefresh">
+        <dc:Bounds x="1740" y="430" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_end_di" bpmnElement="XML_Ocena_end">
+        <dc:Bounds x="2360" y="150" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2282" y="204" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="XML_Ocena_F1_di" bpmnElement="XML_Ocena_F1">
+        <di:waypoint x="116" y="173.0" />
+        <di:waypoint x="260" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F2_di" bpmnElement="XML_Ocena_F2">
+        <di:waypoint x="480" y="173.0" />
+        <di:waypoint x="535.0" y="173.0" />
+        <di:waypoint x="535.0" y="172.0" />
+        <di:waypoint x="590" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F3_di" bpmnElement="XML_Ocena_F3">
+        <di:waypoint x="654" y="172.0" />
+        <di:waypoint x="737.0" y="172.0" />
+        <di:waypoint x="737.0" y="173.0" />
+        <di:waypoint x="820" y="173.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="667.0" y="145.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F4_di" bpmnElement="XML_Ocena_F4">
+        <di:waypoint x="1040" y="173.0" />
+        <di:waypoint x="1150.0" y="173.0" />
+        <di:waypoint x="1150.0" y="172.0" />
+        <di:waypoint x="1260" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F5_di" bpmnElement="XML_Ocena_F5">
+        <di:waypoint x="1324" y="172.0" />
+        <di:waypoint x="1407.0" y="172.0" />
+        <di:waypoint x="1407.0" y="173.0" />
+        <di:waypoint x="1490" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F6_di" bpmnElement="XML_Ocena_F6">
+        <di:waypoint x="1710" y="173.0" />
+        <di:waypoint x="1745.0" y="173.0" />
+        <di:waypoint x="1745.0" y="172.0" />
+        <di:waypoint x="1780" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F7_di" bpmnElement="XML_Ocena_F7">
+        <di:waypoint x="1844" y="172.0" />
+        <di:waypoint x="1937.0" y="172.0" />
+        <di:waypoint x="1937.0" y="173.0" />
+        <di:waypoint x="2030" y="173.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1867.0" y="145.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F8_di" bpmnElement="XML_Ocena_F8">
+        <di:waypoint x="2250" y="173.0" />
+        <di:waypoint x="2360" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F9_di" bpmnElement="XML_Ocena_F9">
+        <di:waypoint x="1812.0" y="204" />
+        <di:waypoint x="1812.0" y="405" />
+        <di:waypoint x="1850.0" y="405" />
+        <di:waypoint x="1850.0" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1780.0" y="377" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F10_di" bpmnElement="XML_Ocena_F10">
+        <di:waypoint x="1960" y="473" />
+        <di:waypoint x="2383" y="473" />
+        <di:waypoint x="2383" y="196" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F11_di" bpmnElement="XML_Ocena_F11">
+        <di:waypoint x="622.0" y="204" />
+        <di:waypoint x="622.0" y="405" />
+        <di:waypoint x="652.0" y="405" />
+        <di:waypoint x="652.0" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="582.0" y="377" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F12_di" bpmnElement="XML_Ocena_F12">
+        <di:waypoint x="684" y="462.0" />
+        <di:waypoint x="807.0" y="462.0" />
+        <di:waypoint x="807.0" y="613.0" />
+        <di:waypoint x="930" y="613.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="737.0" y="585.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F13_di" bpmnElement="XML_Ocena_F13">
+        <di:waypoint x="620" y="462" />
+        <di:waypoint x="370" y="462" />
+        <di:waypoint x="370" y="570" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="300" y="434" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F14_di" bpmnElement="XML_Ocena_F14">
+        <di:waypoint x="370.0" y="656" />
+        <di:waypoint x="370.0" y="775" />
+        <di:waypoint x="370.0" y="775" />
+        <di:waypoint x="370.0" y="800" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F15_di" bpmnElement="XML_Ocena_F15">
+        <di:waypoint x="480" y="843" />
+        <di:waypoint x="1330" y="843" />
+        <di:waypoint x="1330" y="280" />
+        <di:waypoint x="1292" y="280" />
+        <di:waypoint x="1292" y="204" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_F16_di" bpmnElement="XML_Ocena_F16">
+        <di:waypoint x="1150" y="613" />
+        <di:waypoint x="1370" y="613" />
+        <di:waypoint x="1370" y="250" />
+        <di:waypoint x="1292" y="250" />
+        <di:waypoint x="1292" y="204" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="XML_Ocena_files_Diagram" name="Oceń wszystkie pliki; wybierz maksimum">
+    <bpmndi:BPMNPlane id="XML_Ocena_files_Plane" bpmnElement="XML_Ocena_files">
+      <bpmndi:BPMNShape id="XML_Ocena_files_start_di" bpmnElement="XML_Ocena_files_start">
+        <dc:Bounds x="60" y="130" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-18" y="184" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_next_di" bpmnElement="XML_Ocena_files_next">
+        <dc:Bounds x="260" y="120" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="182" y="192" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_fmt_di" bpmnElement="XML_Ocena_files_fmt">
+        <dc:Bounds x="440" y="110" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_has_di" bpmnElement="XML_Ocena_files_has">
+        <dc:Bounds x="760" y="120" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682" y="192" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_one_di" bpmnElement="XML_Ocena_files_one">
+        <dc:Bounds x="740" y="340" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_archive_di" bpmnElement="XML_Ocena_files_archive">
+        <dc:Bounds x="1040" y="120" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="962" y="192" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_inspect_di" bpmnElement="XML_Ocena_files_inspect">
+        <dc:Bounds x="1250" y="110" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_result_di" bpmnElement="XML_Ocena_files_result">
+        <dc:Bounds x="1550" y="120" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1472" y="192" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_zero_di" bpmnElement="XML_Ocena_files_zero">
+        <dc:Bounds x="1800" y="110" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_bad_di" bpmnElement="XML_Ocena_files_bad">
+        <dc:Bounds x="1800" y="340" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_inner_di" bpmnElement="XML_Ocena_files_inner">
+        <dc:Bounds x="1470" y="570" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_di" bpmnElement="XML_Ocena_files_calc" isExpanded="false">
+        <dc:Bounds x="1050" y="570" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_save_di" bpmnElement="XML_Ocena_files_save">
+        <dc:Bounds x="740" y="570" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_max_di" bpmnElement="XML_Ocena_files_max">
+        <dc:Bounds x="170" y="820" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_end_di" bpmnElement="XML_Ocena_files_end">
+        <dc:Bounds x="520" y="840" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="442" y="894" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F1_di" bpmnElement="XML_Ocena_files_F1">
+        <di:waypoint x="106" y="153.0" />
+        <di:waypoint x="183.0" y="153.0" />
+        <di:waypoint x="183.0" y="152.0" />
+        <di:waypoint x="260" y="152.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F2_di" bpmnElement="XML_Ocena_files_F2">
+        <di:waypoint x="324" y="152.0" />
+        <di:waypoint x="382.0" y="152.0" />
+        <di:waypoint x="382.0" y="153.0" />
+        <di:waypoint x="440" y="153.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="312.0" y="125.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F3_di" bpmnElement="XML_Ocena_files_F3">
+        <di:waypoint x="260" y="152" />
+        <di:waypoint x="170" y="152" />
+        <di:waypoint x="170" y="780" />
+        <di:waypoint x="280" y="780" />
+        <di:waypoint x="280" y="820" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="100" y="752" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F4_di" bpmnElement="XML_Ocena_files_F4">
+        <di:waypoint x="660" y="153.0" />
+        <di:waypoint x="710.0" y="153.0" />
+        <di:waypoint x="710.0" y="152.0" />
+        <di:waypoint x="760" y="152.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F5_di" bpmnElement="XML_Ocena_files_F5">
+        <di:waypoint x="792.0" y="184" />
+        <di:waypoint x="792.0" y="315" />
+        <di:waypoint x="850.0" y="315" />
+        <di:waypoint x="850.0" y="340" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="780.0" y="287" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F6_di" bpmnElement="XML_Ocena_files_F6">
+        <di:waypoint x="824" y="152.0" />
+        <di:waypoint x="1040" y="152.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="970" y="124.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F7_di" bpmnElement="XML_Ocena_files_F7">
+        <di:waypoint x="1104" y="152.0" />
+        <di:waypoint x="1177.0" y="152.0" />
+        <di:waypoint x="1177.0" y="153.0" />
+        <di:waypoint x="1250" y="153.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1107.0" y="125.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F8_di" bpmnElement="XML_Ocena_files_F8">
+        <di:waypoint x="1072" y="184" />
+        <di:waypoint x="1072" y="500" />
+        <di:waypoint x="1160" y="500" />
+        <di:waypoint x="1160" y="570" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1090" y="472" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F9_di" bpmnElement="XML_Ocena_files_F9">
+        <di:waypoint x="1470" y="153.0" />
+        <di:waypoint x="1510.0" y="153.0" />
+        <di:waypoint x="1510.0" y="152.0" />
+        <di:waypoint x="1550" y="152.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F10_di" bpmnElement="XML_Ocena_files_F10">
+        <di:waypoint x="1614" y="152.0" />
+        <di:waypoint x="1707.0" y="152.0" />
+        <di:waypoint x="1707.0" y="153.0" />
+        <di:waypoint x="1800" y="153.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1637.0" y="125.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F11_di" bpmnElement="XML_Ocena_files_F11">
+        <di:waypoint x="1614" y="152.0" />
+        <di:waypoint x="1707.0" y="152.0" />
+        <di:waypoint x="1707.0" y="383.0" />
+        <di:waypoint x="1800" y="383.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1637.0" y="355.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F12_di" bpmnElement="XML_Ocena_files_F12">
+        <di:waypoint x="1582.0" y="184" />
+        <di:waypoint x="1582.0" y="545" />
+        <di:waypoint x="1580.0" y="545" />
+        <di:waypoint x="1580.0" y="570" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1510.0" y="517" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F13_di" bpmnElement="XML_Ocena_files_F13">
+        <di:waypoint x="1470" y="613.0" />
+        <di:waypoint x="1270" y="613.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F14_di" bpmnElement="XML_Ocena_files_F14">
+        <di:waypoint x="850" y="426" />
+        <di:waypoint x="850" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F15_di" bpmnElement="XML_Ocena_files_F15">
+        <di:waypoint x="2020" y="153.0" />
+        <di:waypoint x="2060" y="153.0" />
+        <di:waypoint x="2060" y="730" />
+        <di:waypoint x="850" y="730" />
+        <di:waypoint x="850" y="656" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F16_di" bpmnElement="XML_Ocena_files_F16">
+        <di:waypoint x="2020" y="383.0" />
+        <di:waypoint x="2060" y="383.0" />
+        <di:waypoint x="2060" y="730" />
+        <di:waypoint x="850" y="730" />
+        <di:waypoint x="850" y="656" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F17_di" bpmnElement="XML_Ocena_files_F17">
+        <di:waypoint x="1050" y="613.0" />
+        <di:waypoint x="960" y="613.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F18_di" bpmnElement="XML_Ocena_files_F18">
+        <di:waypoint x="740" y="613" />
+        <di:waypoint x="130" y="613" />
+        <di:waypoint x="130" y="45" />
+        <di:waypoint x="292" y="45" />
+        <di:waypoint x="292" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="60" y="17" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_F19_di" bpmnElement="XML_Ocena_files_F19">
+        <di:waypoint x="390" y="863.0" />
+        <di:waypoint x="520" y="863.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="XML_Ocena_files_calc_Diagram" name="Oblicz stopień według formatu i treści">
+    <bpmndi:BPMNPlane id="XML_Ocena_files_calc_Plane" bpmnElement="XML_Ocena_files_calc">
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_start_di" bpmnElement="XML_Ocena_files_calc_start">
+        <dc:Bounds x="80" y="170" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2" y="224" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_format_di" bpmnElement="XML_Ocena_files_calc_format">
+        <dc:Bounds x="280" y="160" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="202" y="232" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_json_di" bpmnElement="XML_Ocena_files_calc_json">
+        <dc:Bounds x="560" y="80" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="152" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_xml_di" bpmnElement="XML_Ocena_files_calc_xml">
+        <dc:Bounds x="560" y="410" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="482" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_rdf_di" bpmnElement="XML_Ocena_files_calc_rdf">
+        <dc:Bounds x="560" y="740" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="812" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_default_di" bpmnElement="XML_Ocena_files_calc_default">
+        <dc:Bounds x="490" y="1060" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_jlinked_di" bpmnElement="XML_Ocena_files_calc_jlinked">
+        <dc:Bounds x="920" y="80" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="152" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_xlinked_di" bpmnElement="XML_Ocena_files_calc_xlinked">
+        <dc:Bounds x="920" y="410" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="482" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_rlinked_di" bpmnElement="XML_Ocena_files_calc_rlinked">
+        <dc:Bounds x="920" y="740" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="812" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_j3_di" bpmnElement="XML_Ocena_files_calc_j3">
+        <dc:Bounds x="880" y="250" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_j4_di" bpmnElement="XML_Ocena_files_calc_j4">
+        <dc:Bounds x="1240" y="80" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_j5_di" bpmnElement="XML_Ocena_files_calc_j5">
+        <dc:Bounds x="1240" y="250" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_x3_di" bpmnElement="XML_Ocena_files_calc_x3">
+        <dc:Bounds x="880" y="580" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_x4_di" bpmnElement="XML_Ocena_files_calc_x4">
+        <dc:Bounds x="1240" y="410" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_x5_di" bpmnElement="XML_Ocena_files_calc_x5">
+        <dc:Bounds x="1240" y="580" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_r4_di" bpmnElement="XML_Ocena_files_calc_r4">
+        <dc:Bounds x="880" y="910" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_r4b_di" bpmnElement="XML_Ocena_files_calc_r4b">
+        <dc:Bounds x="1240" y="740" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_r5_di" bpmnElement="XML_Ocena_files_calc_r5">
+        <dc:Bounds x="1240" y="910" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_files_calc_end_di" bpmnElement="XML_Ocena_files_calc_end">
+        <dc:Bounds x="1700" y="1065" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1622" y="1119" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F1_di" bpmnElement="XML_Ocena_files_calc_F1">
+        <di:waypoint x="126" y="193.0" />
+        <di:waypoint x="203.0" y="193.0" />
+        <di:waypoint x="203.0" y="192.0" />
+        <di:waypoint x="280" y="192.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F2_di" bpmnElement="XML_Ocena_files_calc_F2">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="112.0" />
+        <di:waypoint x="560" y="112.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="84.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F3_di" bpmnElement="XML_Ocena_files_calc_F3">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="442.0" />
+        <di:waypoint x="560" y="442.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="414.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F4_di" bpmnElement="XML_Ocena_files_calc_F4">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="772.0" />
+        <di:waypoint x="560" y="772.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="744.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F5_di" bpmnElement="XML_Ocena_files_calc_F5">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="417.0" y="192.0" />
+        <di:waypoint x="417.0" y="1103.0" />
+        <di:waypoint x="490" y="1103.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="347.0" y="1075.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F6_di" bpmnElement="XML_Ocena_files_calc_F6">
+        <di:waypoint x="624" y="112.0" />
+        <di:waypoint x="920" y="112.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="84.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F7_di" bpmnElement="XML_Ocena_files_calc_F7">
+        <di:waypoint x="624" y="112.0" />
+        <di:waypoint x="752.0" y="112.0" />
+        <di:waypoint x="752.0" y="293.0" />
+        <di:waypoint x="880" y="293.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="265.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F8_di" bpmnElement="XML_Ocena_files_calc_F8">
+        <di:waypoint x="984" y="112.0" />
+        <di:waypoint x="1112.0" y="112.0" />
+        <di:waypoint x="1112.0" y="123.0" />
+        <di:waypoint x="1240" y="123.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="95.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F9_di" bpmnElement="XML_Ocena_files_calc_F9">
+        <di:waypoint x="984" y="112.0" />
+        <di:waypoint x="1112.0" y="112.0" />
+        <di:waypoint x="1112.0" y="293.0" />
+        <di:waypoint x="1240" y="293.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="265.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F10_di" bpmnElement="XML_Ocena_files_calc_F10">
+        <di:waypoint x="624" y="442.0" />
+        <di:waypoint x="920" y="442.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="414.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F11_di" bpmnElement="XML_Ocena_files_calc_F11">
+        <di:waypoint x="624" y="442.0" />
+        <di:waypoint x="752.0" y="442.0" />
+        <di:waypoint x="752.0" y="623.0" />
+        <di:waypoint x="880" y="623.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="595.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F12_di" bpmnElement="XML_Ocena_files_calc_F12">
+        <di:waypoint x="984" y="442.0" />
+        <di:waypoint x="1112.0" y="442.0" />
+        <di:waypoint x="1112.0" y="453.0" />
+        <di:waypoint x="1240" y="453.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="425.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F13_di" bpmnElement="XML_Ocena_files_calc_F13">
+        <di:waypoint x="984" y="442.0" />
+        <di:waypoint x="1112.0" y="442.0" />
+        <di:waypoint x="1112.0" y="623.0" />
+        <di:waypoint x="1240" y="623.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="595.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F14_di" bpmnElement="XML_Ocena_files_calc_F14">
+        <di:waypoint x="624" y="772.0" />
+        <di:waypoint x="920" y="772.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="744.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F15_di" bpmnElement="XML_Ocena_files_calc_F15">
+        <di:waypoint x="624" y="772.0" />
+        <di:waypoint x="752.0" y="772.0" />
+        <di:waypoint x="752.0" y="953.0" />
+        <di:waypoint x="880" y="953.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="925.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F16_di" bpmnElement="XML_Ocena_files_calc_F16">
+        <di:waypoint x="984" y="772.0" />
+        <di:waypoint x="1112.0" y="772.0" />
+        <di:waypoint x="1112.0" y="783.0" />
+        <di:waypoint x="1240" y="783.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="755.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F17_di" bpmnElement="XML_Ocena_files_calc_F17">
+        <di:waypoint x="984" y="772.0" />
+        <di:waypoint x="1112.0" y="772.0" />
+        <di:waypoint x="1112.0" y="953.0" />
+        <di:waypoint x="1240" y="953.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="925.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F18_di" bpmnElement="XML_Ocena_files_calc_F18">
+        <di:waypoint x="990.0" y="336" />
+        <di:waypoint x="990.0" y="361" />
+        <di:waypoint x="1580" y="361" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F19_di" bpmnElement="XML_Ocena_files_calc_F19">
+        <di:waypoint x="1460" y="123.0" />
+        <di:waypoint x="1580" y="123.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F20_di" bpmnElement="XML_Ocena_files_calc_F20">
+        <di:waypoint x="1460" y="293.0" />
+        <di:waypoint x="1580" y="293.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F21_di" bpmnElement="XML_Ocena_files_calc_F21">
+        <di:waypoint x="990.0" y="666" />
+        <di:waypoint x="990.0" y="691" />
+        <di:waypoint x="1580" y="691" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F22_di" bpmnElement="XML_Ocena_files_calc_F22">
+        <di:waypoint x="1460" y="453.0" />
+        <di:waypoint x="1580" y="453.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F23_di" bpmnElement="XML_Ocena_files_calc_F23">
+        <di:waypoint x="1460" y="623.0" />
+        <di:waypoint x="1580" y="623.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F24_di" bpmnElement="XML_Ocena_files_calc_F24">
+        <di:waypoint x="990.0" y="996" />
+        <di:waypoint x="990.0" y="1021" />
+        <di:waypoint x="1580" y="1021" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F25_di" bpmnElement="XML_Ocena_files_calc_F25">
+        <di:waypoint x="1460" y="783.0" />
+        <di:waypoint x="1580" y="783.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F26_di" bpmnElement="XML_Ocena_files_calc_F26">
+        <di:waypoint x="1460" y="953.0" />
+        <di:waypoint x="1580" y="953.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_files_calc_F27_di" bpmnElement="XML_Ocena_files_calc_F27">
+        <di:waypoint x="710" y="1103.0" />
+        <di:waypoint x="1580" y="1103.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="XML_Ocena_calc_Diagram" name="Oblicz stopień według formatu i treści">
+    <bpmndi:BPMNPlane id="XML_Ocena_calc_Plane" bpmnElement="XML_Ocena_calc">
+      <bpmndi:BPMNShape id="XML_Ocena_calc_start_di" bpmnElement="XML_Ocena_calc_start">
+        <dc:Bounds x="80" y="170" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2" y="224" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_format_di" bpmnElement="XML_Ocena_calc_format">
+        <dc:Bounds x="280" y="160" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="202" y="232" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_json_di" bpmnElement="XML_Ocena_calc_json">
+        <dc:Bounds x="560" y="80" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="152" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_xml_di" bpmnElement="XML_Ocena_calc_xml">
+        <dc:Bounds x="560" y="410" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="482" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_rdf_di" bpmnElement="XML_Ocena_calc_rdf">
+        <dc:Bounds x="560" y="740" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="482" y="812" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_default_di" bpmnElement="XML_Ocena_calc_default">
+        <dc:Bounds x="490" y="1060" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_jlinked_di" bpmnElement="XML_Ocena_calc_jlinked">
+        <dc:Bounds x="920" y="80" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="152" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_xlinked_di" bpmnElement="XML_Ocena_calc_xlinked">
+        <dc:Bounds x="920" y="410" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="482" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_rlinked_di" bpmnElement="XML_Ocena_calc_rlinked">
+        <dc:Bounds x="920" y="740" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="812" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_j3_di" bpmnElement="XML_Ocena_calc_j3">
+        <dc:Bounds x="880" y="250" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_j4_di" bpmnElement="XML_Ocena_calc_j4">
+        <dc:Bounds x="1240" y="80" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_j5_di" bpmnElement="XML_Ocena_calc_j5">
+        <dc:Bounds x="1240" y="250" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_x3_di" bpmnElement="XML_Ocena_calc_x3">
+        <dc:Bounds x="880" y="580" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_x4_di" bpmnElement="XML_Ocena_calc_x4">
+        <dc:Bounds x="1240" y="410" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_x5_di" bpmnElement="XML_Ocena_calc_x5">
+        <dc:Bounds x="1240" y="580" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_r4_di" bpmnElement="XML_Ocena_calc_r4">
+        <dc:Bounds x="880" y="910" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_r4b_di" bpmnElement="XML_Ocena_calc_r4b">
+        <dc:Bounds x="1240" y="740" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_r5_di" bpmnElement="XML_Ocena_calc_r5">
+        <dc:Bounds x="1240" y="910" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Ocena_calc_end_di" bpmnElement="XML_Ocena_calc_end">
+        <dc:Bounds x="1700" y="1065" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1622" y="1119" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F1_di" bpmnElement="XML_Ocena_calc_F1">
+        <di:waypoint x="126" y="193.0" />
+        <di:waypoint x="203.0" y="193.0" />
+        <di:waypoint x="203.0" y="192.0" />
+        <di:waypoint x="280" y="192.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F2_di" bpmnElement="XML_Ocena_calc_F2">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="112.0" />
+        <di:waypoint x="560" y="112.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="84.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F3_di" bpmnElement="XML_Ocena_calc_F3">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="442.0" />
+        <di:waypoint x="560" y="442.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="414.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F4_di" bpmnElement="XML_Ocena_calc_F4">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="452.0" y="192.0" />
+        <di:waypoint x="452.0" y="772.0" />
+        <di:waypoint x="560" y="772.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="744.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F5_di" bpmnElement="XML_Ocena_calc_F5">
+        <di:waypoint x="344" y="192.0" />
+        <di:waypoint x="417.0" y="192.0" />
+        <di:waypoint x="417.0" y="1103.0" />
+        <di:waypoint x="490" y="1103.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="347.0" y="1075.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F6_di" bpmnElement="XML_Ocena_calc_F6">
+        <di:waypoint x="624" y="112.0" />
+        <di:waypoint x="920" y="112.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="84.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F7_di" bpmnElement="XML_Ocena_calc_F7">
+        <di:waypoint x="624" y="112.0" />
+        <di:waypoint x="752.0" y="112.0" />
+        <di:waypoint x="752.0" y="293.0" />
+        <di:waypoint x="880" y="293.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="265.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F8_di" bpmnElement="XML_Ocena_calc_F8">
+        <di:waypoint x="984" y="112.0" />
+        <di:waypoint x="1112.0" y="112.0" />
+        <di:waypoint x="1112.0" y="123.0" />
+        <di:waypoint x="1240" y="123.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="95.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F9_di" bpmnElement="XML_Ocena_calc_F9">
+        <di:waypoint x="984" y="112.0" />
+        <di:waypoint x="1112.0" y="112.0" />
+        <di:waypoint x="1112.0" y="293.0" />
+        <di:waypoint x="1240" y="293.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="265.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F10_di" bpmnElement="XML_Ocena_calc_F10">
+        <di:waypoint x="624" y="442.0" />
+        <di:waypoint x="920" y="442.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="414.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F11_di" bpmnElement="XML_Ocena_calc_F11">
+        <di:waypoint x="624" y="442.0" />
+        <di:waypoint x="752.0" y="442.0" />
+        <di:waypoint x="752.0" y="623.0" />
+        <di:waypoint x="880" y="623.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="595.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F12_di" bpmnElement="XML_Ocena_calc_F12">
+        <di:waypoint x="984" y="442.0" />
+        <di:waypoint x="1112.0" y="442.0" />
+        <di:waypoint x="1112.0" y="453.0" />
+        <di:waypoint x="1240" y="453.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="425.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F13_di" bpmnElement="XML_Ocena_calc_F13">
+        <di:waypoint x="984" y="442.0" />
+        <di:waypoint x="1112.0" y="442.0" />
+        <di:waypoint x="1112.0" y="623.0" />
+        <di:waypoint x="1240" y="623.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="595.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F14_di" bpmnElement="XML_Ocena_calc_F14">
+        <di:waypoint x="624" y="772.0" />
+        <di:waypoint x="920" y="772.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="850" y="744.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F15_di" bpmnElement="XML_Ocena_calc_F15">
+        <di:waypoint x="624" y="772.0" />
+        <di:waypoint x="752.0" y="772.0" />
+        <di:waypoint x="752.0" y="953.0" />
+        <di:waypoint x="880" y="953.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="925.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F16_di" bpmnElement="XML_Ocena_calc_F16">
+        <di:waypoint x="984" y="772.0" />
+        <di:waypoint x="1112.0" y="772.0" />
+        <di:waypoint x="1112.0" y="783.0" />
+        <di:waypoint x="1240" y="783.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="755.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F17_di" bpmnElement="XML_Ocena_calc_F17">
+        <di:waypoint x="984" y="772.0" />
+        <di:waypoint x="1112.0" y="772.0" />
+        <di:waypoint x="1112.0" y="953.0" />
+        <di:waypoint x="1240" y="953.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1042.0" y="925.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F18_di" bpmnElement="XML_Ocena_calc_F18">
+        <di:waypoint x="990.0" y="336" />
+        <di:waypoint x="990.0" y="361" />
+        <di:waypoint x="1580" y="361" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F19_di" bpmnElement="XML_Ocena_calc_F19">
+        <di:waypoint x="1460" y="123.0" />
+        <di:waypoint x="1580" y="123.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F20_di" bpmnElement="XML_Ocena_calc_F20">
+        <di:waypoint x="1460" y="293.0" />
+        <di:waypoint x="1580" y="293.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F21_di" bpmnElement="XML_Ocena_calc_F21">
+        <di:waypoint x="990.0" y="666" />
+        <di:waypoint x="990.0" y="691" />
+        <di:waypoint x="1580" y="691" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F22_di" bpmnElement="XML_Ocena_calc_F22">
+        <di:waypoint x="1460" y="453.0" />
+        <di:waypoint x="1580" y="453.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F23_di" bpmnElement="XML_Ocena_calc_F23">
+        <di:waypoint x="1460" y="623.0" />
+        <di:waypoint x="1580" y="623.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F24_di" bpmnElement="XML_Ocena_calc_F24">
+        <di:waypoint x="990.0" y="996" />
+        <di:waypoint x="990.0" y="1021" />
+        <di:waypoint x="1580" y="1021" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F25_di" bpmnElement="XML_Ocena_calc_F25">
+        <di:waypoint x="1460" y="783.0" />
+        <di:waypoint x="1580" y="783.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F26_di" bpmnElement="XML_Ocena_calc_F26">
+        <di:waypoint x="1460" y="953.0" />
+        <di:waypoint x="1580" y="953.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Ocena_calc_F27_di" bpmnElement="XML_Ocena_calc_F27">
+        <di:waypoint x="710" y="1103.0" />
+        <di:waypoint x="1580" y="1103.0" />
+        <di:waypoint x="1580" y="1088" />
+        <di:waypoint x="1700" y="1088" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="XML_Konwersje_Diagram" name="XML — późniejsze podniesienie stopnia przez pliki pochodne">
+    <bpmndi:BPMNPlane id="XML_Konwersje_Plane" bpmnElement="XML_Konwersje">
+      <bpmndi:BPMNShape id="XML_Konwersje_start_di" bpmnElement="XML_Konwersje_start">
+        <dc:Bounds x="60" y="170" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-18" y="224" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Konwersje_csv_di" bpmnElement="XML_Konwersje_csv">
+        <dc:Bounds x="350" y="160" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="272" y="232" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Konwersje_makecsv_di" bpmnElement="XML_Konwersje_makecsv">
+        <dc:Bounds x="600" y="150" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Konwersje_merge_di" bpmnElement="XML_Konwersje_merge">
+        <dc:Bounds x="930" y="160" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="852" y="232" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Konwersje_json_di" bpmnElement="XML_Konwersje_json">
+        <dc:Bounds x="1200" y="160" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1122" y="232" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Konwersje_makejson_di" bpmnElement="XML_Konwersje_makejson">
+        <dc:Bounds x="1440" y="150" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Konwersje_created_di" bpmnElement="XML_Konwersje_created">
+        <dc:Bounds x="1760" y="160" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1682" y="232" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Konwersje_score_di" bpmnElement="XML_Konwersje_score">
+        <dc:Bounds x="1660" y="470" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Konwersje_publish_di" bpmnElement="XML_Konwersje_publish">
+        <dc:Bounds x="1320" y="470" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="XML_Konwersje_end_di" bpmnElement="XML_Konwersje_end">
+        <dc:Bounds x="980" y="490" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="902" y="544" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="XML_Konwersje_F1_di" bpmnElement="XML_Konwersje_F1">
+        <di:waypoint x="106" y="193.0" />
+        <di:waypoint x="228.0" y="193.0" />
+        <di:waypoint x="228.0" y="192.0" />
+        <di:waypoint x="350" y="192.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Konwersje_F2_di" bpmnElement="XML_Konwersje_F2">
+        <di:waypoint x="414" y="192.0" />
+        <di:waypoint x="507.0" y="192.0" />
+        <di:waypoint x="507.0" y="193.0" />
+        <di:waypoint x="600" y="193.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="437.0" y="165.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Konwersje_F3_di" bpmnElement="XML_Konwersje_F3">
+        <di:waypoint x="820" y="193.0" />
+        <di:waypoint x="875.0" y="193.0" />
+        <di:waypoint x="875.0" y="192.0" />
+        <di:waypoint x="930" y="192.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Konwersje_F4_di" bpmnElement="XML_Konwersje_F4">
+        <di:waypoint x="382" y="224" />
+        <di:waypoint x="382" y="350" />
+        <di:waypoint x="962" y="350" />
+        <di:waypoint x="962" y="224" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="892" y="322" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Konwersje_F5_di" bpmnElement="XML_Konwersje_F5">
+        <di:waypoint x="994" y="192.0" />
+        <di:waypoint x="1200" y="192.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Konwersje_F6_di" bpmnElement="XML_Konwersje_F6">
+        <di:waypoint x="1264" y="192.0" />
+        <di:waypoint x="1352.0" y="192.0" />
+        <di:waypoint x="1352.0" y="193.0" />
+        <di:waypoint x="1440" y="193.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1282.0" y="165.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Konwersje_F7_di" bpmnElement="XML_Konwersje_F7">
+        <di:waypoint x="1660" y="193.0" />
+        <di:waypoint x="1710.0" y="193.0" />
+        <di:waypoint x="1710.0" y="192.0" />
+        <di:waypoint x="1760" y="192.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Konwersje_F8_di" bpmnElement="XML_Konwersje_F8">
+        <di:waypoint x="1232" y="224" />
+        <di:waypoint x="1232" y="370" />
+        <di:waypoint x="1792" y="370" />
+        <di:waypoint x="1792" y="224" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1722" y="342" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Konwersje_F9_di" bpmnElement="XML_Konwersje_F9">
+        <di:waypoint x="1792.0" y="224" />
+        <di:waypoint x="1792.0" y="445" />
+        <di:waypoint x="1770.0" y="445" />
+        <di:waypoint x="1770.0" y="470" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1700.0" y="417" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Konwersje_F10_di" bpmnElement="XML_Konwersje_F10">
+        <di:waypoint x="1824" y="192" />
+        <di:waypoint x="2000" y="192" />
+        <di:waypoint x="2000" y="690" />
+        <di:waypoint x="1003" y="690" />
+        <di:waypoint x="1003" y="536" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1930" y="662" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Konwersje_F11_di" bpmnElement="XML_Konwersje_F11">
+        <di:waypoint x="1660" y="513.0" />
+        <di:waypoint x="1540" y="513.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="XML_Konwersje_F12_di" bpmnElement="XML_Konwersje_F12">
+        <di:waypoint x="1320" y="513.0" />
+        <di:waypoint x="1026" y="513.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

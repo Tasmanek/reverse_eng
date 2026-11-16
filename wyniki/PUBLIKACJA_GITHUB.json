@@ -1,0 +1,11 @@
+{
+  "repository": "/tmp/tasmanek-bpmn-publikacja-55x0ajhd",
+  "commit": "f2eb126a1216a6978052c4a2385ef9a4a3d0758e",
+  "branch": "main",
+  "payload_files": 101,
+  "bytes": 17361254,
+  "bundle": "/home/wojtek/bpmn-harvester/wyniki/wyniki_bpmn_do_github.bundle",
+  "github_pushed": false,
+  "reason": "Brak adresu repozytorium; połączenie do api.github.com niedostępne",
+  "whitespace_check_clean": false
+}

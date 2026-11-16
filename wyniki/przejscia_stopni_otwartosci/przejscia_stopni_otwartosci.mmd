@@ -1,0 +1,8 @@
+flowchart LR
+  A["Dotychczasowa ocena: 0, 1, 2, 3, 4 lub 5"] --> B["Wyzwalacz ponownego przeliczenia"]
+  B --> C["Ponowne obliczenie stopnia"]
+  C -->|"Obliczenie i zapis udane"| D["Nowa ocena: 0, 1, 2, 3, 4 lub 5; zastępuje poprzednią"]
+  C -->|"Błąd obliczenia przed zapisem"| E["Pozostaje poprzednia ocena"]
+  C -->|"Błąd podczas zapisu"| F["Sprawdź bazę: zapis może być częściowy"]
+  N["Brak wyzwalacza: brak nowego przeliczenia"]
+  P["Sama zmiana oceny nie zmienia statusu publikacji"]

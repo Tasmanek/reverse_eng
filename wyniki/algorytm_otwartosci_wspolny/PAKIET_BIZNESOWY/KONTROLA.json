@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "bpmn_diagrams": 9,
+  "checks": [
+    "XML",
+    "unikalne identyfikatory",
+    "referencje i calledElement",
+    "przepływy w granicach procesów",
+    "osiągalność węzłów i końców, także wyjątków",
+    "kompletność BPMN DI",
+    "SVG",
+    "lokalne linki HTML"
+  ],
+  "source_probe_cases": 22,
+  "limitations": "Brak testu importu w konkretnym edytorze i brak pełnego testu integracyjnego aplikacji; opis statycznego snapshotu 2.62.3."
+}

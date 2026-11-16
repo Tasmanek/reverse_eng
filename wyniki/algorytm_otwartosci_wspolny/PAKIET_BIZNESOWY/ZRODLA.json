@@ -1,0 +1,1371 @@
+[
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/models.py",
+    "sha256": "b6edb927eceb779cea13a86d4c656aa399c2c821fd49234293411f7f2b569e2b",
+    "symbols": [
+      {
+        "name": "ResourceDataValidationError",
+        "line": 117,
+        "end_line": 118
+      },
+      {
+        "name": "get_coltype",
+        "line": 121,
+        "end_line": 124
+      },
+      {
+        "name": "FileValidator",
+        "line": 131,
+        "end_line": 168
+      },
+      {
+        "name": "FileValidator.__call__",
+        "line": 138,
+        "end_line": 165
+      },
+      {
+        "name": "FileValidator.__eq__",
+        "line": 167,
+        "end_line": 168
+      },
+      {
+        "name": "TaskResult",
+        "line": 198,
+        "end_line": 334
+      },
+      {
+        "name": "TaskResult.values_from_result",
+        "line": 200,
+        "end_line": 220
+      },
+      {
+        "name": "TaskResult.find_es_parse_errors",
+        "line": 223,
+        "end_line": 235
+      },
+      {
+        "name": "TaskResult.message",
+        "line": 238,
+        "end_line": 251
+      },
+      {
+        "name": "TaskResult.message_error_str",
+        "line": 254,
+        "end_line": 257
+      },
+      {
+        "name": "TaskResult.recommendation",
+        "line": 260,
+        "end_line": 276
+      },
+      {
+        "name": "TaskResult._get_exc_message",
+        "line": 278,
+        "end_line": 280
+      },
+      {
+        "name": "TaskResult._find_error_code",
+        "line": 283,
+        "end_line": 330
+      },
+      {
+        "name": "TaskResult.Meta",
+        "line": 332,
+        "end_line": 334
+      },
+      {
+        "name": "Resource",
+        "line": 337,
+        "end_line": 1617
+      },
+      {
+        "name": "Resource.__str__",
+        "line": 581,
+        "end_line": 582
+      },
+      {
+        "name": "Resource.license_code",
+        "line": 585,
+        "end_line": 586
+      },
+      {
+        "name": "Resource.update_frequency",
+        "line": 589,
+        "end_line": 590
+      },
+      {
+        "name": "Resource.type_as_str",
+        "line": 593,
+        "end_line": 598
+      },
+      {
+        "name": "Resource.media_type",
+        "line": 603,
+        "end_line": 604
+      },
+      {
+        "name": "Resource.data_rules",
+        "line": 607,
+        "end_line": 608
+      },
+      {
+        "name": "Resource.is_data_processable",
+        "line": 611,
+        "end_line": 617
+      },
+      {
+        "name": "Resource.is_linked",
+        "line": 620,
+        "end_line": 623
+      },
+      {
+        "name": "Resource.is_link_internal",
+        "line": 626,
+        "end_line": 628
+      },
+      {
+        "name": "Resource.is_imported",
+        "line": 631,
+        "end_line": 632
+      },
+      {
+        "name": "Resource.source_type",
+        "line": 635,
+        "end_line": 636
+      },
+      {
+        "name": "Resource.is_imported_from_ckan",
+        "line": 639,
+        "end_line": 640
+      },
+      {
+        "name": "Resource.is_imported_from_xml",
+        "line": 643,
+        "end_line": 644
+      },
+      {
+        "name": "Resource.maps_and_plots",
+        "line": 647,
+        "end_line": 648
+      },
+      {
+        "name": "Resource.category",
+        "line": 651,
+        "end_line": 652
+      },
+      {
+        "name": "Resource.comment_editors",
+        "line": 655,
+        "end_line": 666
+      },
+      {
+        "name": "Resource.comment_mail_recipients",
+        "line": 669,
+        "end_line": 672
+      },
+      {
+        "name": "Resource.csv_file_url",
+        "line": 675,
+        "end_line": 676
+      },
+      {
+        "name": "Resource.file_data_path",
+        "line": 679,
+        "end_line": 689
+      },
+      {
+        "name": "Resource.is_archived_file",
+        "line": 692,
+        "end_line": 700
+      },
+      {
+        "name": "Resource.is_archived_csv",
+        "line": 703,
+        "end_line": 704
+      },
+      {
+        "name": "Resource.get_csv_file_internal_url",
+        "line": 706,
+        "end_line": 738
+      },
+      {
+        "name": "Resource.jsonld_file_url",
+        "line": 741,
+        "end_line": 742
+      },
+      {
+        "name": "Resource.csv_file_size",
+        "line": 745,
+        "end_line": 749
+      },
+      {
+        "name": "Resource.jsonld_file_size",
+        "line": 752,
+        "end_line": 756
+      },
+      {
+        "name": "Resource.dataset_title_pl",
+        "line": 759,
+        "end_line": 760
+      },
+      {
+        "name": "Resource.dataset_title_en",
+        "line": 763,
+        "end_line": 764
+      },
+      {
+        "name": "Resource.dataset_slug_pl",
+        "line": 767,
+        "end_line": 768
+      },
+      {
+        "name": "Resource.dataset_slug_en",
+        "line": 771,
+        "end_line": 772
+      },
+      {
+        "name": "Resource.label_from_instance",
+        "line": 775,
+        "end_line": 777
+      },
+      {
+        "name": "Resource.link_is_valid",
+        "line": 780,
+        "end_line": 781
+      },
+      {
+        "name": "Resource.last_link_validation_error_message",
+        "line": 784,
+        "end_line": 792
+      },
+      {
+        "name": "Resource.file_is_valid",
+        "line": 795,
+        "end_line": 796
+      },
+      {
+        "name": "Resource.data_is_valid",
+        "line": 799,
+        "end_line": 800
+      },
+      {
+        "name": "Resource.file_url",
+        "line": 803,
+        "end_line": 809
+      },
+      {
+        "name": "Resource.file_basename",
+        "line": 812,
+        "end_line": 813
+      },
+      {
+        "name": "Resource.file_extension",
+        "line": 816,
+        "end_line": 817
+      },
+      {
+        "name": "Resource.file_size",
+        "line": 820,
+        "end_line": 825
+      },
+      {
+        "name": "Resource.frontend_url",
+        "line": 828,
+        "end_line": 829
+      },
+      {
+        "name": "Resource.frontend_absolute_url",
+        "line": 832,
+        "end_line": 833
+      },
+      {
+        "name": "Resource.formats",
+        "line": 836,
+        "end_line": 838
+      },
+      {
+        "name": "Resource.converted_formats",
+        "line": 841,
+        "end_line": 842
+      },
+      {
+        "name": "Resource.converted_formats_str",
+        "line": 845,
+        "end_line": 846
+      },
+      {
+        "name": "Resource.formats_list",
+        "line": 849,
+        "end_line": 856
+      },
+      {
+        "name": "Resource.download_url",
+        "line": 859,
+        "end_line": 862
+      },
+      {
+        "name": "Resource.csv_download_url",
+        "line": 865,
+        "end_line": 866
+      },
+      {
+        "name": "Resource.jsonld_download_url",
+        "line": 869,
+        "end_line": 870
+      },
+      {
+        "name": "Resource.is_indexable",
+        "line": 873,
+        "end_line": 880
+      },
+      {
+        "name": "Resource.data",
+        "line": 883,
+        "end_line": 891
+      },
+      {
+        "name": "Resource.data_meta",
+        "line": 894,
+        "end_line": 900
+      },
+      {
+        "name": "Resource.geo_data",
+        "line": 903,
+        "end_line": 906
+      },
+      {
+        "name": "Resource.tabular_data",
+        "line": 909,
+        "end_line": 912
+      },
+      {
+        "name": "Resource.increase_openness_score",
+        "line": 914,
+        "end_line": 951
+      },
+      {
+        "name": "Resource.convert_csv_to_jsonld",
+        "line": 953,
+        "end_line": 977
+      },
+      {
+        "name": "Resource.save_file",
+        "line": 979,
+        "end_line": 987
+      },
+      {
+        "name": "Resource.revalidate",
+        "line": 989,
+        "end_line": 1000
+      },
+      {
+        "name": "Resource.revalidate_tabular_data",
+        "line": 1002,
+        "end_line": 1009
+      },
+      {
+        "name": "Resource.accusative_case",
+        "line": 1012,
+        "end_line": 1013
+      },
+      {
+        "name": "Resource.get_resources_files",
+        "line": 1016,
+        "end_line": 1020
+      },
+      {
+        "name": "Resource.get_all_files",
+        "line": 1023,
+        "end_line": 1032
+      },
+      {
+        "name": "Resource.remove_orphaned_file",
+        "line": 1035,
+        "end_line": 1044
+      },
+      {
+        "name": "Resource.get_openness_score",
+        "line": 1046,
+        "end_line": 1059
+      },
+      {
+        "name": "Resource.file_size_human_readable",
+        "line": 1062,
+        "end_line": 1063
+      },
+      {
+        "name": "Resource.file_size_human_readable_or_empty_str",
+        "line": 1066,
+        "end_line": 1067
+      },
+      {
+        "name": "Resource.title_as_link",
+        "line": 1070,
+        "end_line": 1071
+      },
+      {
+        "name": "Resource.title_truncated",
+        "line": 1074,
+        "end_line": 1076
+      },
+      {
+        "name": "Resource.has_data",
+        "line": 1079,
+        "end_line": 1084
+      },
+      {
+        "name": "Resource.related_resource_published",
+        "line": 1087,
+        "end_line": 1089
+      },
+      {
+        "name": "Resource.visualization_types",
+        "line": 1092,
+        "end_line": 1102
+      },
+      {
+        "name": "Resource.method_of_sharing",
+        "line": 1105,
+        "end_line": 1106
+      },
+      {
+        "name": "Resource.verify_rules",
+        "line": 1108,
+        "end_line": 1127
+      },
+      {
+        "name": "Resource.Meta",
+        "line": 1140,
+        "end_line": 1147
+      },
+      {
+        "name": "Resource.chartable",
+        "line": 1150,
+        "end_line": 1153
+      },
+      {
+        "name": "Resource.institution",
+        "line": 1156,
+        "end_line": 1157
+      },
+      {
+        "name": "Resource.types",
+        "line": 1160,
+        "end_line": 1163
+      },
+      {
+        "name": "Resource.map_preview",
+        "line": 1166,
+        "end_line": 1167
+      },
+      {
+        "name": "Resource.chart_preview",
+        "line": 1170,
+        "end_line": 1171
+      },
+      {
+        "name": "Resource.has_tabular_format",
+        "line": 1173,
+        "end_line": 1176
+      },
+      {
+        "name": "Resource.computed_downloads_count",
+        "line": 1179,
+        "end_line": 1180
+      },
+      {
+        "name": "Resource.computed_views_count",
+        "line": 1183,
+        "end_line": 1184
+      },
+      {
+        "name": "Resource.data_special_signs",
+        "line": 1187,
+        "end_line": 1188
+      },
+      {
+        "name": "Resource.special_signs_symbols_list",
+        "line": 1191,
+        "end_line": 1192
+      },
+      {
+        "name": "Resource.special_signs_symbols",
+        "line": 1195,
+        "end_line": 1196
+      },
+      {
+        "name": "Resource.supplement_docs",
+        "line": 1199,
+        "end_line": 1200
+      },
+      {
+        "name": "Resource.supplements_str",
+        "line": 1203,
+        "end_line": 1204
+      },
+      {
+        "name": "Resource.all_regions",
+        "line": 1207,
+        "end_line": 1208
+      },
+      {
+        "name": "Resource.all_regions_str",
+        "line": 1211,
+        "end_line": 1212
+      },
+      {
+        "name": "Resource.to_rdf_graph",
+        "line": 1214,
+        "end_line": 1220
+      },
+      {
+        "name": "Resource.as_sparql_create_query",
+        "line": 1222,
+        "end_line": 1226
+      },
+      {
+        "name": "Resource._charts_for_user",
+        "line": 1228,
+        "end_line": 1233
+      },
+      {
+        "name": "Resource.charts_for_user",
+        "line": 1235,
+        "end_line": 1241
+      },
+      {
+        "name": "Resource.check_link_status",
+        "line": 1243,
+        "end_line": 1244
+      },
+      {
+        "name": "Resource.check_support",
+        "line": 1246,
+        "end_line": 1247
+      },
+      {
+        "name": "Resource.download_file",
+        "line": 1249,
+        "end_line": 1250
+      },
+      {
+        "name": "Resource._get_page",
+        "line": 1252,
+        "end_line": 1254
+      },
+      {
+        "name": "Resource.save_chart",
+        "line": 1256,
+        "end_line": 1257
+      },
+      {
+        "name": "Resource.save_named_chart",
+        "line": 1259,
+        "end_line": 1260
+      },
+      {
+        "name": "Resource.get_resource_type",
+        "line": 1262,
+        "end_line": 1274
+      },
+      {
+        "name": "Resource.is_link_updated",
+        "line": 1277,
+        "end_line": 1286
+      },
+      {
+        "name": "Resource.has_forced_file_changed",
+        "line": 1289,
+        "end_line": 1292
+      },
+      {
+        "name": "Resource.main_file",
+        "line": 1295,
+        "end_line": 1296
+      },
+      {
+        "name": "Resource.csv_converted_file",
+        "line": 1299,
+        "end_line": 1300
+      },
+      {
+        "name": "Resource.jsonld_converted_file",
+        "line": 1303,
+        "end_line": 1304
+      },
+      {
+        "name": "Resource.main_file_info",
+        "line": 1307,
+        "end_line": 1308
+      },
+      {
+        "name": "Resource.main_file_encoding",
+        "line": 1311,
+        "end_line": 1312
+      },
+      {
+        "name": "Resource.main_file_mimetype",
+        "line": 1315,
+        "end_line": 1316
+      },
+      {
+        "name": "Resource.main_file_compressed_format",
+        "line": 1319,
+        "end_line": 1320
+      },
+      {
+        "name": "Resource.main_file_compressed_encoding",
+        "line": 1323,
+        "end_line": 1324
+      },
+      {
+        "name": "Resource._main_file",
+        "line": 1327,
+        "end_line": 1337
+      },
+      {
+        "name": "Resource.other_files",
+        "line": 1340,
+        "end_line": 1343
+      },
+      {
+        "name": "Resource.all_files",
+        "line": 1346,
+        "end_line": 1349
+      },
+      {
+        "name": "Resource.add_to_other_files_cache",
+        "line": 1351,
+        "end_line": 1358
+      },
+      {
+        "name": "Resource.get_other_file_by_format",
+        "line": 1360,
+        "end_line": 1363
+      },
+      {
+        "name": "Resource.is_published",
+        "line": 1366,
+        "end_line": 1367
+      },
+      {
+        "name": "Resource.is_dga",
+        "line": 1370,
+        "end_line": 1377
+      },
+      {
+        "name": "Resource.needs_es_and_rdf_db_update",
+        "line": 1380,
+        "end_line": 1381
+      },
+      {
+        "name": "Resource.send_resource_comment_mail",
+        "line": 1383,
+        "end_line": 1424
+      },
+      {
+        "name": "Resource.update_es_and_rdf_db",
+        "line": 1426,
+        "end_line": 1431
+      },
+      {
+        "name": "Resource.update_dataset_verified",
+        "line": 1433,
+        "end_line": 1438
+      },
+      {
+        "name": "Resource.regions_to_conceal",
+        "line": 1441,
+        "end_line": 1443
+      },
+      {
+        "name": "Resource.regions_to_publish",
+        "line": 1446,
+        "end_line": 1448
+      },
+      {
+        "name": "Resource.schedule_data_date_update",
+        "line": 1450,
+        "end_line": 1457
+      },
+      {
+        "name": "Resource.schedule_interval_data_date_update",
+        "line": 1459,
+        "end_line": 1474
+      },
+      {
+        "name": "Resource.schedule_crontab_data_date_update",
+        "line": 1476,
+        "end_line": 1512
+      },
+      {
+        "name": "Resource.is_last_day_of_month",
+        "line": 1514,
+        "end_line": 1517
+      },
+      {
+        "name": "Resource.correct_last_moth_day",
+        "line": 1519,
+        "end_line": 1523
+      },
+      {
+        "name": "Resource._create_schedule_periodic_task",
+        "line": 1525,
+        "end_line": 1541
+      },
+      {
+        "name": "Resource.cancel_data_date_update",
+        "line": 1543,
+        "end_line": 1548
+      },
+      {
+        "name": "Resource.data_date_task_name",
+        "line": 1551,
+        "end_line": 1552
+      },
+      {
+        "name": "Resource.get_auto_data_date_errors",
+        "line": 1555,
+        "end_line": 1589
+      },
+      {
+        "name": "Resource.import_regions_from_harvester",
+        "line": 1591,
+        "end_line": 1594
+      },
+      {
+        "name": "Resource.is_added_by_harvester_with_id",
+        "line": 1596,
+        "end_line": 1599
+      },
+      {
+        "name": "Resource.is_auto_data_date_allowed",
+        "line": 1602,
+        "end_line": 1607
+      },
+      {
+        "name": "Resource.delete",
+        "line": 1609,
+        "end_line": 1617
+      },
+      {
+        "name": "AggregatedDGAInfo",
+        "line": 1620,
+        "end_line": 1645
+      },
+      {
+        "name": "AggregatedDGAInfo.save",
+        "line": 1628,
+        "end_line": 1631
+      },
+      {
+        "name": "AggregatedDGAInfo.main_dga_resource",
+        "line": 1634,
+        "end_line": 1638
+      },
+      {
+        "name": "AggregatedDGAInfo.main_dga_dataset",
+        "line": 1641,
+        "end_line": 1645
+      },
+      {
+        "name": "Chart",
+        "line": 1648,
+        "end_line": 1742
+      },
+      {
+        "name": "Chart.Meta",
+        "line": 1689,
+        "end_line": 1692
+      },
+      {
+        "name": "Chart.__str__",
+        "line": 1694,
+        "end_line": 1695
+      },
+      {
+        "name": "Chart.signals_map",
+        "line": 1698,
+        "end_line": 1699
+      },
+      {
+        "name": "Chart.is_private",
+        "line": 1702,
+        "end_line": 1703
+      },
+      {
+        "name": "Chart.organization",
+        "line": 1706,
+        "end_line": 1707
+      },
+      {
+        "name": "Chart.without_i18_fields",
+        "line": 1710,
+        "end_line": 1712
+      },
+      {
+        "name": "Chart.can_be_updated_by",
+        "line": 1714,
+        "end_line": 1719
+      },
+      {
+        "name": "Chart.get_unique_slug",
+        "line": 1721,
+        "end_line": 1722
+      },
+      {
+        "name": "Chart.is_visible_for",
+        "line": 1724,
+        "end_line": 1735
+      },
+      {
+        "name": "Chart.update",
+        "line": 1737,
+        "end_line": 1742
+      },
+      {
+        "name": "ResourceFile",
+        "line": 1745,
+        "end_line": 1852
+      },
+      {
+        "name": "ResourceFile.file_size",
+        "line": 1802,
+        "end_line": 1806
+      },
+      {
+        "name": "ResourceFile.extension",
+        "line": 1809,
+        "end_line": 1810
+      },
+      {
+        "name": "ResourceFile.download_url",
+        "line": 1813,
+        "end_line": 1815
+      },
+      {
+        "name": "ResourceFile.file_basename",
+        "line": 1818,
+        "end_line": 1819
+      },
+      {
+        "name": "ResourceFile.check_support",
+        "line": 1821,
+        "end_line": 1824
+      },
+      {
+        "name": "ResourceFile.save_file",
+        "line": 1826,
+        "end_line": 1836
+      },
+      {
+        "name": "ResourceFile.get_openness_score",
+        "line": 1838,
+        "end_line": 1844
+      },
+      {
+        "name": "ResourceFile.without_i18_fields",
+        "line": 1847,
+        "end_line": 1849
+      },
+      {
+        "name": "ResourceFile.__str__",
+        "line": 1851,
+        "end_line": 1852
+      },
+      {
+        "name": "Supplement",
+        "line": 1855,
+        "end_line": 1863
+      },
+      {
+        "name": "ResourceTrash",
+        "line": 1866,
+        "end_line": 1870
+      },
+      {
+        "name": "ResourceTrash.Meta",
+        "line": 1867,
+        "end_line": 1870
+      },
+      {
+        "name": "update_modified_by",
+        "line": 1874,
+        "end_line": 1876
+      },
+      {
+        "name": "update_chart_resource_handler",
+        "line": 1880,
+        "end_line": 1885
+      },
+      {
+        "name": "preprocess_resource",
+        "line": 1889,
+        "end_line": 1893
+      },
+      {
+        "name": "handle_resource_post_save",
+        "line": 1897,
+        "end_line": 1928
+      },
+      {
+        "name": "update_dataset_verified_after_restoring_from_trash",
+        "line": 1932,
+        "end_line": 1934
+      },
+      {
+        "name": "process_resource",
+        "line": 1938,
+        "end_line": 1969
+      },
+      {
+        "name": "update_dataset_archive",
+        "line": 1973,
+        "end_line": 1979
+      },
+      {
+        "name": "update_dataset_watcher",
+        "line": 1982,
+        "end_line": 2003
+      },
+      {
+        "name": "cancel_data_date_update_schedule",
+        "line": 2007,
+        "end_line": 2008
+      },
+      {
+        "name": "process_created_file",
+        "line": 2012,
+        "end_line": 2016
+      },
+      {
+        "name": "remove_regions",
+        "line": 2020,
+        "end_line": 2021
+      },
+      {
+        "name": "restore_regions",
+        "line": 2026,
+        "end_line": 2027
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/tasks/common.py",
+    "sha256": "3bec2b6d32c1df4c97dc7e6e62bf3a04259e5ecb7d5983750d90bde231a46f77",
+    "symbols": [
+      {
+        "name": "prepare_url_task_result_for_resource",
+        "line": 18,
+        "end_line": 32
+      },
+      {
+        "name": "save_task_result_for_resource_after_task_failure",
+        "line": 35,
+        "end_line": 87
+      },
+      {
+        "name": "update_resource_verification_date",
+        "line": 90,
+        "end_line": 94
+      },
+      {
+        "name": "update_resource_openness_score",
+        "line": 97,
+        "end_line": 108
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/tasks/entrypoint_res.py",
+    "sha256": "27c50f3035d9f0e46f1c73804219b6c5c72c2f6c4b9ac347eb11cbc8aef34e09",
+    "symbols": [
+      {
+        "name": "_run_url_validation",
+        "line": 24,
+        "end_line": 32
+      },
+      {
+        "name": "_run_file_validation",
+        "line": 35,
+        "end_line": 54
+      },
+      {
+        "name": "_run_file_data_validation",
+        "line": 57,
+        "end_line": 66
+      },
+      {
+        "name": "_schedule_es_and_rdf_update",
+        "line": 69,
+        "end_line": 73
+      },
+      {
+        "name": "entrypoint_process_resource_validation_task",
+        "line": 81,
+        "end_line": 160
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/tasks/entrypoint_res_file.py",
+    "sha256": "5526d2f6dc7ec5ba1415f5f33518cc93aa4dec4d48bd5fa9ad94860ec15dcb6f",
+    "symbols": [
+      {
+        "name": "_run_file_validation",
+        "line": 26,
+        "end_line": 34
+      },
+      {
+        "name": "_run_file_data_validation",
+        "line": 37,
+        "end_line": 46
+      },
+      {
+        "name": "_create_success_link_task_result",
+        "line": 49,
+        "end_line": 60
+      },
+      {
+        "name": "_schedule_es_and_rdf_update",
+        "line": 63,
+        "end_line": 67
+      },
+      {
+        "name": "entrypoint_process_resource_file_validation_task",
+        "line": 75,
+        "end_line": 146
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/tasks/entrypoint_common.py",
+    "sha256": "51708ab082fe805363bc4015ffdc40af0d5b8661a2a558034ebebc82f1ba2d22",
+    "symbols": [
+      {
+        "name": "report_exceptions",
+        "line": 11,
+        "end_line": 20
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/score_computation/common.py",
+    "sha256": "b18435df6a8192c85571757ba871fd9a1dc8678c6358decb8b1a75d49ab61703",
+    "symbols": [
+      {
+        "name": "SourceData",
+        "line": 14,
+        "end_line": 19
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/score_computation/score_calculation.py",
+    "sha256": "eaa9d41abcc311cd2c111a015c6006a143856915376922853f9f915546289ced",
+    "symbols": [
+      {
+        "name": "calculate_score_for_archive",
+        "line": 24,
+        "end_line": 66
+      },
+      {
+        "name": "get_source_data",
+        "line": 69,
+        "end_line": 99
+      },
+      {
+        "name": "get_default_openness_score_for_extension",
+        "line": 102,
+        "end_line": 112
+      },
+      {
+        "name": "get_score",
+        "line": 115,
+        "end_line": 130
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/score_computation/calculators/__init__.py",
+    "sha256": "228c64fdbdb84f50fe0155ec66ba32448ad87ac06bcda52cc864f51fe89eb6dc",
+    "symbols": [
+      {
+        "name": "get_calculator_for_extension",
+        "line": 21,
+        "end_line": 22
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/score_computation/calculators/calculator_json.py",
+    "sha256": "b809701e940ea246768cac469086b53c638af8adb50117e98f298e116e76636c",
+    "symbols": [
+      {
+        "name": "_get_graph",
+        "line": 16,
+        "end_line": 52
+      },
+      {
+        "name": "calculate_score_for_json",
+        "line": 55,
+        "end_line": 68
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/score_computation/calculators/calculator_xml.py",
+    "sha256": "fa4e0db5b5872e9bccc0cc50a6bfb8cab99e31047f6604ca70e509b06d27e24c",
+    "symbols": [
+      {
+        "name": "_validate_score_4",
+        "line": 19,
+        "end_line": 37
+      },
+      {
+        "name": "_validate_score_5",
+        "line": 40,
+        "end_line": 51
+      },
+      {
+        "name": "calculate_score_for_xml",
+        "line": 54,
+        "end_line": 70
+      },
+      {
+        "name": "calculate_score_for_rdf",
+        "line": 73,
+        "end_line": 87
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/score_computation/calculators/contains_linked_data.py",
+    "sha256": "0cb89c7e5c2ca3a40aff2c95e1e38fb1783930bf234addbff57d28d696df9342",
+    "symbols": [
+      {
+        "name": "graph_contains_linked_data",
+        "line": 7,
+        "end_line": 20
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/file_validation.py",
+    "sha256": "b53bcfae94701b012d1e5a5a1878909be615657c2dc27564d4452c2ded580872",
+    "symbols": [
+      {
+        "name": "UnknownFileFormatError",
+        "line": 31,
+        "end_line": 32
+      },
+      {
+        "name": "_is_json",
+        "line": 35,
+        "end_line": 36
+      },
+      {
+        "name": "_is_xml",
+        "line": 39,
+        "end_line": 40
+      },
+      {
+        "name": "_is_office_file",
+        "line": 43,
+        "end_line": 44
+      },
+      {
+        "name": "_is_spreadsheet",
+        "line": 47,
+        "end_line": 48
+      },
+      {
+        "name": "_is_plain_text",
+        "line": 51,
+        "end_line": 52
+      },
+      {
+        "name": "_isnt_text_encoding",
+        "line": 55,
+        "end_line": 62
+      },
+      {
+        "name": "_isnt_msdoc_text",
+        "line": 65,
+        "end_line": 70
+      },
+      {
+        "name": "_analyze_plain_text",
+        "line": 73,
+        "end_line": 83
+      },
+      {
+        "name": "_analyze_office_file",
+        "line": 86,
+        "end_line": 111
+      },
+      {
+        "name": "check_support",
+        "line": 114,
+        "end_line": 125
+      },
+      {
+        "name": "get_file_info",
+        "line": 128,
+        "end_line": 131
+      },
+      {
+        "name": "analyze_file",
+        "line": 134,
+        "end_line": 200
+      },
+      {
+        "name": "_json_suspected_as_jsonld",
+        "line": 203,
+        "end_line": 212
+      },
+      {
+        "name": "check_rdf",
+        "line": 215,
+        "end_line": 236
+      },
+      {
+        "name": "evaluate_file_details",
+        "line": 239,
+        "end_line": 292
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/resources/archives.py",
+    "sha256": "d50577fa4fddbc99709121f30658fdccd64e16205117a79d29cf253a4c24180e",
+    "symbols": [
+      {
+        "name": "UnsupportedArchiveError",
+        "line": 18,
+        "end_line": 19
+      },
+      {
+        "name": "is_archive_file",
+        "line": 22,
+        "end_line": 23
+      },
+      {
+        "name": "_is_password_protected_7z",
+        "line": 26,
+        "end_line": 33
+      },
+      {
+        "name": "_is_password_protected_zip",
+        "line": 36,
+        "end_line": 45
+      },
+      {
+        "name": "_is_password_protected_rar",
+        "line": 48,
+        "end_line": 55
+      },
+      {
+        "name": "get_memory_file_info",
+        "line": 58,
+        "end_line": 62
+      },
+      {
+        "name": "is_password_protected_archive_file",
+        "line": 65,
+        "end_line": 75
+      },
+      {
+        "name": "ArchiveReader",
+        "line": 78,
+        "end_line": 167
+      },
+      {
+        "name": "ArchiveReader.__init__",
+        "line": 81,
+        "end_line": 101
+      },
+      {
+        "name": "ArchiveReader.from_bytes",
+        "line": 104,
+        "end_line": 109
+      },
+      {
+        "name": "ArchiveReader.__len__",
+        "line": 111,
+        "end_line": 112
+      },
+      {
+        "name": "ArchiveReader.__getitem__",
+        "line": 114,
+        "end_line": 115
+      },
+      {
+        "name": "ArchiveReader.__enter__",
+        "line": 117,
+        "end_line": 118
+      },
+      {
+        "name": "ArchiveReader.__iter__",
+        "line": 120,
+        "end_line": 121
+      },
+      {
+        "name": "ArchiveReader.__exit__",
+        "line": 123,
+        "end_line": 126
+      },
+      {
+        "name": "ArchiveReader.get_by_extension",
+        "line": 128,
+        "end_line": 133
+      },
+      {
+        "name": "ArchiveReader.extract",
+        "line": 135,
+        "end_line": 153
+      },
+      {
+        "name": "ArchiveReader.extract_single",
+        "line": 155,
+        "end_line": 159
+      },
+      {
+        "name": "ArchiveReader.__repr__",
+        "line": 161,
+        "end_line": 165
+      },
+      {
+        "name": "PasswordProtectedArchiveError",
+        "line": 170,
+        "end_line": 171
+      }
+    ]
+  },
+  {
+    "path": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod/settings/base.py",
+    "sha256": "a98c5441c32f0a44adf62503d5f14ecebaa4a34f736993f6de759fc4499c9d9e",
+    "symbols": [
+      {
+        "name": "_build_extension_to_mime_type_map",
+        "line": 1321,
+        "end_line": 1329
+      },
+      {
+        "name": "_supported_formats",
+        "line": 1411,
+        "end_line": 1417
+      },
+      {
+        "name": "_supported_formats_choices",
+        "line": 1420,
+        "end_line": 1421
+      },
+      {
+        "name": "url_without_schema",
+        "line": 2104,
+        "end_line": 2109
+      }
+    ]
+  }
+]

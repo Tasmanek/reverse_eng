@@ -1,0 +1,40 @@
+[
+  {
+    "kind": "CKAN",
+    "planes": [
+      {
+        "title": "CKAN — nadanie stopnia otwartości zasobu",
+        "svg": "ckan_01.svg"
+      },
+      {
+        "title": "Oblicz stopień według formatu i treści",
+        "svg": "ckan_02.svg"
+      }
+    ]
+  },
+  {
+    "kind": "XML",
+    "planes": [
+      {
+        "title": "XML — nadanie stopnia otwartości zasobu",
+        "svg": "xml_01.svg"
+      },
+      {
+        "title": "Oceń wszystkie pliki; wybierz maksimum",
+        "svg": "xml_02.svg"
+      },
+      {
+        "title": "Oblicz stopień według formatu i treści",
+        "svg": "xml_03.svg"
+      },
+      {
+        "title": "Oblicz stopień według formatu i treści",
+        "svg": "xml_04.svg"
+      },
+      {
+        "title": "XML — późniejsze podniesienie stopnia przez pliki pochodne",
+        "svg": "xml_05.svg"
+      }
+    ]
+  }
+]

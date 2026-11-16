@@ -1,0 +1,47 @@
+[
+  {
+    "title": "CKAN i XML — osobne przygotowanie, wspólne stopnie otwartości",
+    "svg": "wspolny_01.svg",
+    "id": "WSPOLNY_Proces"
+  },
+  {
+    "title": "Przygotuj zasób CKAN",
+    "svg": "wspolny_02.svg",
+    "id": "WSPOLNY_Proces_prepCK"
+  },
+  {
+    "title": "Przygotuj zasób XML",
+    "svg": "wspolny_03.svg",
+    "id": "WSPOLNY_Proces_prepXML"
+  },
+  {
+    "title": "OBLICZ STOPIEŃ OTWARTOŚCI",
+    "svg": "wspolny_04.svg",
+    "id": "WSPOLNY_Proces_core"
+  },
+  {
+    "title": "Oceń każdy plik zasobu",
+    "svg": "wspolny_05.svg",
+    "id": "WSPOLNY_Proces_core_files"
+  },
+  {
+    "title": "WSPÓLNE — ocena pojedynczego źródła: linku albo pliku",
+    "svg": "wspolny_06.svg",
+    "id": "WSPOLNY_JednoZrodlo"
+  },
+  {
+    "title": "Rozstrzygnij lokalne archiwum",
+    "svg": "wspolny_07.svg",
+    "id": "WSPOLNY_JednoZrodlo_archive"
+  },
+  {
+    "title": "Zastosuj kalkulator lub tabelę formatów",
+    "svg": "wspolny_08.svg",
+    "id": "WSPOLNY_JednoZrodlo_calculator"
+  },
+  {
+    "title": "Ustal stopień z tabeli formatów",
+    "svg": "wspolny_09.svg",
+    "id": "WSPOLNY_JednoZrodlo_calculator_default"
+  }
+]

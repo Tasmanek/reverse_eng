@@ -1,0 +1,2074 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="WSPOLNY_Definitions" targetNamespace="https://example.org/harvester/openness" exporter="Codex" exporterVersion="1">
+  <bpmn:process id="WSPOLNY_Proces" name="CKAN i XML — osobne przygotowanie, wspólne stopnie otwartości" isExecutable="false">
+    <bpmn:documentation>AS-IS lokalnego snapshotu mcod 2.62.3, 98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree. Model analityczny niewykonywalny. Osobne przygotowanie CKAN/XML, wspólna ocena. 0 jest brakiem stopnia 1–5; brak nowego obliczenia nie jest tożsamy z 0. Boundary error odwzorowuje propagację wyjątku, nie dodaje handlera/rollbacku do aplikacji.</bpmn:documentation>
+    <bpmn:startEvent id="WSPOLNY_Proces_ckan" name="Wejście CKAN">
+      <bpmn:outgoing>WSPOLNY_Proces_F1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="WSPOLNY_Proces_prepCK" name="Przygotuj zasób CKAN">
+      <bpmn:incoming>WSPOLNY_Proces_F1</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_Proces_F2</bpmn:outgoing>
+      <bpmn:startEvent id="WSPOLNY_Proces_prepCK_start" name="Źródło aktywne; import metadanych">
+        <bpmn:outgoing>WSPOLNY_Proces_prepCK_F1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="WSPOLNY_Proces_prepCK_validate" name="Sprawdź pobranie API, JSON i schemat">
+        <bpmn:documentation>Kontrole importu, nie kalkulator stopnia otwartości. XML odrzuca cały błędny wykaz; CKAN może odrzucić całą listę na schemacie.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_prepCK_F1</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_prepCK_F2</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="WSPOLNY_Proces_prepCK_accepted" name="Schemat poprawny i zbiór przyjęty?" gatewayDirection="Diverging">
+        <bpmn:documentation>CKAN: po schemacie także selekcja zbioru według licencji/kosza/HVD/DGA. Odrzucenie zbioru oznacza brak oceny jego zasobu w tym przebiegu; poprzedni odrzucony zbiór może zostać wycofany przy synchronizacji.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_prepCK_F2</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_prepCK_F3</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_Proces_prepCK_F4</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="WSPOLNY_Proces_prepCK_save" name="Zapisz zasób i jego format">
+        <bpmn:documentation>Zapis może przerwać się wyjątkiem. Nie oznacza to automatycznie nadania nowego stopnia. CKAN format z bazy może pochodzić z deklaracji, rozpoznania lub błędu propagacji U-1.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_prepCK_F3</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_prepCK_F5</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="WSPOLNY_Proces_prepCK_scheduled" name="Sygnał zleca przygotowanie zasobu?" gatewayDirection="Diverging">
+        <bpmn:documentation>Nowy publikowany zasób / odpowiednia zmiana linku, availability, forced_file_type lub restored. Sam format/opis nie wymusza ponownej oceny; nowy szkic nie uruchamia tej ścieżki.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_prepCK_F5</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_prepCK_F6</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_Proces_prepCK_F7</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:endEvent id="WSPOLNY_Proces_prepCK_skip" name="Brak wywołania oceny">
+        <bpmn:incoming>WSPOLNY_Proces_prepCK_F4</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_Proces_prepCK_F7</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_Proces_prepCK_F9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:serviceTask id="WSPOLNY_Proces_prepCK_prep" name="Pomiń tworzenie kopii głównej i kontrolę lokalnej tabeli">
+        <bpmn:documentation>CKAN: process_resource_from_url_task zwraca {}; bez pliku głównego. XML: URL → wymagana kontrola pliku → warunkowe dane. Błąd URL/pliku nie jest automatycznym pominięciem update_resource_openness_score; istotne są zachowany stan i późniejsze wyjątki. Po sukcesie indeksacji osobne konwersje; pierwsza ocena na nie nie czeka.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_prepCK_F6</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_prepCK_F8</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="WSPOLNY_Proces_prepCK_ready" name="Przejdź do wspólnej oceny">
+        <bpmn:incoming>WSPOLNY_Proces_prepCK_F8</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:boundaryEvent id="WSPOLNY_Proces_prepCK_failure" name="Przerwany zapis" attachedToRef="WSPOLNY_Proces_prepCK_save" cancelActivity="true">
+        <bpmn:documentation>Analityczne odwzorowanie wyjątku; bez gwarancji rollbacku.</bpmn:documentation>
+        <bpmn:errorEventDefinition id="WSPOLNY_Proces_prepCK_failure_def" errorRef="ErrorPersist" />
+        <bpmn:outgoing>WSPOLNY_Proces_prepCK_F9</bpmn:outgoing>
+      </bpmn:boundaryEvent>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepCK_F1" sourceRef="WSPOLNY_Proces_prepCK_start" targetRef="WSPOLNY_Proces_prepCK_validate" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepCK_F2" sourceRef="WSPOLNY_Proces_prepCK_validate" targetRef="WSPOLNY_Proces_prepCK_accepted" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepCK_F3" sourceRef="WSPOLNY_Proces_prepCK_accepted" targetRef="WSPOLNY_Proces_prepCK_save" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepCK_F4" sourceRef="WSPOLNY_Proces_prepCK_accepted" targetRef="WSPOLNY_Proces_prepCK_skip" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepCK_F5" sourceRef="WSPOLNY_Proces_prepCK_save" targetRef="WSPOLNY_Proces_prepCK_scheduled" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepCK_F6" sourceRef="WSPOLNY_Proces_prepCK_scheduled" targetRef="WSPOLNY_Proces_prepCK_prep" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepCK_F7" sourceRef="WSPOLNY_Proces_prepCK_scheduled" targetRef="WSPOLNY_Proces_prepCK_skip" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepCK_F8" sourceRef="WSPOLNY_Proces_prepCK_prep" targetRef="WSPOLNY_Proces_prepCK_ready" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepCK_F9" sourceRef="WSPOLNY_Proces_prepCK_failure" targetRef="WSPOLNY_Proces_prepCK_skip" />
+    </bpmn:subProcess>
+    <bpmn:exclusiveGateway id="WSPOLNY_Proces_ckReady" name="Uruchomiono ocenę zasobu?" gatewayDirection="Diverging">
+      <bpmn:incoming>WSPOLNY_Proces_F2</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_Proces_F3</bpmn:outgoing>
+      <bpmn:outgoing>WSPOLNY_Proces_F7</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:startEvent id="WSPOLNY_Proces_xml" name="Wejście XML">
+      <bpmn:outgoing>WSPOLNY_Proces_F4</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="WSPOLNY_Proces_prepXML" name="Przygotuj zasób XML">
+      <bpmn:incoming>WSPOLNY_Proces_F4</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_Proces_F5</bpmn:outgoing>
+      <bpmn:startEvent id="WSPOLNY_Proces_prepXML_start" name="Źródło aktywne; import metadanych">
+        <bpmn:outgoing>WSPOLNY_Proces_prepXML_F1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="WSPOLNY_Proces_prepXML_validate" name="Sprawdź pobranie XML, MD5, XSD i opisy">
+        <bpmn:documentation>Kontrole importu, nie kalkulator stopnia otwartości. XML odrzuca cały błędny wykaz; CKAN może odrzucić całą listę na schemacie.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_prepXML_F1</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_prepXML_F2</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="WSPOLNY_Proces_prepXML_accepted" name="Cały wykaz został przyjęty?" gatewayDirection="Diverging">
+        <bpmn:documentation>CKAN: po schemacie także selekcja zbioru według licencji/kosza/HVD/DGA. Odrzucenie zbioru oznacza brak oceny jego zasobu w tym przebiegu; poprzedni odrzucony zbiór może zostać wycofany przy synchronizacji.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_prepXML_F2</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_prepXML_F3</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_Proces_prepXML_F4</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="WSPOLNY_Proces_prepXML_save" name="Zapisz zasób i jego format">
+        <bpmn:documentation>Zapis może przerwać się wyjątkiem. Nie oznacza to automatycznie nadania nowego stopnia. CKAN format z bazy może pochodzić z deklaracji, rozpoznania lub błędu propagacji U-1.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_prepXML_F3</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_prepXML_F5</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="WSPOLNY_Proces_prepXML_scheduled" name="Sygnał zleca przygotowanie zasobu?" gatewayDirection="Diverging">
+        <bpmn:documentation>Nowy publikowany zasób / odpowiednia zmiana linku, availability, forced_file_type lub restored. Sam format/opis nie wymusza ponownej oceny; nowy szkic nie uruchamia tej ścieżki.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_prepXML_F5</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_prepXML_F6</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_Proces_prepXML_F7</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:endEvent id="WSPOLNY_Proces_prepXML_skip" name="Brak wywołania oceny">
+        <bpmn:incoming>WSPOLNY_Proces_prepXML_F4</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_Proces_prepXML_F7</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_Proces_prepXML_F9</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:serviceTask id="WSPOLNY_Proces_prepXML_prep" name="Przygotuj URL, plik i warunkowo dane tabeli">
+        <bpmn:documentation>CKAN: process_resource_from_url_task zwraca {}; bez pliku głównego. XML: URL → wymagana kontrola pliku → warunkowe dane. Błąd URL/pliku nie jest automatycznym pominięciem update_resource_openness_score; istotne są zachowany stan i późniejsze wyjątki. Po sukcesie indeksacji osobne konwersje; pierwsza ocena na nie nie czeka.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_prepXML_F6</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_prepXML_F8</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="WSPOLNY_Proces_prepXML_ready" name="Przejdź do wspólnej oceny">
+        <bpmn:incoming>WSPOLNY_Proces_prepXML_F8</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:boundaryEvent id="WSPOLNY_Proces_prepXML_failure" name="Przerwany zapis" attachedToRef="WSPOLNY_Proces_prepXML_save" cancelActivity="true">
+        <bpmn:documentation>Analityczne odwzorowanie wyjątku; bez gwarancji rollbacku.</bpmn:documentation>
+        <bpmn:errorEventDefinition id="WSPOLNY_Proces_prepXML_failure_def" errorRef="ErrorPersist" />
+        <bpmn:outgoing>WSPOLNY_Proces_prepXML_F9</bpmn:outgoing>
+      </bpmn:boundaryEvent>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepXML_F1" sourceRef="WSPOLNY_Proces_prepXML_start" targetRef="WSPOLNY_Proces_prepXML_validate" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepXML_F2" sourceRef="WSPOLNY_Proces_prepXML_validate" targetRef="WSPOLNY_Proces_prepXML_accepted" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepXML_F3" sourceRef="WSPOLNY_Proces_prepXML_accepted" targetRef="WSPOLNY_Proces_prepXML_save" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepXML_F4" sourceRef="WSPOLNY_Proces_prepXML_accepted" targetRef="WSPOLNY_Proces_prepXML_skip" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepXML_F5" sourceRef="WSPOLNY_Proces_prepXML_save" targetRef="WSPOLNY_Proces_prepXML_scheduled" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepXML_F6" sourceRef="WSPOLNY_Proces_prepXML_scheduled" targetRef="WSPOLNY_Proces_prepXML_prep" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepXML_F7" sourceRef="WSPOLNY_Proces_prepXML_scheduled" targetRef="WSPOLNY_Proces_prepXML_skip" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepXML_F8" sourceRef="WSPOLNY_Proces_prepXML_prep" targetRef="WSPOLNY_Proces_prepXML_ready" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_prepXML_F9" sourceRef="WSPOLNY_Proces_prepXML_failure" targetRef="WSPOLNY_Proces_prepXML_skip" />
+    </bpmn:subProcess>
+    <bpmn:exclusiveGateway id="WSPOLNY_Proces_xmlReady" name="Uruchomiono ocenę zasobu?" gatewayDirection="Diverging">
+      <bpmn:incoming>WSPOLNY_Proces_F5</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_Proces_F6</bpmn:outgoing>
+      <bpmn:outgoing>WSPOLNY_Proces_F8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="WSPOLNY_Proces_notrun" name="BRAK NOWEGO PRZELICZENIA">
+      <bpmn:documentation>Brak utworzonego zasobu albo zachowana dotychczasowa ocena, zwykle domyślne 0 nowego zasobu. Nie przypisujemy 1 za sam brak przeliczenia.</bpmn:documentation>
+      <bpmn:incoming>WSPOLNY_Proces_F7</bpmn:incoming>
+      <bpmn:incoming>WSPOLNY_Proces_F8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="WSPOLNY_Proces_merge" name="Wspólna część algorytmu" gatewayDirection="Converging">
+      <bpmn:incoming>WSPOLNY_Proces_F3</bpmn:incoming>
+      <bpmn:incoming>WSPOLNY_Proces_F6</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_Proces_F9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:subProcess id="WSPOLNY_Proces_core" name="OBLICZ STOPIEŃ OTWARTOŚCI">
+      <bpmn:incoming>WSPOLNY_Proces_F9</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_Proces_F10</bpmn:outgoing>
+      <bpmn:startEvent id="WSPOLNY_Proces_core_start" name="Stan zasobu w bazie">
+        <bpmn:outgoing>WSPOLNY_Proces_core_F1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:exclusiveGateway id="WSPOLNY_Proces_core_format" name="Format zasobu jest None?" gatewayDirection="Diverging">
+        <bpmn:documentation>Dokładnie None, nie pusty napis. get_openness_score: format_ = format_ or self.format; brak normalizacji wielkości liter w kalkulatorze.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_core_F1</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_core_F2</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_Proces_core_F4</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="WSPOLNY_Proces_core_zero" name="Wynik zasobu = 0">
+        <bpmn:documentation>Brak stopnia 1–5; zapis obliczonego zera, a nie przerwanie obliczenia.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_core_F2</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_core_F3</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="WSPOLNY_Proces_core_source" name="Jest link i nie ma pliku głównego?" gatewayDirection="Diverging">
+        <bpmn:documentation>Dokładny warunek: if self.link and not self.main_file. W przeciwnym razie lista self.all_files, także gdy plików jest zero.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_core_F4</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_core_F5</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_Proces_core_F6</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:callActivity id="WSPOLNY_Proces_core_link" name="Oceń jedno źródło: link + format zasobu" calledElement="WSPOLNY_JednoZrodlo">
+        <bpmn:documentation>Wspólna procedura oceny pojedynczego źródła; CKAN trafia standardowo tą ścieżką. Pobranie na potrzeby oceny nie tworzy ResourceFile.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_core_F5</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_core_F7</bpmn:outgoing>
+      </bpmn:callActivity>
+      <bpmn:subProcess id="WSPOLNY_Proces_core_files" name="Oceń każdy plik zasobu">
+        <bpmn:documentation>Główny i wszystkie pochodne. Najpierw ocena wszystkich plików, dopiero potem zapis wyników. Nieprzechwycony wyjątek jednego pliku przerywa obliczenie całego zasobu.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_core_F6</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_core_F8</bpmn:outgoing>
+        <bpmn:startEvent id="WSPOLNY_Proces_core_files_start" name="Lista plików zasobu">
+          <bpmn:outgoing>WSPOLNY_Proces_core_files_F1</bpmn:outgoing>
+        </bpmn:startEvent>
+        <bpmn:exclusiveGateway id="WSPOLNY_Proces_core_files_next" name="Jest następny plik?" gatewayDirection="Mixed">
+          <bpmn:incoming>WSPOLNY_Proces_core_files_F1</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_Proces_core_files_F2</bpmn:outgoing>
+          <bpmn:incoming>WSPOLNY_Proces_core_files_F8</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_Proces_core_files_F9</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:serviceTask id="WSPOLNY_Proces_core_files_fmt" name="Ustal efektywny format pliku">
+          <bpmn:documentation>compressed_file_format lub format. jsonstat → json. Ta normalizacja dotyczy pliku, nie linku.</bpmn:documentation>
+          <bpmn:incoming>WSPOLNY_Proces_core_files_F2</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_Proces_core_files_F3</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:exclusiveGateway id="WSPOLNY_Proces_core_files_none" name="Format pliku jest None?" gatewayDirection="Diverging">
+          <bpmn:incoming>WSPOLNY_Proces_core_files_F3</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_Proces_core_files_F4</bpmn:outgoing>
+          <bpmn:outgoing>WSPOLNY_Proces_core_files_F5</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:serviceTask id="WSPOLNY_Proces_core_files_one" name="Ocena tego pliku = 1">
+          <bpmn:documentation>Brak formatu pojedynczego pliku oznacza 1 i nie wymaga odczytu treści. To inna reguła niż format zasobu None → 0.</bpmn:documentation>
+          <bpmn:incoming>WSPOLNY_Proces_core_files_F4</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_Proces_core_files_F6</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:callActivity id="WSPOLNY_Proces_core_files_call" name="Oceń jedno źródło: plik + efektywny format" calledElement="WSPOLNY_JednoZrodlo">
+          <bpmn:incoming>WSPOLNY_Proces_core_files_F5</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_Proces_core_files_F7</bpmn:outgoing>
+        </bpmn:callActivity>
+        <bpmn:serviceTask id="WSPOLNY_Proces_core_files_keep" name="Zachowaj wynik pliku do późniejszego zapisu">
+          <bpmn:incoming>WSPOLNY_Proces_core_files_F6</bpmn:incoming>
+          <bpmn:incoming>WSPOLNY_Proces_core_files_F7</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_Proces_core_files_F8</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:endEvent id="WSPOLNY_Proces_core_files_end" name="Wszystkie oceny plików gotowe">
+          <bpmn:incoming>WSPOLNY_Proces_core_files_F9</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow id="WSPOLNY_Proces_core_files_F1" sourceRef="WSPOLNY_Proces_core_files_start" targetRef="WSPOLNY_Proces_core_files_next" />
+        <bpmn:sequenceFlow id="WSPOLNY_Proces_core_files_F2" sourceRef="WSPOLNY_Proces_core_files_next" targetRef="WSPOLNY_Proces_core_files_fmt" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="WSPOLNY_Proces_core_files_F3" sourceRef="WSPOLNY_Proces_core_files_fmt" targetRef="WSPOLNY_Proces_core_files_none" />
+        <bpmn:sequenceFlow id="WSPOLNY_Proces_core_files_F4" sourceRef="WSPOLNY_Proces_core_files_none" targetRef="WSPOLNY_Proces_core_files_one" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="WSPOLNY_Proces_core_files_F5" sourceRef="WSPOLNY_Proces_core_files_none" targetRef="WSPOLNY_Proces_core_files_call" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="WSPOLNY_Proces_core_files_F6" sourceRef="WSPOLNY_Proces_core_files_one" targetRef="WSPOLNY_Proces_core_files_keep" />
+        <bpmn:sequenceFlow id="WSPOLNY_Proces_core_files_F7" sourceRef="WSPOLNY_Proces_core_files_call" targetRef="WSPOLNY_Proces_core_files_keep" />
+        <bpmn:sequenceFlow id="WSPOLNY_Proces_core_files_F8" sourceRef="WSPOLNY_Proces_core_files_keep" targetRef="WSPOLNY_Proces_core_files_next" name="Kolejny" />
+        <bpmn:sequenceFlow id="WSPOLNY_Proces_core_files_F9" sourceRef="WSPOLNY_Proces_core_files_next" targetRef="WSPOLNY_Proces_core_files_end" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+      </bpmn:subProcess>
+      <bpmn:serviceTask id="WSPOLNY_Proces_core_max" name="Wynik = maksimum ocen plików; pusta lista → 0">
+        <bpmn:documentation>resource_score = max(files_score.values()) if files_score else 0. Jedna ocena pliku 1 nie wystarcza do wyniku zasobu 1, jeśli inny plik ma 2–5. Wszystkie pliki 0 → wynik 0.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_Proces_core_F8</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_core_F9</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="WSPOLNY_Proces_core_merge" name="Obliczony wynik zasobu" gatewayDirection="Converging">
+        <bpmn:incoming>WSPOLNY_Proces_core_F3</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_Proces_core_F7</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_Proces_core_F9</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_Proces_core_F10</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:endEvent id="WSPOLNY_Proces_core_end" name="Zwróć wynik i oceny plików do zapisu">
+        <bpmn:incoming>WSPOLNY_Proces_core_F10</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_core_F1" sourceRef="WSPOLNY_Proces_core_start" targetRef="WSPOLNY_Proces_core_format" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_core_F2" sourceRef="WSPOLNY_Proces_core_format" targetRef="WSPOLNY_Proces_core_zero" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_core_F3" sourceRef="WSPOLNY_Proces_core_zero" targetRef="WSPOLNY_Proces_core_merge" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_core_F4" sourceRef="WSPOLNY_Proces_core_format" targetRef="WSPOLNY_Proces_core_source" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_core_F5" sourceRef="WSPOLNY_Proces_core_source" targetRef="WSPOLNY_Proces_core_link" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_core_F6" sourceRef="WSPOLNY_Proces_core_source" targetRef="WSPOLNY_Proces_core_files" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_core_F7" sourceRef="WSPOLNY_Proces_core_link" targetRef="WSPOLNY_Proces_core_merge" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_core_F8" sourceRef="WSPOLNY_Proces_core_files" targetRef="WSPOLNY_Proces_core_max" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_core_F9" sourceRef="WSPOLNY_Proces_core_max" targetRef="WSPOLNY_Proces_core_merge" />
+      <bpmn:sequenceFlow id="WSPOLNY_Proces_core_F10" sourceRef="WSPOLNY_Proces_core_merge" targetRef="WSPOLNY_Proces_core_end" />
+    </bpmn:subProcess>
+    <bpmn:serviceTask id="WSPOLNY_Proces_save" name="Zapisz ocenę zasobu, następnie oceny plików">
+      <bpmn:documentation>update_resource_openness_score: get_openness_score jest przed UPDATE. Po obliczeniu najpierw UPDATE Resource.openness_score, potem osobno każdy ResourceFile.openness_score. Nie deklarujemy atomowości całego zapisu.</bpmn:documentation>
+      <bpmn:incoming>WSPOLNY_Proces_F10</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_Proces_F11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="WSPOLNY_Proces_done" name="Nowy wynik w bazie: 0 albo 1–5">
+      <bpmn:documentation>Odświeżenie ES/RDF to późniejszy warunkowy etap. Brak odświeżenia nie oznacza braku zapisu oceny. Po nowych plikach pochodnych XML wywołuje ten sam algorytm ponownie.</bpmn:documentation>
+      <bpmn:incoming>WSPOLNY_Proces_F11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:boundaryEvent id="WSPOLNY_Proces_calcError" name="Nieprzechwycony wyjątek" attachedToRef="WSPOLNY_Proces_core" cancelActivity="true">
+      <bpmn:documentation>Analityczne odwzorowanie wyjątku; bez gwarancji rollbacku.</bpmn:documentation>
+      <bpmn:errorEventDefinition id="WSPOLNY_Proces_calcError_def" errorRef="ErrorCompute" />
+      <bpmn:outgoing>WSPOLNY_Proces_F12</bpmn:outgoing>
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="WSPOLNY_Proces_noUpdate" name="NIE ZAPISANO NOWEJ OCENY">
+      <bpmn:documentation>Wyjątek z get_openness_score/get_score przed UPDATE. Dla istniejącego zasobu pozostaje poprzednia ocena, dla nowego zwykle wartość domyślna 0. Nie ma ogólnej reguły błąd → 0 ani błąd → 1.</bpmn:documentation>
+      <bpmn:incoming>WSPOLNY_Proces_F12</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:boundaryEvent id="WSPOLNY_Proces_saveError" name="Błąd zapisu" attachedToRef="WSPOLNY_Proces_save" cancelActivity="true">
+      <bpmn:documentation>Analityczne odwzorowanie wyjątku; bez gwarancji rollbacku.</bpmn:documentation>
+      <bpmn:errorEventDefinition id="WSPOLNY_Proces_saveError_def" errorRef="ErrorPersist" />
+      <bpmn:outgoing>WSPOLNY_Proces_F13</bpmn:outgoing>
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="WSPOLNY_Proces_partial" name="ZAPIS NIEPOTWIERDZONY / MOŻLIWY CZĘŚCIOWY">
+      <bpmn:documentation>Błąd bazy po obliczeniu. UPDATE zasobu mógł się udać przed błędem aktualizacji plików. Stan zależy od miejsca błędu i otaczającej transakcji; nie zakładamy automatycznego wyzerowania ani rollbacku.</bpmn:documentation>
+      <bpmn:incoming>WSPOLNY_Proces_F13</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F1" sourceRef="WSPOLNY_Proces_ckan" targetRef="WSPOLNY_Proces_prepCK" />
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F2" sourceRef="WSPOLNY_Proces_prepCK" targetRef="WSPOLNY_Proces_ckReady" />
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F3" sourceRef="WSPOLNY_Proces_ckReady" targetRef="WSPOLNY_Proces_merge" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F4" sourceRef="WSPOLNY_Proces_xml" targetRef="WSPOLNY_Proces_prepXML" />
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F5" sourceRef="WSPOLNY_Proces_prepXML" targetRef="WSPOLNY_Proces_xmlReady" />
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F6" sourceRef="WSPOLNY_Proces_xmlReady" targetRef="WSPOLNY_Proces_merge" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F7" sourceRef="WSPOLNY_Proces_ckReady" targetRef="WSPOLNY_Proces_notrun" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F8" sourceRef="WSPOLNY_Proces_xmlReady" targetRef="WSPOLNY_Proces_notrun" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F9" sourceRef="WSPOLNY_Proces_merge" targetRef="WSPOLNY_Proces_core" />
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F10" sourceRef="WSPOLNY_Proces_core" targetRef="WSPOLNY_Proces_save" />
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F11" sourceRef="WSPOLNY_Proces_save" targetRef="WSPOLNY_Proces_done" />
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F12" sourceRef="WSPOLNY_Proces_calcError" targetRef="WSPOLNY_Proces_noUpdate" />
+    <bpmn:sequenceFlow id="WSPOLNY_Proces_F13" sourceRef="WSPOLNY_Proces_saveError" targetRef="WSPOLNY_Proces_partial" />
+  </bpmn:process>
+  <bpmn:error id="ErrorRequest" name="Przechwycony requests.RequestException" errorCode="REQUEST_EXCEPTION" />
+  <bpmn:error id="ErrorCompute" name="Nieprzechwycony błąd obliczania" errorCode="COMPUTE_ERROR" />
+  <bpmn:error id="ErrorPersist" name="Błąd zapisu oceny" errorCode="PERSIST_ERROR" />
+  <bpmn:process id="WSPOLNY_JednoZrodlo" name="WSPÓLNE — ocena pojedynczego źródła: linku albo pliku" isExecutable="false">
+    <bpmn:documentation>AS-IS lokalnego snapshotu mcod 2.62.3, 98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree. Model analityczny niewykonywalny. Osobne przygotowanie CKAN/XML, wspólna ocena. 0 jest brakiem stopnia 1–5; brak nowego obliczenia nie jest tożsamy z 0. Boundary error odwzorowuje propagację wyjątku, nie dodaje handlera/rollbacku do aplikacji.</bpmn:documentation>
+    <bpmn:startEvent id="WSPOLNY_JednoZrodlo_start" name="Źródło i efektywny format">
+      <bpmn:outgoing>WSPOLNY_JednoZrodlo_F1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_islink" name="Źródło to napis zaczynający się od http?" gatewayDirection="Diverging">
+      <bpmn:documentation>Dokładna kontrola get_source_data: isinstance(source, str) and source.startswith("http"). Nie jest to pełna walidacja URL.</bpmn:documentation>
+      <bpmn:incoming>WSPOLNY_JednoZrodlo_F1</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_JednoZrodlo_F2</bpmn:outgoing>
+      <bpmn:outgoing>WSPOLNY_JednoZrodlo_F6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_get" name="Pobierz treść i nagłówek Link">
+      <bpmn:documentation>requests.get: przekierowania, timeout, verify=False. Brak response.raise_for_status i brak sprawdzenia status_code: 404/500 nie są samodzielną przyczyną odrzucenia w tej funkcji. Archiwum pod linkiem nie jest rozpoznawane jako lokalne archiwum.</bpmn:documentation>
+      <bpmn:incoming>WSPOLNY_JednoZrodlo_F2</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_JednoZrodlo_F3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="WSPOLNY_JednoZrodlo_requesterror" name="RequestException" attachedToRef="WSPOLNY_JednoZrodlo_get" cancelActivity="true">
+      <bpmn:documentation>Analityczne odwzorowanie wyjątku; bez gwarancji rollbacku.</bpmn:documentation>
+      <bpmn:errorEventDefinition id="WSPOLNY_JednoZrodlo_requesterror_def" errorRef="ErrorRequest" />
+      <bpmn:outgoing>WSPOLNY_JednoZrodlo_F4</bpmn:outgoing>
+    </bpmn:boundaryEvent>
+    <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_nodata" name="Błąd pobrania: pozostaw data=None; kontynuuj">
+      <bpmn:documentation>Przechwytywany wyłącznie requests.exceptions.RequestException. Nie ustawia wyniku 0 ani 1; wybór wyniku jest dalej zależny od kalkulatora/formatu.</bpmn:documentation>
+      <bpmn:incoming>WSPOLNY_JednoZrodlo_F4</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_JednoZrodlo_F5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_read" name="Rozpoznaj MIME i odczytaj lokalny plik">
+      <bpmn:documentation>source.path, get_file_info(source.path), is_archive_file(content_type), open(path, rb). Wyjątki tego etapu NIE są przechwytywane przez get_source_data: np. brak pliku, brak uprawnień, błąd MIME; propagują do wywołującego, bez nowego wyniku.</bpmn:documentation>
+      <bpmn:incoming>WSPOLNY_JednoZrodlo_F6</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_JednoZrodlo_F7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_merge" name="Dane źródła gotowe albo brak treści po błędzie sieci" gatewayDirection="Converging">
+      <bpmn:incoming>WSPOLNY_JednoZrodlo_F3</bpmn:incoming>
+      <bpmn:incoming>WSPOLNY_JednoZrodlo_F5</bpmn:incoming>
+      <bpmn:incoming>WSPOLNY_JednoZrodlo_F7</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_JednoZrodlo_F8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:subProcess id="WSPOLNY_JednoZrodlo_archive" name="Rozstrzygnij lokalne archiwum">
+      <bpmn:incoming>WSPOLNY_JednoZrodlo_F8</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_JednoZrodlo_F9</bpmn:outgoing>
+      <bpmn:startEvent id="WSPOLNY_JednoZrodlo_archive_start" name="Dane źródła">
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_archive_archive" name="is_archive jest True?" gatewayDirection="Diverging">
+        <bpmn:documentation>Ustawiane tylko po rozpoznaniu MIME lokalnego pliku. Dla linku pozostaje False, nawet gdy URL/format wskazuje ZIP.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F1</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F2</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F3</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_archive_open" name="Otwórz archiwum i odczytaj listę plików">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F2</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F4</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:boundaryEvent id="WSPOLNY_JednoZrodlo_archive_encrypted" name="Hasło" attachedToRef="WSPOLNY_JednoZrodlo_archive_open" cancelActivity="true">
+        <bpmn:documentation>Analityczne odwzorowanie wyjątku; bez gwarancji rollbacku.</bpmn:documentation>
+        <bpmn:errorEventDefinition id="WSPOLNY_JednoZrodlo_archive_encrypted_def" errorRef="ErrorEncrypted" />
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F10</bpmn:outgoing>
+      </bpmn:boundaryEvent>
+      <bpmn:boundaryEvent id="WSPOLNY_JednoZrodlo_archive_broken" name="Inny błąd" attachedToRef="WSPOLNY_JednoZrodlo_archive_open" cancelActivity="true">
+        <bpmn:documentation>Analityczne odwzorowanie wyjątku; bez gwarancji rollbacku.</bpmn:documentation>
+        <bpmn:errorEventDefinition id="WSPOLNY_JednoZrodlo_archive_broken_def" errorRef="ErrorArchive" />
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F11</bpmn:outgoing>
+      </bpmn:boundaryEvent>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_archive_zero" name="Wynik źródła = 0">
+        <bpmn:documentation>Zaszyfrowane archiwum: tylko jeśli PasswordProtectedArchiveError został rzucony wewnątrz calculate_score_for_archive. Błąd wcześniejszego odczytu lokalnego pliku nie jest objęty tą regułą.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F10</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F12</bpmn:outgoing>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F15</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_archive_one" name="Wynik źródła = 1">
+        <bpmn:documentation>Dowolny inny wyjątek wewnątrz calculate_score_for_archive. Także wyjątek ekstrakcji/odczytu pliku wewnętrznego. Wynik dotyczy pojedynczego źródła, nie automatycznie całego zasobu XML.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F9</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F11</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F13</bpmn:outgoing>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F14</bpmn:incoming>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_archive_single" name="Liczba plików w archiwum = 1?" gatewayDirection="Diverging">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F4</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F5</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F7</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_archive_extract" name="Wyodrębnij pojedynczy plik i wybierz format">
+        <bpmn:documentation>Jeżeli przekazany efektywny format nie jest na liście ARCHIVE_EXTENSIONS, zachowaj go. W przeciwnym razie rozszerzenie pojedynczego pliku wewnętrznego. Zwrócona treść ma is_archive=False; brak rekurencyjnego rozpakowywania.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F5</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F6</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_archive_effective" name="Efektywny format spoza listy archiwów?" gatewayDirection="Diverging">
+        <bpmn:documentation>Gałąź liczby plików różnej od 1, także zero. Kod sprawdza format spoza ARCHIVE_EXTENSIONS; przypadki geotiff/shp są przykładami, nie jedynymi dopuszczonymi wartościami tego warunku.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F7</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F8</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F9</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:endEvent id="WSPOLNY_JednoZrodlo_archive_endcalc" name="Przekaż dane do kalkulatora">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F3</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F6</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F8</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:endEvent id="WSPOLNY_JednoZrodlo_archive_endscore" name="Zwróć ustalony wynik 0 albo 1">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F12</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_archive_F13</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F1" sourceRef="WSPOLNY_JednoZrodlo_archive_start" targetRef="WSPOLNY_JednoZrodlo_archive_archive" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F2" sourceRef="WSPOLNY_JednoZrodlo_archive_archive" targetRef="WSPOLNY_JednoZrodlo_archive_open" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F3" sourceRef="WSPOLNY_JednoZrodlo_archive_archive" targetRef="WSPOLNY_JednoZrodlo_archive_endcalc" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F4" sourceRef="WSPOLNY_JednoZrodlo_archive_open" targetRef="WSPOLNY_JednoZrodlo_archive_single" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F5" sourceRef="WSPOLNY_JednoZrodlo_archive_single" targetRef="WSPOLNY_JednoZrodlo_archive_extract" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F6" sourceRef="WSPOLNY_JednoZrodlo_archive_extract" targetRef="WSPOLNY_JednoZrodlo_archive_endcalc" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F7" sourceRef="WSPOLNY_JednoZrodlo_archive_single" targetRef="WSPOLNY_JednoZrodlo_archive_effective" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F8" sourceRef="WSPOLNY_JednoZrodlo_archive_effective" targetRef="WSPOLNY_JednoZrodlo_archive_endcalc" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F9" sourceRef="WSPOLNY_JednoZrodlo_archive_effective" targetRef="WSPOLNY_JednoZrodlo_archive_one" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F10" sourceRef="WSPOLNY_JednoZrodlo_archive_encrypted" targetRef="WSPOLNY_JednoZrodlo_archive_zero" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F11" sourceRef="WSPOLNY_JednoZrodlo_archive_broken" targetRef="WSPOLNY_JednoZrodlo_archive_one" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F12" sourceRef="WSPOLNY_JednoZrodlo_archive_zero" targetRef="WSPOLNY_JednoZrodlo_archive_endscore" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F13" sourceRef="WSPOLNY_JednoZrodlo_archive_one" targetRef="WSPOLNY_JednoZrodlo_archive_endscore" />
+      <bpmn:boundaryEvent id="WSPOLNY_JednoZrodlo_archive_extracterror" name="Inny błąd" attachedToRef="WSPOLNY_JednoZrodlo_archive_extract" cancelActivity="true">
+        <bpmn:documentation>Analityczne odwzorowanie wyjątku; bez gwarancji rollbacku.</bpmn:documentation>
+        <bpmn:errorEventDefinition id="WSPOLNY_JednoZrodlo_archive_extracterror_def" errorRef="ErrorArchive" />
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F14</bpmn:outgoing>
+      </bpmn:boundaryEvent>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F14" sourceRef="WSPOLNY_JednoZrodlo_archive_extracterror" targetRef="WSPOLNY_JednoZrodlo_archive_one" />
+      <bpmn:boundaryEvent id="WSPOLNY_JednoZrodlo_archive_extractencrypted" name="Hasło" attachedToRef="WSPOLNY_JednoZrodlo_archive_extract" cancelActivity="true">
+        <bpmn:documentation>Analityczne odwzorowanie wyjątku; bez gwarancji rollbacku.</bpmn:documentation>
+        <bpmn:errorEventDefinition id="WSPOLNY_JednoZrodlo_archive_extractencrypted_def" errorRef="ErrorEncrypted" />
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_archive_F15</bpmn:outgoing>
+      </bpmn:boundaryEvent>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_archive_F15" sourceRef="WSPOLNY_JednoZrodlo_archive_extractencrypted" targetRef="WSPOLNY_JednoZrodlo_archive_zero" />
+    </bpmn:subProcess>
+    <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_ready" name="Archiwum ustaliło już wynik 0 lub 1?" gatewayDirection="Diverging">
+      <bpmn:incoming>WSPOLNY_JednoZrodlo_F9</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_JednoZrodlo_F10</bpmn:outgoing>
+      <bpmn:outgoing>WSPOLNY_JednoZrodlo_F11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:subProcess id="WSPOLNY_JednoZrodlo_calculator" name="Zastosuj kalkulator lub tabelę formatów">
+      <bpmn:incoming>WSPOLNY_JednoZrodlo_F11</bpmn:incoming>
+      <bpmn:outgoing>WSPOLNY_JednoZrodlo_F12</bpmn:outgoing>
+      <bpmn:startEvent id="WSPOLNY_JednoZrodlo_calculator_start" name="Treść (może być None) i format">
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_calculator_format" name="Który kalkulator jest zarejestrowany?" gatewayDirection="Diverging">
+        <bpmn:documentation>json → JSON; xml → XML; rozszerzenia RDF_FORMAT_TO_MIMETYPE poza xml → RDF; reszta → pierwsze dopasowanie SUPPORTED_CONTENT_TYPES, inaczej 1. Dopasowanie dokładne, bez lower().</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F1</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F2</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F3</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F4</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F5</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_calculator_json" name="JSON: udał się odczyt niepustego grafu RDF?" gatewayDirection="Diverging">
+        <bpmn:documentation>Najpierw json.loads; ewentualny Link: application/ld+json dostarcza @context; potem rdflib JSON-LD. Wyjątek dowolnego typu w _get_graph albo pusty graf → 3. graph_contains_linked_data jest poza tym try; jego nieprzewidziany wyjątek może propagować.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F2</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F6</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F7</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_calculator_xml" name="XML: test przestrzeni nazw przeszedł?" gatewayDirection="Diverging">
+        <bpmn:documentation>Dane nie None; parsowanie poprawne; co najmniej jedna deklaracja namespace; korzeń ma elementy potomne (if not root → False); tag każdego elementu zawiera co najmniej jedną z zadeklarowanych wartości namespace. Wyjątek lub niespełnienie → 3. To opis dokładnego testu kodu, nie ogólna zgodność ze standardem XML.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F3</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F10</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F11</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_calculator_rdf" name="RDF: odczytano graf z trójkami?" gatewayDirection="Diverging">
+        <bpmn:documentation>Format z RDF_FORMAT_TO_MIMETYPE. Wyjątek parsowania albo brak trójek w kontekstach → 4. Treść None też przechodzi tę ścieżkę i błąd jest przechwycony.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F4</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F14</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F15</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:subProcess id="WSPOLNY_JednoZrodlo_calculator_default" name="Ustal stopień z tabeli formatów">
+        <bpmn:documentation>Pierwsze dokładne dopasowanie w SUPPORTED_CONTENT_TYPES, inaczej 1. Formatów JSON/XML/RDF dotyczy wcześniej dedykowany kalkulator. W obecnej konfiguracji po tym rozdzieleniu tabela zwraca 1, 2 lub 3; wszystkie wpisy tabeli o wartości 4 mają kalkulator RDF.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F5</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F27</bpmn:outgoing>
+        <bpmn:startEvent id="WSPOLNY_JednoZrodlo_calculator_default_start" name="Brak dedykowanego kalkulatora">
+          <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_default_F1</bpmn:outgoing>
+        </bpmn:startEvent>
+        <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_default_lookup" name="Znajdź pierwsze dokładne dopasowanie formatu">
+          <bpmn:documentation>SUPPORTED_CONTENT_TYPES: kolejność wpisów ma znaczenie. Bez normalizacji wielkości liter w tej funkcji.</bpmn:documentation>
+          <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_default_F1</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_default_F2</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_calculator_default_found" name="Znaleziono format w tabeli?" gatewayDirection="Diverging">
+          <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_default_F2</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_default_F3</bpmn:outgoing>
+          <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_default_F4</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_default_unknown" name="Brak wpisu: wynik 1">
+          <bpmn:documentation>Np. nieznany format, pusty napis albo ZIP pod linkiem; niepasująca wielkość liter również nie daje dopasowania, jeżeli taka wartość dotrze tu bez wcześniejszej normalizacji.</bpmn:documentation>
+          <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_default_F3</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_default_F11</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_calculator_default_rating" name="Jaka ocena ma pierwszy wpis?" gatewayDirection="Diverging">
+          <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_default_F4</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_default_F5</bpmn:outgoing>
+          <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_default_F6</bpmn:outgoing>
+          <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_default_F7</bpmn:outgoing>
+        </bpmn:exclusiveGateway>
+        <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_default_one" name="Tabela wskazuje 1">
+          <bpmn:documentation>PDF, TXT, DOC/DOCX, JPG/PNG, TIFF i pozostałe rozszerzenia z grupy 1 w pełnej tabeli. To nie jest automatyczna reakcja na każdy błąd.</bpmn:documentation>
+          <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_default_F5</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_default_F8</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_default_two" name="Tabela wskazuje 2">
+          <bpmn:documentation>XLS, XLSX, XLB, GIF, WEBP, GRIB/GRIB2, NC, ODI, PPM, XBM.</bpmn:documentation>
+          <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_default_F6</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_default_F9</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_default_three" name="Tabela wskazuje 3">
+          <bpmn:documentation>M.in. CSV, TSV, HTML, ODS, GEOJSON, SHP, GEOTIFF; pełna lista w prezentacji i CSV. W obecnej konfiguracji wszystkie wpisy 4 trafiają wcześniej do kalkulatora RDF, więc nie rysujemy fikcyjnej osiągalnej gałęzi tabeli 4.</bpmn:documentation>
+          <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_default_F7</bpmn:incoming>
+          <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_default_F10</bpmn:outgoing>
+        </bpmn:serviceTask>
+        <bpmn:endEvent id="WSPOLNY_JednoZrodlo_calculator_default_end" name="Wynik z tabeli lub domyślne 1">
+          <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_default_F8</bpmn:incoming>
+          <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_default_F9</bpmn:incoming>
+          <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_default_F10</bpmn:incoming>
+          <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_default_F11</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_default_F1" sourceRef="WSPOLNY_JednoZrodlo_calculator_default_start" targetRef="WSPOLNY_JednoZrodlo_calculator_default_lookup" />
+        <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_default_F2" sourceRef="WSPOLNY_JednoZrodlo_calculator_default_lookup" targetRef="WSPOLNY_JednoZrodlo_calculator_default_found" />
+        <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_default_F3" sourceRef="WSPOLNY_JednoZrodlo_calculator_default_found" targetRef="WSPOLNY_JednoZrodlo_calculator_default_unknown" name="Nie">
+          <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_default_F4" sourceRef="WSPOLNY_JednoZrodlo_calculator_default_found" targetRef="WSPOLNY_JednoZrodlo_calculator_default_rating" name="Tak">
+          <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_default_F5" sourceRef="WSPOLNY_JednoZrodlo_calculator_default_rating" targetRef="WSPOLNY_JednoZrodlo_calculator_default_one" name="1">
+          <bpmn:conditionExpression>1</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_default_F6" sourceRef="WSPOLNY_JednoZrodlo_calculator_default_rating" targetRef="WSPOLNY_JednoZrodlo_calculator_default_two" name="2">
+          <bpmn:conditionExpression>2</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_default_F7" sourceRef="WSPOLNY_JednoZrodlo_calculator_default_rating" targetRef="WSPOLNY_JednoZrodlo_calculator_default_three" name="3">
+          <bpmn:conditionExpression>3</bpmn:conditionExpression>
+        </bpmn:sequenceFlow>
+        <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_default_F8" sourceRef="WSPOLNY_JednoZrodlo_calculator_default_one" targetRef="WSPOLNY_JednoZrodlo_calculator_default_end" />
+        <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_default_F9" sourceRef="WSPOLNY_JednoZrodlo_calculator_default_two" targetRef="WSPOLNY_JednoZrodlo_calculator_default_end" />
+        <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_default_F10" sourceRef="WSPOLNY_JednoZrodlo_calculator_default_three" targetRef="WSPOLNY_JednoZrodlo_calculator_default_end" />
+        <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_default_F11" sourceRef="WSPOLNY_JednoZrodlo_calculator_default_unknown" targetRef="WSPOLNY_JednoZrodlo_calculator_default_end" />
+      </bpmn:subProcess>
+      <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_calculator_jlinked" name="Graf spełnia test powiązań?" gatewayDirection="Diverging">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F6</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F8</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F9</bpmn:outgoing>
+        <bpmn:documentation>graph_contains_linked_data: w kontekstach grafu rozpatruje subject i object typu URIRef, wyklucza całe trójki z predykatem zaczynającym się od rdf namespace; zbiera urlparse(...).netloc; wynik True gdy więcej niż jedna odmienna wartość netloc. Pusty netloc nie jest odfiltrowany. Nie jest to pełny audyt Linked Open Data.</bpmn:documentation>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_calculator_xlinked" name="XML: poprawny, niepusty RDF spełnia test powiązań?" gatewayDirection="Diverging">
+        <bpmn:documentation>Po wyniku 4: parsowanie według RDF_EXTENSIONS[xml], graf niepusty, graph_contains_linked_data True. Wyjątek lub niespełnienie → 4.</bpmn:documentation>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F10</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F12</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F13</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:exclusiveGateway id="WSPOLNY_JednoZrodlo_calculator_rlinked" name="Graf spełnia test powiązań?" gatewayDirection="Diverging">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F14</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F16</bpmn:outgoing>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F17</bpmn:outgoing>
+        <bpmn:documentation>graph_contains_linked_data: w kontekstach grafu rozpatruje subject i object typu URIRef, wyklucza całe trójki z predykatem zaczynającym się od rdf namespace; zbiera urlparse(...).netloc; wynik True gdy więcej niż jedna odmienna wartość netloc. Pusty netloc nie jest odfiltrowany. Nie jest to pełny audyt Linked Open Data.</bpmn:documentation>
+      </bpmn:exclusiveGateway>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_j3" name="Wynik źródła = 3">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F7</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F18</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_j4" name="Wynik źródła = 4">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F8</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F19</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_j5" name="Wynik źródła = 5">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F9</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F20</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_x3" name="Wynik źródła = 3">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F11</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F21</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_x4" name="Wynik źródła = 4">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F12</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F22</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_x5" name="Wynik źródła = 5">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F13</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F23</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_r4" name="Wynik źródła = 4">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F15</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F24</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_r4b" name="Wynik źródła = 4">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F16</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F25</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:serviceTask id="WSPOLNY_JednoZrodlo_calculator_r5" name="Wynik źródła = 5">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F17</bpmn:incoming>
+        <bpmn:outgoing>WSPOLNY_JednoZrodlo_calculator_F26</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:endEvent id="WSPOLNY_JednoZrodlo_calculator_end" name="Zwróć wynik 1–5">
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F18</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F19</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F20</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F21</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F22</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F23</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F24</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F25</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F26</bpmn:incoming>
+        <bpmn:incoming>WSPOLNY_JednoZrodlo_calculator_F27</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F1" sourceRef="WSPOLNY_JednoZrodlo_calculator_start" targetRef="WSPOLNY_JednoZrodlo_calculator_format" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F2" sourceRef="WSPOLNY_JednoZrodlo_calculator_format" targetRef="WSPOLNY_JednoZrodlo_calculator_json" name="json">
+        <bpmn:conditionExpression>json</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F3" sourceRef="WSPOLNY_JednoZrodlo_calculator_format" targetRef="WSPOLNY_JednoZrodlo_calculator_xml" name="xml">
+        <bpmn:conditionExpression>xml</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F4" sourceRef="WSPOLNY_JednoZrodlo_calculator_format" targetRef="WSPOLNY_JednoZrodlo_calculator_rdf" name="RDF i pokrewne">
+        <bpmn:conditionExpression>RDF i pokrewne</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F5" sourceRef="WSPOLNY_JednoZrodlo_calculator_format" targetRef="WSPOLNY_JednoZrodlo_calculator_default" name="Pozostałe">
+        <bpmn:conditionExpression>Pozostałe</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F6" sourceRef="WSPOLNY_JednoZrodlo_calculator_json" targetRef="WSPOLNY_JednoZrodlo_calculator_jlinked" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F7" sourceRef="WSPOLNY_JednoZrodlo_calculator_json" targetRef="WSPOLNY_JednoZrodlo_calculator_j3" name="Nie / błąd">
+        <bpmn:conditionExpression>Nie / błąd</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F8" sourceRef="WSPOLNY_JednoZrodlo_calculator_jlinked" targetRef="WSPOLNY_JednoZrodlo_calculator_j4" name="Nie">
+        <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F9" sourceRef="WSPOLNY_JednoZrodlo_calculator_jlinked" targetRef="WSPOLNY_JednoZrodlo_calculator_j5" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F10" sourceRef="WSPOLNY_JednoZrodlo_calculator_xml" targetRef="WSPOLNY_JednoZrodlo_calculator_xlinked" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F11" sourceRef="WSPOLNY_JednoZrodlo_calculator_xml" targetRef="WSPOLNY_JednoZrodlo_calculator_x3" name="Nie / błąd">
+        <bpmn:conditionExpression>Nie / błąd</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F12" sourceRef="WSPOLNY_JednoZrodlo_calculator_xlinked" targetRef="WSPOLNY_JednoZrodlo_calculator_x4" name="Nie / błąd">
+        <bpmn:conditionExpression>Nie / błąd</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F13" sourceRef="WSPOLNY_JednoZrodlo_calculator_xlinked" targetRef="WSPOLNY_JednoZrodlo_calculator_x5" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F14" sourceRef="WSPOLNY_JednoZrodlo_calculator_rdf" targetRef="WSPOLNY_JednoZrodlo_calculator_rlinked" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F15" sourceRef="WSPOLNY_JednoZrodlo_calculator_rdf" targetRef="WSPOLNY_JednoZrodlo_calculator_r4" name="Nie / błąd">
+        <bpmn:conditionExpression>Nie / błąd</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F16" sourceRef="WSPOLNY_JednoZrodlo_calculator_rlinked" targetRef="WSPOLNY_JednoZrodlo_calculator_r4b" name="Nie / błąd">
+        <bpmn:conditionExpression>Nie / błąd</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F17" sourceRef="WSPOLNY_JednoZrodlo_calculator_rlinked" targetRef="WSPOLNY_JednoZrodlo_calculator_r5" name="Tak">
+        <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F18" sourceRef="WSPOLNY_JednoZrodlo_calculator_j3" targetRef="WSPOLNY_JednoZrodlo_calculator_end" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F19" sourceRef="WSPOLNY_JednoZrodlo_calculator_j4" targetRef="WSPOLNY_JednoZrodlo_calculator_end" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F20" sourceRef="WSPOLNY_JednoZrodlo_calculator_j5" targetRef="WSPOLNY_JednoZrodlo_calculator_end" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F21" sourceRef="WSPOLNY_JednoZrodlo_calculator_x3" targetRef="WSPOLNY_JednoZrodlo_calculator_end" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F22" sourceRef="WSPOLNY_JednoZrodlo_calculator_x4" targetRef="WSPOLNY_JednoZrodlo_calculator_end" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F23" sourceRef="WSPOLNY_JednoZrodlo_calculator_x5" targetRef="WSPOLNY_JednoZrodlo_calculator_end" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F24" sourceRef="WSPOLNY_JednoZrodlo_calculator_r4" targetRef="WSPOLNY_JednoZrodlo_calculator_end" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F25" sourceRef="WSPOLNY_JednoZrodlo_calculator_r4b" targetRef="WSPOLNY_JednoZrodlo_calculator_end" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F26" sourceRef="WSPOLNY_JednoZrodlo_calculator_r5" targetRef="WSPOLNY_JednoZrodlo_calculator_end" />
+      <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_calculator_F27" sourceRef="WSPOLNY_JednoZrodlo_calculator_default" targetRef="WSPOLNY_JednoZrodlo_calculator_end" />
+    </bpmn:subProcess>
+    <bpmn:endEvent id="WSPOLNY_JednoZrodlo_end" name="Zwróć ocenę pojedynczego źródła">
+      <bpmn:incoming>WSPOLNY_JednoZrodlo_F10</bpmn:incoming>
+      <bpmn:incoming>WSPOLNY_JednoZrodlo_F12</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_F1" sourceRef="WSPOLNY_JednoZrodlo_start" targetRef="WSPOLNY_JednoZrodlo_islink" />
+    <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_F2" sourceRef="WSPOLNY_JednoZrodlo_islink" targetRef="WSPOLNY_JednoZrodlo_get" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_F3" sourceRef="WSPOLNY_JednoZrodlo_get" targetRef="WSPOLNY_JednoZrodlo_merge" />
+    <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_F4" sourceRef="WSPOLNY_JednoZrodlo_requesterror" targetRef="WSPOLNY_JednoZrodlo_nodata" />
+    <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_F5" sourceRef="WSPOLNY_JednoZrodlo_nodata" targetRef="WSPOLNY_JednoZrodlo_merge" />
+    <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_F6" sourceRef="WSPOLNY_JednoZrodlo_islink" targetRef="WSPOLNY_JednoZrodlo_read" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_F7" sourceRef="WSPOLNY_JednoZrodlo_read" targetRef="WSPOLNY_JednoZrodlo_merge" />
+    <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_F8" sourceRef="WSPOLNY_JednoZrodlo_merge" targetRef="WSPOLNY_JednoZrodlo_archive" />
+    <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_F9" sourceRef="WSPOLNY_JednoZrodlo_archive" targetRef="WSPOLNY_JednoZrodlo_ready" />
+    <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_F10" sourceRef="WSPOLNY_JednoZrodlo_ready" targetRef="WSPOLNY_JednoZrodlo_end" name="Tak">
+      <bpmn:conditionExpression>Tak</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_F11" sourceRef="WSPOLNY_JednoZrodlo_ready" targetRef="WSPOLNY_JednoZrodlo_calculator" name="Nie">
+      <bpmn:conditionExpression>Nie</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="WSPOLNY_JednoZrodlo_F12" sourceRef="WSPOLNY_JednoZrodlo_calculator" targetRef="WSPOLNY_JednoZrodlo_end" />
+  </bpmn:process>
+  <bpmn:error id="ErrorEncrypted" name="PasswordProtectedArchiveError" errorCode="ENCRYPTED_ARCHIVE" />
+  <bpmn:error id="ErrorArchive" name="Pozostały wyjątek wewnątrz calculate_score_for_archive" errorCode="ARCHIVE_ERROR" />
+  <bpmndi:BPMNDiagram id="WSPOLNY_Proces_Diagram" name="CKAN i XML — osobne przygotowanie, wspólne stopnie otwartości">
+    <bpmndi:BPMNPlane id="WSPOLNY_Proces_Plane" bpmnElement="WSPOLNY_Proces">
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_ckan_di" bpmnElement="WSPOLNY_Proces_ckan">
+        <dc:Bounds x="90" y="160" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="12" y="214" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepCK_di" bpmnElement="WSPOLNY_Proces_prepCK" isExpanded="false">
+        <dc:Bounds x="300" y="140" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_ckReady_di" bpmnElement="WSPOLNY_Proces_ckReady">
+        <dc:Bounds x="650" y="150" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="572" y="222" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_xml_di" bpmnElement="WSPOLNY_Proces_xml">
+        <dc:Bounds x="90" y="520" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="12" y="574" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepXML_di" bpmnElement="WSPOLNY_Proces_prepXML" isExpanded="false">
+        <dc:Bounds x="300" y="500" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_xmlReady_di" bpmnElement="WSPOLNY_Proces_xmlReady">
+        <dc:Bounds x="650" y="510" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="572" y="582" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_notrun_di" bpmnElement="WSPOLNY_Proces_notrun" bioc:fill="#fff1cb" bioc:stroke="#bd6b11">
+        <dc:Bounds x="920" y="690" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="842" y="744" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_merge_di" bpmnElement="WSPOLNY_Proces_merge">
+        <dc:Bounds x="980" y="340" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="902" y="412" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_di" bpmnElement="WSPOLNY_Proces_core" isExpanded="false" bioc:fill="#fff1cb" bioc:stroke="#bd6b11">
+        <dc:Bounds x="1200" y="330" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_save_di" bpmnElement="WSPOLNY_Proces_save">
+        <dc:Bounds x="1520" y="330" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_done_di" bpmnElement="WSPOLNY_Proces_done">
+        <dc:Bounds x="1880" y="350" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1802" y="404" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_calcError_di" bpmnElement="WSPOLNY_Proces_calcError">
+        <dc:Bounds x="1340" y="393" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1262" y="447" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_noUpdate_di" bpmnElement="WSPOLNY_Proces_noUpdate" bioc:fill="#fff1cb" bioc:stroke="#bd6b11">
+        <dc:Bounds x="1250" y="700" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1172" y="754" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_saveError_di" bpmnElement="WSPOLNY_Proces_saveError">
+        <dc:Bounds x="1670" y="393" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1592" y="447" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_partial_di" bpmnElement="WSPOLNY_Proces_partial" bioc:fill="#fff1cb" bioc:stroke="#bd6b11">
+        <dc:Bounds x="1720" y="700" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1642" y="754" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F1_di" bpmnElement="WSPOLNY_Proces_F1">
+        <di:waypoint x="136" y="183.0" />
+        <di:waypoint x="300" y="183.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F2_di" bpmnElement="WSPOLNY_Proces_F2">
+        <di:waypoint x="520" y="183.0" />
+        <di:waypoint x="585.0" y="183.0" />
+        <di:waypoint x="585.0" y="182.0" />
+        <di:waypoint x="650" y="182.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F3_di" bpmnElement="WSPOLNY_Proces_F3">
+        <di:waypoint x="714" y="182.0" />
+        <di:waypoint x="847.0" y="182.0" />
+        <di:waypoint x="847.0" y="372.0" />
+        <di:waypoint x="980" y="372.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="777.0" y="344.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F4_di" bpmnElement="WSPOLNY_Proces_F4">
+        <di:waypoint x="136" y="543.0" />
+        <di:waypoint x="300" y="543.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F5_di" bpmnElement="WSPOLNY_Proces_F5">
+        <di:waypoint x="520" y="543.0" />
+        <di:waypoint x="585.0" y="543.0" />
+        <di:waypoint x="585.0" y="542.0" />
+        <di:waypoint x="650" y="542.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F6_di" bpmnElement="WSPOLNY_Proces_F6">
+        <di:waypoint x="714" y="542.0" />
+        <di:waypoint x="847.0" y="542.0" />
+        <di:waypoint x="847.0" y="372.0" />
+        <di:waypoint x="980" y="372.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="777.0" y="344.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F7_di" bpmnElement="WSPOLNY_Proces_F7">
+        <di:waypoint x="682" y="214" />
+        <di:waypoint x="810" y="214" />
+        <di:waypoint x="810" y="713" />
+        <di:waypoint x="920" y="713" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="740" y="685" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F8_di" bpmnElement="WSPOLNY_Proces_F8">
+        <di:waypoint x="682" y="574" />
+        <di:waypoint x="810" y="574" />
+        <di:waypoint x="810" y="713" />
+        <di:waypoint x="920" y="713" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="740" y="685" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F9_di" bpmnElement="WSPOLNY_Proces_F9">
+        <di:waypoint x="1044" y="372.0" />
+        <di:waypoint x="1122.0" y="372.0" />
+        <di:waypoint x="1122.0" y="373.0" />
+        <di:waypoint x="1200" y="373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F10_di" bpmnElement="WSPOLNY_Proces_F10">
+        <di:waypoint x="1420" y="373.0" />
+        <di:waypoint x="1520" y="373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F11_di" bpmnElement="WSPOLNY_Proces_F11">
+        <di:waypoint x="1740" y="373.0" />
+        <di:waypoint x="1880" y="373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F12_di" bpmnElement="WSPOLNY_Proces_F12">
+        <di:waypoint x="1363.0" y="439" />
+        <di:waypoint x="1363.0" y="675" />
+        <di:waypoint x="1273.0" y="675" />
+        <di:waypoint x="1273.0" y="700" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_F13_di" bpmnElement="WSPOLNY_Proces_F13">
+        <di:waypoint x="1716" y="416.0" />
+        <di:waypoint x="1718.0" y="416.0" />
+        <di:waypoint x="1718.0" y="723.0" />
+        <di:waypoint x="1720" y="723.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="WSPOLNY_Proces_prepCK_Diagram" name="Przygotuj zasób CKAN">
+    <bpmndi:BPMNPlane id="WSPOLNY_Proces_prepCK_Plane" bpmnElement="WSPOLNY_Proces_prepCK">
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepCK_start_di" bpmnElement="WSPOLNY_Proces_prepCK_start">
+        <dc:Bounds x="70" y="150" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-8" y="204" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepCK_validate_di" bpmnElement="WSPOLNY_Proces_prepCK_validate">
+        <dc:Bounds x="250" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepCK_accepted_di" bpmnElement="WSPOLNY_Proces_prepCK_accepted">
+        <dc:Bounds x="590" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="512" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepCK_save_di" bpmnElement="WSPOLNY_Proces_prepCK_save">
+        <dc:Bounds x="850" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepCK_scheduled_di" bpmnElement="WSPOLNY_Proces_prepCK_scheduled">
+        <dc:Bounds x="1160" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1082" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepCK_skip_di" bpmnElement="WSPOLNY_Proces_prepCK_skip">
+        <dc:Bounds x="630" y="420" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="552" y="474" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepCK_prep_di" bpmnElement="WSPOLNY_Proces_prepCK_prep">
+        <dc:Bounds x="1420" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepCK_ready_di" bpmnElement="WSPOLNY_Proces_prepCK_ready">
+        <dc:Bounds x="1750" y="150" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1672" y="204" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepCK_failure_di" bpmnElement="WSPOLNY_Proces_prepCK_failure">
+        <dc:Bounds x="990" y="193" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="912" y="247" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepCK_F1_di" bpmnElement="WSPOLNY_Proces_prepCK_F1">
+        <di:waypoint x="116" y="173.0" />
+        <di:waypoint x="250" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepCK_F2_di" bpmnElement="WSPOLNY_Proces_prepCK_F2">
+        <di:waypoint x="470" y="173.0" />
+        <di:waypoint x="530.0" y="173.0" />
+        <di:waypoint x="530.0" y="172.0" />
+        <di:waypoint x="590" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepCK_F3_di" bpmnElement="WSPOLNY_Proces_prepCK_F3">
+        <di:waypoint x="654" y="172.0" />
+        <di:waypoint x="752.0" y="172.0" />
+        <di:waypoint x="752.0" y="173.0" />
+        <di:waypoint x="850" y="173.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="145.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepCK_F4_di" bpmnElement="WSPOLNY_Proces_prepCK_F4">
+        <di:waypoint x="622.0" y="204" />
+        <di:waypoint x="622.0" y="395" />
+        <di:waypoint x="653.0" y="395" />
+        <di:waypoint x="653.0" y="420" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="583.0" y="367" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepCK_F5_di" bpmnElement="WSPOLNY_Proces_prepCK_F5">
+        <di:waypoint x="1070" y="173.0" />
+        <di:waypoint x="1115.0" y="173.0" />
+        <di:waypoint x="1115.0" y="172.0" />
+        <di:waypoint x="1160" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepCK_F6_di" bpmnElement="WSPOLNY_Proces_prepCK_F6">
+        <di:waypoint x="1224" y="172.0" />
+        <di:waypoint x="1322.0" y="172.0" />
+        <di:waypoint x="1322.0" y="173.0" />
+        <di:waypoint x="1420" y="173.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1252.0" y="145.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepCK_F7_di" bpmnElement="WSPOLNY_Proces_prepCK_F7">
+        <di:waypoint x="1192" y="204" />
+        <di:waypoint x="1192" y="443" />
+        <di:waypoint x="676" y="443" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1122" y="415" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepCK_F8_di" bpmnElement="WSPOLNY_Proces_prepCK_F8">
+        <di:waypoint x="1640" y="173.0" />
+        <di:waypoint x="1750" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepCK_F9_di" bpmnElement="WSPOLNY_Proces_prepCK_F9">
+        <di:waypoint x="1013.0" y="239" />
+        <di:waypoint x="1013.0" y="395" />
+        <di:waypoint x="653.0" y="395" />
+        <di:waypoint x="653.0" y="420" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="WSPOLNY_Proces_prepXML_Diagram" name="Przygotuj zasób XML">
+    <bpmndi:BPMNPlane id="WSPOLNY_Proces_prepXML_Plane" bpmnElement="WSPOLNY_Proces_prepXML">
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepXML_start_di" bpmnElement="WSPOLNY_Proces_prepXML_start">
+        <dc:Bounds x="70" y="150" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-8" y="204" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepXML_validate_di" bpmnElement="WSPOLNY_Proces_prepXML_validate">
+        <dc:Bounds x="250" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepXML_accepted_di" bpmnElement="WSPOLNY_Proces_prepXML_accepted">
+        <dc:Bounds x="590" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="512" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepXML_save_di" bpmnElement="WSPOLNY_Proces_prepXML_save">
+        <dc:Bounds x="850" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepXML_scheduled_di" bpmnElement="WSPOLNY_Proces_prepXML_scheduled">
+        <dc:Bounds x="1160" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1082" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepXML_skip_di" bpmnElement="WSPOLNY_Proces_prepXML_skip">
+        <dc:Bounds x="630" y="420" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="552" y="474" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepXML_prep_di" bpmnElement="WSPOLNY_Proces_prepXML_prep">
+        <dc:Bounds x="1420" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepXML_ready_di" bpmnElement="WSPOLNY_Proces_prepXML_ready">
+        <dc:Bounds x="1750" y="150" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1672" y="204" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_prepXML_failure_di" bpmnElement="WSPOLNY_Proces_prepXML_failure">
+        <dc:Bounds x="990" y="193" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="912" y="247" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepXML_F1_di" bpmnElement="WSPOLNY_Proces_prepXML_F1">
+        <di:waypoint x="116" y="173.0" />
+        <di:waypoint x="250" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepXML_F2_di" bpmnElement="WSPOLNY_Proces_prepXML_F2">
+        <di:waypoint x="470" y="173.0" />
+        <di:waypoint x="530.0" y="173.0" />
+        <di:waypoint x="530.0" y="172.0" />
+        <di:waypoint x="590" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepXML_F3_di" bpmnElement="WSPOLNY_Proces_prepXML_F3">
+        <di:waypoint x="654" y="172.0" />
+        <di:waypoint x="752.0" y="172.0" />
+        <di:waypoint x="752.0" y="173.0" />
+        <di:waypoint x="850" y="173.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682.0" y="145.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepXML_F4_di" bpmnElement="WSPOLNY_Proces_prepXML_F4">
+        <di:waypoint x="622.0" y="204" />
+        <di:waypoint x="622.0" y="395" />
+        <di:waypoint x="653.0" y="395" />
+        <di:waypoint x="653.0" y="420" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="583.0" y="367" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepXML_F5_di" bpmnElement="WSPOLNY_Proces_prepXML_F5">
+        <di:waypoint x="1070" y="173.0" />
+        <di:waypoint x="1115.0" y="173.0" />
+        <di:waypoint x="1115.0" y="172.0" />
+        <di:waypoint x="1160" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepXML_F6_di" bpmnElement="WSPOLNY_Proces_prepXML_F6">
+        <di:waypoint x="1224" y="172.0" />
+        <di:waypoint x="1322.0" y="172.0" />
+        <di:waypoint x="1322.0" y="173.0" />
+        <di:waypoint x="1420" y="173.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1252.0" y="145.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepXML_F7_di" bpmnElement="WSPOLNY_Proces_prepXML_F7">
+        <di:waypoint x="1192" y="204" />
+        <di:waypoint x="1192" y="443" />
+        <di:waypoint x="676" y="443" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1122" y="415" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepXML_F8_di" bpmnElement="WSPOLNY_Proces_prepXML_F8">
+        <di:waypoint x="1640" y="173.0" />
+        <di:waypoint x="1750" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_prepXML_F9_di" bpmnElement="WSPOLNY_Proces_prepXML_F9">
+        <di:waypoint x="1013.0" y="239" />
+        <di:waypoint x="1013.0" y="395" />
+        <di:waypoint x="653.0" y="395" />
+        <di:waypoint x="653.0" y="420" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="WSPOLNY_Proces_core_Diagram" name="OBLICZ STOPIEŃ OTWARTOŚCI">
+    <bpmndi:BPMNPlane id="WSPOLNY_Proces_core_Plane" bpmnElement="WSPOLNY_Proces_core">
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_start_di" bpmnElement="WSPOLNY_Proces_core_start">
+        <dc:Bounds x="70" y="140" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-8" y="194" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_format_di" bpmnElement="WSPOLNY_Proces_core_format">
+        <dc:Bounds x="300" y="130" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="222" y="202" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_zero_di" bpmnElement="WSPOLNY_Proces_core_zero" bioc:fill="#fff1cb" bioc:stroke="#bd6b11">
+        <dc:Bounds x="560" y="120" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_source_di" bpmnElement="WSPOLNY_Proces_core_source">
+        <dc:Bounds x="350" y="460" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="272" y="532" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_link_di" bpmnElement="WSPOLNY_Proces_core_link">
+        <dc:Bounds x="680" y="440" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_files_di" bpmnElement="WSPOLNY_Proces_core_files" isExpanded="false">
+        <dc:Bounds x="680" y="740" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_max_di" bpmnElement="WSPOLNY_Proces_core_max">
+        <dc:Bounds x="1010" y="740" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_merge_di" bpmnElement="WSPOLNY_Proces_core_merge">
+        <dc:Bounds x="1260" y="130" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1182" y="202" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_end_di" bpmnElement="WSPOLNY_Proces_core_end">
+        <dc:Bounds x="1530" y="140" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1452" y="194" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_F1_di" bpmnElement="WSPOLNY_Proces_core_F1">
+        <di:waypoint x="116" y="163.0" />
+        <di:waypoint x="208.0" y="163.0" />
+        <di:waypoint x="208.0" y="162.0" />
+        <di:waypoint x="300" y="162.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_F2_di" bpmnElement="WSPOLNY_Proces_core_F2">
+        <di:waypoint x="364" y="162.0" />
+        <di:waypoint x="462.0" y="162.0" />
+        <di:waypoint x="462.0" y="163.0" />
+        <di:waypoint x="560" y="163.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="392.0" y="135.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_F3_di" bpmnElement="WSPOLNY_Proces_core_F3">
+        <di:waypoint x="780" y="163.0" />
+        <di:waypoint x="1020.0" y="163.0" />
+        <di:waypoint x="1020.0" y="162.0" />
+        <di:waypoint x="1260" y="162.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_F4_di" bpmnElement="WSPOLNY_Proces_core_F4">
+        <di:waypoint x="332.0" y="194" />
+        <di:waypoint x="332.0" y="435" />
+        <di:waypoint x="382.0" y="435" />
+        <di:waypoint x="382.0" y="460" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="312.0" y="407" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_F5_di" bpmnElement="WSPOLNY_Proces_core_F5">
+        <di:waypoint x="414" y="492.0" />
+        <di:waypoint x="547.0" y="492.0" />
+        <di:waypoint x="547.0" y="483.0" />
+        <di:waypoint x="680" y="483.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="477.0" y="455.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_F6_di" bpmnElement="WSPOLNY_Proces_core_F6">
+        <di:waypoint x="414" y="492.0" />
+        <di:waypoint x="547.0" y="492.0" />
+        <di:waypoint x="547.0" y="783.0" />
+        <di:waypoint x="680" y="783.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="477.0" y="755.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_F7_di" bpmnElement="WSPOLNY_Proces_core_F7">
+        <di:waypoint x="900" y="483.0" />
+        <di:waypoint x="1080.0" y="483.0" />
+        <di:waypoint x="1080.0" y="162.0" />
+        <di:waypoint x="1260" y="162.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_F8_di" bpmnElement="WSPOLNY_Proces_core_F8">
+        <di:waypoint x="900" y="783.0" />
+        <di:waypoint x="1010" y="783.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_F9_di" bpmnElement="WSPOLNY_Proces_core_F9">
+        <di:waypoint x="1230" y="783" />
+        <di:waypoint x="1370" y="783" />
+        <di:waypoint x="1370" y="250" />
+        <di:waypoint x="1292" y="250" />
+        <di:waypoint x="1292" y="194" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_F10_di" bpmnElement="WSPOLNY_Proces_core_F10">
+        <di:waypoint x="1324" y="162.0" />
+        <di:waypoint x="1427.0" y="162.0" />
+        <di:waypoint x="1427.0" y="163.0" />
+        <di:waypoint x="1530" y="163.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="WSPOLNY_Proces_core_files_Diagram" name="Oceń każdy plik zasobu">
+    <bpmndi:BPMNPlane id="WSPOLNY_Proces_core_files_Plane" bpmnElement="WSPOLNY_Proces_core_files">
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_files_start_di" bpmnElement="WSPOLNY_Proces_core_files_start">
+        <dc:Bounds x="70" y="140" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-8" y="194" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_files_next_di" bpmnElement="WSPOLNY_Proces_core_files_next">
+        <dc:Bounds x="280" y="130" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="202" y="202" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_files_fmt_di" bpmnElement="WSPOLNY_Proces_core_files_fmt">
+        <dc:Bounds x="520" y="120" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_files_none_di" bpmnElement="WSPOLNY_Proces_core_files_none">
+        <dc:Bounds x="830" y="130" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="752" y="202" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_files_one_di" bpmnElement="WSPOLNY_Proces_core_files_one" bioc:fill="#fff1cb" bioc:stroke="#bd6b11">
+        <dc:Bounds x="1080" y="120" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_files_call_di" bpmnElement="WSPOLNY_Proces_core_files_call">
+        <dc:Bounds x="800" y="430" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_files_keep_di" bpmnElement="WSPOLNY_Proces_core_files_keep">
+        <dc:Bounds x="1180" y="430" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_Proces_core_files_end_di" bpmnElement="WSPOLNY_Proces_core_files_end">
+        <dc:Bounds x="440" y="730" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="362" y="784" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_files_F1_di" bpmnElement="WSPOLNY_Proces_core_files_F1">
+        <di:waypoint x="116" y="163.0" />
+        <di:waypoint x="198.0" y="163.0" />
+        <di:waypoint x="198.0" y="162.0" />
+        <di:waypoint x="280" y="162.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_files_F2_di" bpmnElement="WSPOLNY_Proces_core_files_F2">
+        <di:waypoint x="344" y="162.0" />
+        <di:waypoint x="432.0" y="162.0" />
+        <di:waypoint x="432.0" y="163.0" />
+        <di:waypoint x="520" y="163.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="362.0" y="135.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_files_F3_di" bpmnElement="WSPOLNY_Proces_core_files_F3">
+        <di:waypoint x="740" y="163.0" />
+        <di:waypoint x="785.0" y="163.0" />
+        <di:waypoint x="785.0" y="162.0" />
+        <di:waypoint x="830" y="162.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_files_F4_di" bpmnElement="WSPOLNY_Proces_core_files_F4">
+        <di:waypoint x="894" y="162.0" />
+        <di:waypoint x="987.0" y="162.0" />
+        <di:waypoint x="987.0" y="163.0" />
+        <di:waypoint x="1080" y="163.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="917.0" y="135.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_files_F5_di" bpmnElement="WSPOLNY_Proces_core_files_F5">
+        <di:waypoint x="862.0" y="194" />
+        <di:waypoint x="862.0" y="405" />
+        <di:waypoint x="910.0" y="405" />
+        <di:waypoint x="910.0" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="840.0" y="377" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_files_F6_di" bpmnElement="WSPOLNY_Proces_core_files_F6">
+        <di:waypoint x="1190.0" y="206" />
+        <di:waypoint x="1190.0" y="405" />
+        <di:waypoint x="1290.0" y="405" />
+        <di:waypoint x="1290.0" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_files_F7_di" bpmnElement="WSPOLNY_Proces_core_files_F7">
+        <di:waypoint x="1020" y="473.0" />
+        <di:waypoint x="1180" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_files_F8_di" bpmnElement="WSPOLNY_Proces_core_files_F8">
+        <di:waypoint x="1290" y="516" />
+        <di:waypoint x="1290" y="640" />
+        <di:waypoint x="180" y="640" />
+        <di:waypoint x="180" y="60" />
+        <di:waypoint x="312" y="60" />
+        <di:waypoint x="312" y="130" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="110" y="32" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_Proces_core_files_F9_di" bpmnElement="WSPOLNY_Proces_core_files_F9">
+        <di:waypoint x="280" y="162" />
+        <di:waypoint x="150" y="162" />
+        <di:waypoint x="150" y="753" />
+        <di:waypoint x="440" y="753" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="80" y="725" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="WSPOLNY_JednoZrodlo_Diagram" name="WSPÓLNE — ocena pojedynczego źródła: linku albo pliku">
+    <bpmndi:BPMNPlane id="WSPOLNY_JednoZrodlo_Plane" bpmnElement="WSPOLNY_JednoZrodlo">
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_start_di" bpmnElement="WSPOLNY_JednoZrodlo_start">
+        <dc:Bounds x="70" y="150" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-8" y="204" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_islink_di" bpmnElement="WSPOLNY_JednoZrodlo_islink">
+        <dc:Bounds x="300" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="222" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_get_di" bpmnElement="WSPOLNY_JednoZrodlo_get">
+        <dc:Bounds x="560" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_requesterror_di" bpmnElement="WSPOLNY_JednoZrodlo_requesterror">
+        <dc:Bounds x="700" y="193" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="622" y="247" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_nodata_di" bpmnElement="WSPOLNY_JednoZrodlo_nodata">
+        <dc:Bounds x="550" y="400" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_read_di" bpmnElement="WSPOLNY_JednoZrodlo_read">
+        <dc:Bounds x="300" y="680" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_merge_di" bpmnElement="WSPOLNY_JednoZrodlo_merge">
+        <dc:Bounds x="990" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="912" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_di" bpmnElement="WSPOLNY_JednoZrodlo_archive" isExpanded="false">
+        <dc:Bounds x="1220" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_ready_di" bpmnElement="WSPOLNY_JednoZrodlo_ready">
+        <dc:Bounds x="1540" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1462" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator" isExpanded="false">
+        <dc:Bounds x="1500" y="450" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_end_di" bpmnElement="WSPOLNY_JednoZrodlo_end">
+        <dc:Bounds x="1910" y="160" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1832" y="214" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_F1_di" bpmnElement="WSPOLNY_JednoZrodlo_F1">
+        <di:waypoint x="116" y="173.0" />
+        <di:waypoint x="208.0" y="173.0" />
+        <di:waypoint x="208.0" y="172.0" />
+        <di:waypoint x="300" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_F2_di" bpmnElement="WSPOLNY_JednoZrodlo_F2">
+        <di:waypoint x="364" y="172.0" />
+        <di:waypoint x="462.0" y="172.0" />
+        <di:waypoint x="462.0" y="173.0" />
+        <di:waypoint x="560" y="173.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="392.0" y="145.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_F3_di" bpmnElement="WSPOLNY_JednoZrodlo_F3">
+        <di:waypoint x="780" y="173.0" />
+        <di:waypoint x="885.0" y="173.0" />
+        <di:waypoint x="885.0" y="172.0" />
+        <di:waypoint x="990" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_F4_di" bpmnElement="WSPOLNY_JednoZrodlo_F4">
+        <di:waypoint x="723.0" y="239" />
+        <di:waypoint x="723.0" y="375" />
+        <di:waypoint x="660.0" y="375" />
+        <di:waypoint x="660.0" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_F5_di" bpmnElement="WSPOLNY_JednoZrodlo_F5">
+        <di:waypoint x="770" y="443.0" />
+        <di:waypoint x="880.0" y="443.0" />
+        <di:waypoint x="880.0" y="172.0" />
+        <di:waypoint x="990" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_F6_di" bpmnElement="WSPOLNY_JednoZrodlo_F6">
+        <di:waypoint x="332.0" y="204" />
+        <di:waypoint x="332.0" y="655" />
+        <di:waypoint x="410.0" y="655" />
+        <di:waypoint x="410.0" y="680" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="340.0" y="627" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_F7_di" bpmnElement="WSPOLNY_JednoZrodlo_F7">
+        <di:waypoint x="520" y="723" />
+        <di:waypoint x="1022" y="723" />
+        <di:waypoint x="1022" y="204" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_F8_di" bpmnElement="WSPOLNY_JednoZrodlo_F8">
+        <di:waypoint x="1054" y="172.0" />
+        <di:waypoint x="1137.0" y="172.0" />
+        <di:waypoint x="1137.0" y="173.0" />
+        <di:waypoint x="1220" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_F9_di" bpmnElement="WSPOLNY_JednoZrodlo_F9">
+        <di:waypoint x="1440" y="173.0" />
+        <di:waypoint x="1490.0" y="173.0" />
+        <di:waypoint x="1490.0" y="172.0" />
+        <di:waypoint x="1540" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_F10_di" bpmnElement="WSPOLNY_JednoZrodlo_F10">
+        <di:waypoint x="1604" y="172.0" />
+        <di:waypoint x="1757.0" y="172.0" />
+        <di:waypoint x="1757.0" y="183.0" />
+        <di:waypoint x="1910" y="183.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1687.0" y="155.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_F11_di" bpmnElement="WSPOLNY_JednoZrodlo_F11">
+        <di:waypoint x="1572.0" y="204" />
+        <di:waypoint x="1572.0" y="425" />
+        <di:waypoint x="1610.0" y="425" />
+        <di:waypoint x="1610.0" y="450" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1540.0" y="397" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_F12_di" bpmnElement="WSPOLNY_JednoZrodlo_F12">
+        <di:waypoint x="1720" y="493.0" />
+        <di:waypoint x="1815.0" y="493.0" />
+        <di:waypoint x="1815.0" y="183.0" />
+        <di:waypoint x="1910" y="183.0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="WSPOLNY_JednoZrodlo_archive_Diagram" name="Rozstrzygnij lokalne archiwum">
+    <bpmndi:BPMNPlane id="WSPOLNY_JednoZrodlo_archive_Plane" bpmnElement="WSPOLNY_JednoZrodlo_archive">
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_start_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_start">
+        <dc:Bounds x="70" y="140" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-8" y="194" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_archive_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_archive">
+        <dc:Bounds x="290" y="130" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="212" y="202" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_open_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_open">
+        <dc:Bounds x="550" y="120" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_encrypted_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_encrypted">
+        <dc:Bounds x="580" y="183" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="502" y="237" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_broken_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_broken">
+        <dc:Bounds x="700" y="183" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="622" y="237" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_zero_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_zero" bioc:fill="#fff1cb" bioc:stroke="#bd6b11">
+        <dc:Bounds x="470" y="400" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_one_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_one" bioc:fill="#fff1cb" bioc:stroke="#bd6b11">
+        <dc:Bounds x="880" y="400" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_single_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_single">
+        <dc:Bounds x="900" y="130" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="822" y="202" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_extract_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_extract">
+        <dc:Bounds x="1150" y="120" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_effective_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_effective">
+        <dc:Bounds x="1250" y="680" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1172" y="752" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_endcalc_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_endcalc">
+        <dc:Bounds x="1620" y="140" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1542" y="194" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_endscore_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_endscore">
+        <dc:Bounds x="1620" y="420" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1542" y="474" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_extracterror_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_extracterror">
+        <dc:Bounds x="1280" y="183" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1202" y="237" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_archive_extractencrypted_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_extractencrypted">
+        <dc:Bounds x="1180" y="183" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1102" y="237" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F1_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F1">
+        <di:waypoint x="116" y="163.0" />
+        <di:waypoint x="203.0" y="163.0" />
+        <di:waypoint x="203.0" y="162.0" />
+        <di:waypoint x="290" y="162.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F2_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F2">
+        <di:waypoint x="354" y="162.0" />
+        <di:waypoint x="452.0" y="162.0" />
+        <di:waypoint x="452.0" y="163.0" />
+        <di:waypoint x="550" y="163.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="382.0" y="135.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F3_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F3">
+        <di:waypoint x="322" y="130" />
+        <di:waypoint x="322" y="50" />
+        <di:waypoint x="1643" y="50" />
+        <di:waypoint x="1643" y="140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1573" y="22" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F4_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F4">
+        <di:waypoint x="770" y="163.0" />
+        <di:waypoint x="835.0" y="163.0" />
+        <di:waypoint x="835.0" y="162.0" />
+        <di:waypoint x="900" y="162.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F5_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F5">
+        <di:waypoint x="964" y="162.0" />
+        <di:waypoint x="1057.0" y="162.0" />
+        <di:waypoint x="1057.0" y="163.0" />
+        <di:waypoint x="1150" y="163.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="987.0" y="135.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F6_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F6">
+        <di:waypoint x="1370" y="163.0" />
+        <di:waypoint x="1620" y="163.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F7_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F7">
+        <di:waypoint x="964" y="162" />
+        <di:waypoint x="1120" y="162" />
+        <di:waypoint x="1120" y="610" />
+        <di:waypoint x="1282" y="610" />
+        <di:waypoint x="1282" y="680" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1050" y="582" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F8_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F8">
+        <di:waypoint x="1314" y="712" />
+        <di:waypoint x="1770" y="712" />
+        <di:waypoint x="1770" y="163" />
+        <di:waypoint x="1666" y="163" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1700" y="135" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F9_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F9">
+        <di:waypoint x="1250" y="712" />
+        <di:waypoint x="990" y="712" />
+        <di:waypoint x="990" y="486" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="920" y="684" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F10_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F10">
+        <di:waypoint x="603" y="229" />
+        <di:waypoint x="603" y="320" />
+        <di:waypoint x="580" y="320" />
+        <di:waypoint x="580" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F11_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F11">
+        <di:waypoint x="723" y="229" />
+        <di:waypoint x="723" y="360" />
+        <di:waypoint x="990" y="360" />
+        <di:waypoint x="990" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F12_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F12">
+        <di:waypoint x="580" y="486" />
+        <di:waypoint x="580" y="560" />
+        <di:waypoint x="1643" y="560" />
+        <di:waypoint x="1643" y="466" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F13_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F13">
+        <di:waypoint x="1100" y="443.0" />
+        <di:waypoint x="1620" y="443.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F14_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F14">
+        <di:waypoint x="1303" y="229" />
+        <di:waypoint x="1303" y="340" />
+        <di:waypoint x="990" y="340" />
+        <di:waypoint x="990" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_archive_F15_di" bpmnElement="WSPOLNY_JednoZrodlo_archive_F15">
+        <di:waypoint x="1203" y="229" />
+        <di:waypoint x="1203" y="300" />
+        <di:waypoint x="580" y="300" />
+        <di:waypoint x="580" y="400" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="WSPOLNY_JednoZrodlo_calculator_Diagram" name="Zastosuj kalkulator lub tabelę formatów">
+    <bpmndi:BPMNPlane id="WSPOLNY_JednoZrodlo_calculator_Plane" bpmnElement="WSPOLNY_JednoZrodlo_calculator">
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_start_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_start">
+        <dc:Bounds x="70" y="160" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-8" y="214" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_format_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_format">
+        <dc:Bounds x="290" y="150" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="212" y="222" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_json_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_json">
+        <dc:Bounds x="590" y="80" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="512" y="152" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_xml_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_xml">
+        <dc:Bounds x="590" y="450" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="512" y="522" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_rdf_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_rdf">
+        <dc:Bounds x="590" y="820" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="512" y="892" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_default_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default" isExpanded="false">
+        <dc:Bounds x="500" y="1170" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_jlinked_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_jlinked">
+        <dc:Bounds x="950" y="80" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="872" y="152" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_xlinked_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_xlinked">
+        <dc:Bounds x="950" y="450" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="872" y="522" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_rlinked_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_rlinked">
+        <dc:Bounds x="950" y="820" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="872" y="892" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_j3_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_j3">
+        <dc:Bounds x="900" y="270" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_j4_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_j4">
+        <dc:Bounds x="1280" y="80" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_j5_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_j5">
+        <dc:Bounds x="1280" y="270" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_x3_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_x3">
+        <dc:Bounds x="900" y="640" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_x4_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_x4">
+        <dc:Bounds x="1280" y="450" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_x5_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_x5">
+        <dc:Bounds x="1280" y="640" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_r4_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_r4">
+        <dc:Bounds x="900" y="1010" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_r4b_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_r4b">
+        <dc:Bounds x="1280" y="820" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_r5_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_r5">
+        <dc:Bounds x="1280" y="1010" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_end_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_end">
+        <dc:Bounds x="1770" y="1190" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1692" y="1244" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F1_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F1">
+        <di:waypoint x="116" y="183.0" />
+        <di:waypoint x="203.0" y="183.0" />
+        <di:waypoint x="203.0" y="182.0" />
+        <di:waypoint x="290" y="182.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F2_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F2">
+        <di:waypoint x="354" y="182.0" />
+        <di:waypoint x="472.0" y="182.0" />
+        <di:waypoint x="472.0" y="112.0" />
+        <di:waypoint x="590" y="112.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="402.0" y="84.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F3_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F3">
+        <di:waypoint x="354" y="182.0" />
+        <di:waypoint x="472.0" y="182.0" />
+        <di:waypoint x="472.0" y="482.0" />
+        <di:waypoint x="590" y="482.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="402.0" y="454.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F4_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F4">
+        <di:waypoint x="354" y="182.0" />
+        <di:waypoint x="472.0" y="182.0" />
+        <di:waypoint x="472.0" y="852.0" />
+        <di:waypoint x="590" y="852.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="402.0" y="824.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F5_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F5">
+        <di:waypoint x="354" y="182.0" />
+        <di:waypoint x="427.0" y="182.0" />
+        <di:waypoint x="427.0" y="1213.0" />
+        <di:waypoint x="500" y="1213.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="357.0" y="1185.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F6_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F6">
+        <di:waypoint x="654" y="112.0" />
+        <di:waypoint x="950" y="112.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="880" y="84.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F7_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F7">
+        <di:waypoint x="654" y="112.0" />
+        <di:waypoint x="777.0" y="112.0" />
+        <di:waypoint x="777.0" y="313.0" />
+        <di:waypoint x="900" y="313.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="707.0" y="285.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F8_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F8">
+        <di:waypoint x="1014" y="112.0" />
+        <di:waypoint x="1147.0" y="112.0" />
+        <di:waypoint x="1147.0" y="123.0" />
+        <di:waypoint x="1280" y="123.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1077.0" y="95.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F9_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F9">
+        <di:waypoint x="1014" y="112.0" />
+        <di:waypoint x="1147.0" y="112.0" />
+        <di:waypoint x="1147.0" y="313.0" />
+        <di:waypoint x="1280" y="313.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1077.0" y="285.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F10_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F10">
+        <di:waypoint x="654" y="482.0" />
+        <di:waypoint x="950" y="482.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="880" y="454.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F11_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F11">
+        <di:waypoint x="654" y="482.0" />
+        <di:waypoint x="777.0" y="482.0" />
+        <di:waypoint x="777.0" y="683.0" />
+        <di:waypoint x="900" y="683.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="707.0" y="655.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F12_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F12">
+        <di:waypoint x="1014" y="482.0" />
+        <di:waypoint x="1147.0" y="482.0" />
+        <di:waypoint x="1147.0" y="493.0" />
+        <di:waypoint x="1280" y="493.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1077.0" y="465.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F13_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F13">
+        <di:waypoint x="1014" y="482.0" />
+        <di:waypoint x="1147.0" y="482.0" />
+        <di:waypoint x="1147.0" y="683.0" />
+        <di:waypoint x="1280" y="683.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1077.0" y="655.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F14_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F14">
+        <di:waypoint x="654" y="852.0" />
+        <di:waypoint x="950" y="852.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="880" y="824.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F15_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F15">
+        <di:waypoint x="654" y="852.0" />
+        <di:waypoint x="777.0" y="852.0" />
+        <di:waypoint x="777.0" y="1053.0" />
+        <di:waypoint x="900" y="1053.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="707.0" y="1025.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F16_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F16">
+        <di:waypoint x="1014" y="852.0" />
+        <di:waypoint x="1147.0" y="852.0" />
+        <di:waypoint x="1147.0" y="863.0" />
+        <di:waypoint x="1280" y="863.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1077.0" y="835.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F17_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F17">
+        <di:waypoint x="1014" y="852.0" />
+        <di:waypoint x="1147.0" y="852.0" />
+        <di:waypoint x="1147.0" y="1053.0" />
+        <di:waypoint x="1280" y="1053.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1077.0" y="1025.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F18_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F18">
+        <di:waypoint x="1010.0" y="356" />
+        <di:waypoint x="1010.0" y="381" />
+        <di:waypoint x="1640" y="381" />
+        <di:waypoint x="1640" y="1213" />
+        <di:waypoint x="1770" y="1213" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F19_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F19">
+        <di:waypoint x="1500" y="123.0" />
+        <di:waypoint x="1640" y="123.0" />
+        <di:waypoint x="1640" y="1213" />
+        <di:waypoint x="1770" y="1213" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F20_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F20">
+        <di:waypoint x="1500" y="313.0" />
+        <di:waypoint x="1640" y="313.0" />
+        <di:waypoint x="1640" y="1213" />
+        <di:waypoint x="1770" y="1213" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F21_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F21">
+        <di:waypoint x="1010.0" y="726" />
+        <di:waypoint x="1010.0" y="751" />
+        <di:waypoint x="1640" y="751" />
+        <di:waypoint x="1640" y="1213" />
+        <di:waypoint x="1770" y="1213" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F22_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F22">
+        <di:waypoint x="1500" y="493.0" />
+        <di:waypoint x="1640" y="493.0" />
+        <di:waypoint x="1640" y="1213" />
+        <di:waypoint x="1770" y="1213" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F23_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F23">
+        <di:waypoint x="1500" y="683.0" />
+        <di:waypoint x="1640" y="683.0" />
+        <di:waypoint x="1640" y="1213" />
+        <di:waypoint x="1770" y="1213" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F24_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F24">
+        <di:waypoint x="1010.0" y="1096" />
+        <di:waypoint x="1010.0" y="1121" />
+        <di:waypoint x="1640" y="1121" />
+        <di:waypoint x="1640" y="1213" />
+        <di:waypoint x="1770" y="1213" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F25_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F25">
+        <di:waypoint x="1500" y="863.0" />
+        <di:waypoint x="1640" y="863.0" />
+        <di:waypoint x="1640" y="1213" />
+        <di:waypoint x="1770" y="1213" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F26_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F26">
+        <di:waypoint x="1500" y="1053.0" />
+        <di:waypoint x="1640" y="1053.0" />
+        <di:waypoint x="1640" y="1213" />
+        <di:waypoint x="1770" y="1213" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_F27_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_F27">
+        <di:waypoint x="720" y="1213.0" />
+        <di:waypoint x="1640" y="1213.0" />
+        <di:waypoint x="1640" y="1213" />
+        <di:waypoint x="1770" y="1213" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="WSPOLNY_JednoZrodlo_calculator_default_Diagram" name="Ustal stopień z tabeli formatów">
+    <bpmndi:BPMNPlane id="WSPOLNY_JednoZrodlo_calculator_default_Plane" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default">
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_default_start_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_start">
+        <dc:Bounds x="70" y="150" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="-8" y="204" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_default_lookup_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_lookup">
+        <dc:Bounds x="300" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_default_found_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_found">
+        <dc:Bounds x="650" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="572" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_default_unknown_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_unknown" bioc:fill="#fff1cb" bioc:stroke="#bd6b11">
+        <dc:Bounds x="600" y="430" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_default_rating_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_rating">
+        <dc:Bounds x="960" y="140" width="64" height="64" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="882" y="212" width="220" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_default_one_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_one" bioc:fill="#fff1cb" bioc:stroke="#bd6b11">
+        <dc:Bounds x="1240" y="130" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_default_two_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_two">
+        <dc:Bounds x="1240" y="430" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_default_three_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_three">
+        <dc:Bounds x="1240" y="730" width="220" height="86" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="WSPOLNY_JednoZrodlo_calculator_default_end_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_end">
+        <dc:Bounds x="1770" y="450" width="46" height="46" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1692" y="504" width="202" height="48" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_default_F1_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_F1">
+        <di:waypoint x="116" y="173.0" />
+        <di:waypoint x="300" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_default_F2_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_F2">
+        <di:waypoint x="520" y="173.0" />
+        <di:waypoint x="585.0" y="173.0" />
+        <di:waypoint x="585.0" y="172.0" />
+        <di:waypoint x="650" y="172.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_default_F3_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_F3">
+        <di:waypoint x="682.0" y="204" />
+        <di:waypoint x="682.0" y="405" />
+        <di:waypoint x="710.0" y="405" />
+        <di:waypoint x="710.0" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="640.0" y="377" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_default_F4_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_F4">
+        <di:waypoint x="714" y="172.0" />
+        <di:waypoint x="960" y="172.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="890" y="144.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_default_F5_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_F5">
+        <di:waypoint x="1024" y="172.0" />
+        <di:waypoint x="1132.0" y="172.0" />
+        <di:waypoint x="1132.0" y="173.0" />
+        <di:waypoint x="1240" y="173.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1062.0" y="145.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_default_F6_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_F6">
+        <di:waypoint x="1024" y="172.0" />
+        <di:waypoint x="1132.0" y="172.0" />
+        <di:waypoint x="1132.0" y="473.0" />
+        <di:waypoint x="1240" y="473.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1062.0" y="445.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_default_F7_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_F7">
+        <di:waypoint x="1024" y="172.0" />
+        <di:waypoint x="1132.0" y="172.0" />
+        <di:waypoint x="1132.0" y="773.0" />
+        <di:waypoint x="1240" y="773.0" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1062.0" y="745.0" width="140" height="25" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_default_F8_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_F8">
+        <di:waypoint x="1460" y="173.0" />
+        <di:waypoint x="1670" y="173.0" />
+        <di:waypoint x="1670" y="473" />
+        <di:waypoint x="1770" y="473" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_default_F9_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_F9">
+        <di:waypoint x="1460" y="473.0" />
+        <di:waypoint x="1670" y="473.0" />
+        <di:waypoint x="1670" y="473" />
+        <di:waypoint x="1770" y="473" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_default_F10_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_F10">
+        <di:waypoint x="1460" y="773.0" />
+        <di:waypoint x="1670" y="773.0" />
+        <di:waypoint x="1670" y="473" />
+        <di:waypoint x="1770" y="473" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="WSPOLNY_JednoZrodlo_calculator_default_F11_di" bpmnElement="WSPOLNY_JednoZrodlo_calculator_default_F11">
+        <di:waypoint x="710.0" y="516" />
+        <di:waypoint x="710.0" y="900" />
+        <di:waypoint x="1670" y="900" />
+        <di:waypoint x="1670" y="473" />
+        <di:waypoint x="1770" y="473" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
