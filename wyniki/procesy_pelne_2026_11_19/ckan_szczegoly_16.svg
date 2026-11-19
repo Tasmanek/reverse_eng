@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="142.0 65.0 906.0 265.0" role="img" aria-label="Wybierz zbiory spełniające reguły biznesowe"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="142.0" y="65.0" width="906.0" height="265.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 600.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="800.0,180.0 932.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Lista po podstawowej walidacji
+Źródło HTML: #tab=ckan&amp;node=K13
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-117</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Lista po podstawowej</tspan><tspan x="200.0" dy="15">walidacji</tspan></text></g><g class="node"><title>Policz DGA na instytucję w całej liście
+Źródło HTML: #tab=ckan&amp;node=K13
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-117</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Policz DGA na instytucję w</tspan><tspan x="450.0" dy="15">całej liście</tspan></text></g><g class="node"><title>Oceń i przyjmij albo odrzuć każdy zbiór
+
+Pierwsza niespełniona reguła odrzuca zbiór; kolejne zbiory są nadal oceniane. Licencje: cc-zero / cc-by / cc-by-sa / cc-nc. HVD z wykazu KE: typ instytucji state/local/other i hasHighValueData=true; sprawdzane osobno dla zbioru i zasobu. Samo hasHighValueData nie ma tych dodatkowych warunków. Odrzucony wcześniejszy zbiór może zostać trwale wycofany podczas synchronizacji (U-7).
+
+Źródło HTML: #tab=ckan&amp;node=K14
+
+Źródło HTML: #tab=ckan&amp;node=K14r
+
+Źródło HTML: #tab=ckan&amp;node=K15
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-118
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-119
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-120</title><rect x="600.0" y="130.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="226.0" text-anchor="middle" font-weight="bold">⊞</text><text x="700.0" y="177.0" text-anchor="middle"><tspan x="700.0" dy="0">Oceń i przyjmij albo odrzuć</tspan><tspan x="700.0" dy="15">każdy zbiór</tspan></text></g><g class="node"><title>Listy przyjętych i odrzuconych gotowe
+Źródło HTML: #tab=ckan&amp;node=K14r
+
+Źródło HTML: #tab=ckan&amp;node=K15
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-119
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-120</title><circle cx="950.0" cy="180.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="950.0" y="215.0" text-anchor="middle"><tspan x="950.0" dy="0">Listy przyjętych i</tspan><tspan x="950.0" dy="15">odrzuconych gotowe</tspan></text></g></svg>

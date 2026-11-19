@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="65.0 65.0 2070.0 993.0" role="img" aria-label="Przygotuj zasób i oblicz ocenę"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="65.0" y="65.0" width="2070.0" height="993.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 350.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="550.0,180.0 673.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="727.0,180.0 855.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="796.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="727.0,180.0 824.0,180.0 824.0,299.0 1648.0,299.0 1648.0,370.0 1673.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="829.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie — pomiń kontrolę pliku</text><polyline points="1045.0,180.0 1173.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1227.0,180.0 1350.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1293.5" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1227.0,180.0 1330.0,180.0 1330.0,370.0 1355.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1335.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1550.0,180.0 1575.0,180.0 1575.0,370.0 1673.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1545.0,370.0 1673.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1727.0,370.0 1850.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2050.0,370.0 2075.0,370.0 2075.0,490.0 200.0,490.0 200.0,515.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="295.0,560.0 355.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,560.0 673.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="727.0,560.0 923.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="830.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="727.0,560.0 824.0,560.0 824.0,750.0 923.0,750.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="829.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="977.0,560.0 1105.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1046.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="977.0,560.0 1002.0,560.0 1002.0,489.0 1407.0,489.0 1407.0,560.0 1432.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1007.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">nie — bez odświeżenia</text><polyline points="1295.0,560.0 1432.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="977.0,750.0 1079.0,750.0 1079.0,940.0 1182.0,940.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1084.0" y="742.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="977.0,750.0 1105.0,750.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1046.0" y="742.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1295.0,750.0 1432.0,750.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Zadanie zasobu odebrane
+Źródło HTML: #tab=xml&amp;node=O3
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-211</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Zadanie zasobu odebrane</tspan></text></g><g class="node"><title>Pobierz i rozpoznaj zasób
+
+Synchroniczny etap URL bieżącego zadania zasobu; .apply() nie publikuje nowego zlecenia. Błąd pobrania nie pomija automatycznie późniejszego obliczenia oceny.
+
+Źródło HTML: #tab=xml&amp;node=OURL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-307</title><rect x="350.0" y="130.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="226.0" text-anchor="middle" font-weight="bold">⊞</text><text x="450.0" y="184.0" text-anchor="middle"><tspan x="450.0" dy="0">Pobierz i rozpoznaj zasób</tspan></text></g><g class="node"><title>URL udany, brak odroczonego błędu i typ wymaga pliku?
+Typ file lub API z wymuszonym typem plikowym. Późniejszy helper waliduje tylko istniejący plik główny.
+
+Źródło HTML: #tab=xml&amp;node=O7
+
+Źródło HTML: #tab=xml&amp;node=OALL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-308</title><polygon points="700.0,153.0 727.0,180.0 700.0,207.0 673.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="700.0" y="185.0" text-anchor="middle">×</text><text x="700.0" y="128.0" text-anchor="middle"><tspan x="700.0" dy="0">URL udany, brak odroczonego</tspan><tspan x="700.0" dy="15">błędu i typ wymaga pliku?</tspan></text></g><g class="node"><title>Zweryfikuj istniejący plik główny
+Synchroniczne process_resource_res_file_task.apply; wynik i błędy etapu są przechowywane. Przy braku pliku helper nie wykonuje kontroli zawartości.
+
+Źródło HTML: #tab=xml&amp;node=O8
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-309</title><rect x="855.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="950.0" y="177.0" text-anchor="middle"><tspan x="950.0" dy="0">Zweryfikuj istniejący plik</tspan><tspan x="950.0" dy="15">główny</tspan></text></g><g class="node"><title>Wymagana kontrola pliku udana?
+Źródło HTML: #tab=xml&amp;node=O8
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-309</title><polygon points="1200.0,153.0 1227.0,180.0 1200.0,207.0 1173.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="1200.0" y="185.0" text-anchor="middle">×</text><text x="1200.0" y="141.0" text-anchor="middle"><tspan x="1200.0" dy="0">Wymagana kontrola pliku udana?</tspan></text></g><g class="node"><title>Sprawdź przetwarzalność i dane tabeli
+Źródło HTML: #tab=xml&amp;node=ODATA
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-311</title><rect x="1350.0" y="130.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1450.0" y="226.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1450.0" y="177.0" text-anchor="middle"><tspan x="1450.0" dy="0">Sprawdź przetwarzalność i</tspan><tspan x="1450.0" dy="15">dane tabeli</tspan></text></g><g class="node"><title>Zapamiętaj błąd pliku; kontynuuj do oceny
+Źródło HTML: #tab=xml&amp;node=O8
+
+Źródło HTML: #tab=xml&amp;node=OFAIL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-309
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-319</title><rect x="1355.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff0d4" stroke="#46637f"/><text x="1450.0" y="367.0" text-anchor="middle"><tspan x="1450.0" dy="0">Zapamiętaj błąd pliku;</tspan><tspan x="1450.0" dy="15">kontynuuj do oceny</tspan></text></g><g class="node"><title>Przejdź do obliczenia oceny
+Źródło HTML: #tab=xml&amp;node=OJOIN</title><polygon points="1700.0,343.0 1727.0,370.0 1700.0,397.0 1673.0,370.0" fill="#fff0d4" stroke="#b58030"/><text x="1700.0" y="375.0" text-anchor="middle">×</text><text x="1700.0" y="331.0" text-anchor="middle"><tspan x="1700.0" dy="0">Przejdź do obliczenia oceny</tspan></text></g><g class="node"><title>Wyznacz ocenę otwartości
+Źródło HTML: #tab=xml&amp;node=O9
+
+Źródło HTML: #tab=ocena&amp;id=SECTION-ocena-5
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-316</title><rect x="1850.0" y="320.0" width="200.0" height="100.0" rx="8" fill="#fff0d4" stroke="#46637f"/><text x="1950.0" y="416.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1950.0" y="374.0" text-anchor="middle"><tspan x="1950.0" dy="0">Wyznacz ocenę otwartości</tspan></text></g><g class="node"><title>Zapisz ocenę zasobu i ocenianych plików
+Bezpośredni UPDATE, bez sygnałów. Następuje przed zleceniem końcowego odświeżenia ES/RDF.
+
+Źródło HTML: #tab=xml&amp;node=O9
+
+Źródło HTML: #tab=xml&amp;node=O15
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-316
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-317</title><rect x="105.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff0d4" stroke="#46637f"/><text x="200.0" y="557.0" text-anchor="middle"><tspan x="200.0" dy="0">Zapisz ocenę zasobu i</tspan><tspan x="200.0" dy="15">ocenianych plików</tspan></text></g><g class="node"><title>Zapisz datę weryfikacji, jeżeli żądana
+Warunek update_verification_date=True. Nie jest to potwierdzenie merytorycznej aktualności danych.
+
+Źródło HTML: #tab=xml&amp;node=O15
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-317</title><rect x="355.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="557.0" text-anchor="middle"><tspan x="450.0" dy="0">Zapisz datę weryfikacji,</tspan><tspan x="450.0" dy="15">jeżeli żądana</tspan></text></g><g class="node"><title>URL i wymagane kontrole udane; brak odroczonych wyjątków?
+Dopiero ten warunek umożliwia końcowe zlecenie odświeżenia. Ocena i data mogły już zostać zapisane mimo problemu.
+
+Źródło HTML: #tab=xml&amp;node=OALL</title><polygon points="700.0,533.0 727.0,560.0 700.0,587.0 673.0,560.0" fill="#fff0d4" stroke="#b58030"/><text x="700.0" y="565.0" text-anchor="middle">×</text><text x="700.0" y="508.0" text-anchor="middle"><tspan x="700.0" dy="0">URL i wymagane kontrole udane;</tspan><tspan x="700.0" dy="15">brak odroczonych wyjątków?</tspan></text></g><g class="node"><title>Zasób nadal opublikowany i nieusunięty?
+Źródło HTML: #tab=xml&amp;node=PB4
+
+Źródło HTML: #tab=stany&amp;id=SECTION-stany-8
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-318</title><polygon points="950.0,533.0 977.0,560.0 950.0,587.0 923.0,560.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="565.0" text-anchor="middle">×</text><text x="950.0" y="508.0" text-anchor="middle"><tspan x="950.0" dy="0">Zasób nadal opublikowany i</tspan><tspan x="950.0" dy="15">nieusunięty?</tspan></text></g><g class="node"><title>Zleć ES i RDF z aktualną oceną
+Nie zleca ponownego powiadomienia obserwujących tylko z powodu wyliczenia oceny.
+
+Źródło HTML: #tab=xml&amp;node=PB4
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-318</title><rect x="1105.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="557.0" text-anchor="middle"><tspan x="1200.0" dy="0">Zleć ES i RDF z aktualną</tspan><tspan x="1200.0" dy="15">oceną</tspan></text></g><g class="node"><title>Zadanie zasobu zakończone
+Źródło HTML: #tab=xml&amp;node=O3
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-211</title><circle cx="1450.0" cy="560.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1450.0" y="595.0" text-anchor="middle"><tspan x="1450.0" dy="0">Zadanie zasobu zakończone</tspan></text></g><g class="node"><title>Są odroczone wyjątki do zgłoszenia?
+Źródło HTML: #tab=xml&amp;node=OFAIL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-319</title><polygon points="950.0,723.0 977.0,750.0 950.0,777.0 923.0,750.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="755.0" text-anchor="middle">×</text><text x="950.0" y="698.0" text-anchor="middle"><tspan x="950.0" dy="0">Są odroczone wyjątki do</tspan><tspan x="950.0" dy="15">zgłoszenia?</tspan></text></g><g class="node"><title>Zaloguj problem; bez końcowego odświeżenia
+Nieudany status URL/pliku bez deferred_exceptions może jedynie blokować odświeżenie; nie zamieniamy go automatycznie w wyjątek.
+
+Źródło HTML: #tab=xml&amp;node=OFAIL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-319</title><rect x="1105.0" y="705.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="747.0" text-anchor="middle"><tspan x="1200.0" dy="0">Zaloguj problem; bez</tspan><tspan x="1200.0" dy="15">końcowego odświeżenia</tspan></text></g><g class="node"><title>Zadanie zakończone z problemem w etapach
+Źródło HTML: #tab=xml&amp;node=OFAIL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-319</title><circle cx="1450.0" cy="750.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1450.0" y="785.0" text-anchor="middle"><tspan x="1450.0" dy="0">Zadanie zakończone z</tspan><tspan x="1450.0" dy="15">problemem w etapach</tspan></text></g><g class="node"><title>Zgłoś pierwszy odroczony wyjątek
+Po przewidzianym zapisie oceny i daty. Wynik importu opisów pozostaje odrębny.
+
+Źródło HTML: #tab=xml&amp;node=OFAIL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-319</title><circle cx="1200.0" cy="940.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1200.0" y="975.0" text-anchor="middle"><tspan x="1200.0" dy="0">Zgłoś pierwszy odroczony</tspan><tspan x="1200.0" dy="15">wyjątek</tspan></text></g></svg>

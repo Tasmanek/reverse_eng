@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60.0 -45.0 1738.0 565.0" role="img" aria-label="Sprawdź każdy zbiór, zasoby i dokumenty"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="60.0" y="-45.0" width="1738.0" height="565.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 673.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="727.0,180.0 855.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="796.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="727.0,180.0 830.0,180.0 830.0,370.0 855.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="835.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie — pomiń reguły obiektu</text><polyline points="1045.0,180.0 1070.0,180.0 1070.0,300.0 950.0,300.0 950.0,325.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1045.0,370.0 1100.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1300.0,370.0 1350.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1550.0,370.0 1682.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Kolejny zbiór
+Źródło HTML: #tab=xml&amp;node=X12
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-123</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Kolejny zbiór</tspan></text></g><g class="node"><title>Sprawdź pola i identyfikatory zbioru
+extIdent wymagany ≤36; intIdent istniejącego zbioru tej instytucji; status draft/published; tytuły, opisy, URL i wartości według XSD. Nieznane pola schematu są ignorowane.
+
+Źródło HTML: #tab=xml&amp;node=X12
+
+Źródło HTML: #tab=zrodla&amp;id=SECTION-zrodla-8
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-123</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Sprawdź pola i</tspan><tspan x="450.0" dy="15">identyfikatory zbioru</tspan></text></g><g class="node"><title>Pola pozwalają na walidację reguł zbioru?
+Źródło HTML: #tab=xml&amp;node=X12
+
+Źródło HTML: #tab=bledy&amp;id=SECTION-bledy-8
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-123</title><polygon points="700.0,153.0 727.0,180.0 700.0,207.0 673.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="700.0" y="185.0" text-anchor="middle">×</text><text x="700.0" y="128.0" text-anchor="middle"><tspan x="700.0" dy="0">Pola pozwalają na walidację</tspan><tspan x="700.0" dy="15">reguł zbioru?</tspan></text></g><g class="node"><title>Sprawdź parę warunków licencji i reguły HVD
+dbOrCopyrighted oraz dbOrCopyrightedLicenseChosen występują tylko razem. HVD z wykazu KE: typ instytucji state/local/other i hasHighValueData=true; sprawdzane osobno dla zbioru i zasobu. Samo hasHighValueData nie ma tych dodatkowych warunków. Wynik dopisz do błędów, gdy niepoprawny.
+
+Źródło HTML: #tab=xml&amp;node=X12
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-6
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-123</title><rect x="855.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="950.0" y="177.0" text-anchor="middle"><tspan x="950.0" dy="0">Sprawdź parę warunków</tspan><tspan x="950.0" dy="15">licencji i reguły HVD</tspan></text></g><g class="node"><title>Zbierz błędy zbioru
+Zbiera także wynik walidacji reguł. Błędy pól mogą pominąć walidatory całego obiektu, lecz nie zatrzymują kontroli pozostałych pozycji.
+
+Źródło HTML: #tab=xml&amp;node=XERR
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-132</title><rect x="855.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="950.0" y="374.0" text-anchor="middle"><tspan x="950.0" dy="0">Zbierz błędy zbioru</tspan></text></g><g class="node"><title>Sprawdź dokumenty zbioru
+Źródło HTML: #tab=xml&amp;node=XDS18
+
+Źródło HTML: #tab=xml&amp;node=X18
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-125
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-131</title><rect x="1100.0" y="320.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="416.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1200.0" y="374.0" text-anchor="middle"><tspan x="1200.0" dy="0">Sprawdź dokumenty zbioru</tspan></text></g><g class="node"><title>Sprawdź każdy zasób
+Źródło HTML: #tab=xml&amp;node=X13
+
+Źródło HTML: #tab=xml&amp;node=X14
+
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=xml&amp;node=X18
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-126
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-128
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><rect x="1350.0" y="320.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1450.0" y="416.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1450.0" y="374.0" text-anchor="middle"><tspan x="1450.0" dy="0">Sprawdź każdy zasób</tspan></text></g><g class="node"><title>Przejdź do następnego zbioru
+Źródło HTML: #tab=xml&amp;node=XNEXT</title><circle cx="1700.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1700.0" y="405.0" text-anchor="middle"><tspan x="1700.0" dy="0">Przejdź do następnego zbioru</tspan></text></g><g class="node"><title>Sekwencyjna iteracja listy, nie współbieżne importy. Walidacja gromadzi błędy; niektóre walidatory obiektu są pomijane po błędach pól. Błąd nie przyjmuje pozostałych pozycji częściowo.
+</title><text x="909.0" y="36.0" text-anchor="middle"><tspan x="909.0" dy="0">Sekwencyjna iteracja listy, nie współbieżne importy. Walidacja gromadzi błędy; niektóre walidatory obiektu są pomijane po błędach pól. Błąd nie przyjmuje pozostałych pozycji częściowo.</tspan></text></g></svg>

@@ -1,0 +1,1029 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="VIEW_xml" targetNamespace="urn:mcod:as-is:2026-11-19" exporter="Lokalna analiza kodu" exporterVersion="2.0">
+  <bpmn:collaboration id="VIEW_xml_coll" name="2. XML — import, pliki, ocena i konwersje">
+    <bpmn:participant id="xml_setup_pool" name="ADMINISTRATOR I HARMONOGRAM — aktywacja lub należny termin" processRef="xml_setup" />
+    <bpmn:participant id="xml_import_pool" name="HARWESTER I KATALOG — import metadanych; koniec importu nie czeka na ocenę" processRef="xml_import" />
+    <bpmn:messageFlow id="xml_flow_238" sourceRef="xml_sendimport" targetRef="xml_importstart" />
+    <bpmn:messageFlow id="xml_flow_246" sourceRef="xml_timersend" targetRef="xml_importstart" />
+    <bpmn:participant id="xml_dispatch_pool" name="ZAPIS ZASOBU — decyzja o przygotowaniu; zlecenie po zatwierdzeniu transakcji" processRef="xml_dispatch" />
+    <bpmn:messageFlow id="xml_flow_295" sourceRef="xml_save" targetRef="xml_dispatchstart" />
+    <bpmn:participant id="xml_prep_url_pool" name="PRZYGOTOWANIE W TLE — URL zasobu XML" processRef="xml_prep_url" />
+    <bpmn:messageFlow id="xml_flow_526" sourceRef="xml_prepsend" targetRef="xml_url_start" />
+    <bpmn:participant id="xml_conversion_pool" name="PLIKI POCHODNE W TLE — wspólny algorytm XML i ręcznego dodania" processRef="xml_conversion" />
+    <bpmn:messageFlow id="xml_flow_681" sourceRef="xml_url_derive" targetRef="xml_convstart" />
+    <bpmn:participant id="xml_archive_pool" name="PACZKA PLIKÓW ZBIORU — niezależne zadanie" processRef="xml_archive" />
+    <bpmn:messageFlow id="xml_flow_752" sourceRef="xml_archsend" targetRef="xml_archstart" />
+    <bpmn:participant id="xml_publication_pool" name="PUBLIKACJA W TLE — osobne zadania zależne od zdarzenia zapisu / oceny" processRef="xml_publication" />
+    <bpmn:messageFlow id="xml_flow_790" sourceRef="xml_save" targetRef="xml_pubstart" name="Według zdarzenia zapisu" />
+    <bpmn:messageFlow id="xml_flow_798" sourceRef="xml_url_refresh" targetRef="xml_pubstart" name="ES/RDF" />
+    <bpmn:messageFlow id="xml_flow_806" sourceRef="xml_convrefresh" targetRef="xml_pubstart" name="ES/RDF" />
+  </bpmn:collaboration>
+  <bpmndi:BPMNDiagram id="VIEW_xml_diagram" name="2. XML — import, pliki, ocena i konwersje">
+    <bpmndi:BPMNPlane id="VIEW_xml_plane" bpmnElement="VIEW_xml_coll">
+      <bpmndi:BPMNShape id="xml_setup_pool_di" bpmnElement="xml_setup_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="70" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_config_di" bpmnElement="xml_config">
+        <dc:Bounds x="110" y="135" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_activation_di" bpmnElement="xml_activation">
+        <dc:Bounds x="350" y="135" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_sendimport_di" bpmnElement="xml_sendimport">
+        <dc:Bounds x="590" y="135" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_setupend_di" bpmnElement="xml_setupend">
+        <dc:Bounds x="830" y="135" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="xml_flow_21_di" bpmnElement="xml_flow_21">
+        <di:waypoint x="300" y="173.0" />
+        <di:waypoint x="325.0" y="173.0" />
+        <di:waypoint x="325.0" y="164.0" />
+        <di:waypoint x="350" y="164.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_29_di" bpmnElement="xml_flow_29">
+        <di:waypoint x="408" y="164.0" />
+        <di:waypoint x="499.0" y="164.0" />
+        <di:waypoint x="499.0" y="173.0" />
+        <di:waypoint x="590" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_37_di" bpmnElement="xml_flow_37">
+        <di:waypoint x="379.0" y="193" />
+        <di:waypoint x="379.0" y="220" />
+        <di:waypoint x="852.0" y="220" />
+        <di:waypoint x="852.0" y="179" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_45_di" bpmnElement="xml_flow_45">
+        <di:waypoint x="780" y="173.0" />
+        <di:waypoint x="805.0" y="173.0" />
+        <di:waypoint x="805.0" y="157.0" />
+        <di:waypoint x="830" y="157.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="xml_timer_di" bpmnElement="xml_timer">
+        <dc:Bounds x="1070" y="135" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_due_di" bpmnElement="xml_due">
+        <dc:Bounds x="1310" y="135" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_duetest_di" bpmnElement="xml_duetest">
+        <dc:Bounds x="1550" y="135" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_timersend_di" bpmnElement="xml_timersend">
+        <dc:Bounds x="1790" y="135" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_timerend_di" bpmnElement="xml_timerend">
+        <dc:Bounds x="2030" y="135" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="xml_flow_68_di" bpmnElement="xml_flow_68">
+        <di:waypoint x="1114" y="157.0" />
+        <di:waypoint x="1212.0" y="157.0" />
+        <di:waypoint x="1212.0" y="173.0" />
+        <di:waypoint x="1310" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_76_di" bpmnElement="xml_flow_76">
+        <di:waypoint x="1500" y="173.0" />
+        <di:waypoint x="1525.0" y="173.0" />
+        <di:waypoint x="1525.0" y="164.0" />
+        <di:waypoint x="1550" y="164.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_84_di" bpmnElement="xml_flow_84">
+        <di:waypoint x="1608" y="164.0" />
+        <di:waypoint x="1699.0" y="164.0" />
+        <di:waypoint x="1699.0" y="173.0" />
+        <di:waypoint x="1790" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_92_di" bpmnElement="xml_flow_92">
+        <di:waypoint x="1579.0" y="193" />
+        <di:waypoint x="1579.0" y="232" />
+        <di:waypoint x="2052.0" y="232" />
+        <di:waypoint x="2052.0" y="179" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_100_di" bpmnElement="xml_flow_100">
+        <di:waypoint x="1980" y="173.0" />
+        <di:waypoint x="2005.0" y="173.0" />
+        <di:waypoint x="2005.0" y="157.0" />
+        <di:waypoint x="2030" y="157.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="xml_import_pool_di" bpmnElement="xml_import_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="370" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_importstart_di" bpmnElement="xml_importstart">
+        <dc:Bounds x="110" y="435" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_active_di" bpmnElement="xml_active">
+        <dc:Bounds x="350" y="435" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_fetch_di" bpmnElement="xml_fetch">
+        <dc:Bounds x="590" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_validate_di" bpmnElement="xml_validate">
+        <dc:Bounds x="830" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_valid_di" bpmnElement="xml_valid">
+        <dc:Bounds x="1070" y="435" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_rules_di" bpmnElement="xml_rules">
+        <dc:Bounds x="1310" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_save_di" bpmnElement="xml_save">
+        <dc:Bounds x="1550" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_sync_di" bpmnElement="xml_sync">
+        <dc:Bounds x="1790" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_result_di" bpmnElement="xml_result">
+        <dc:Bounds x="2030" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_importend_di" bpmnElement="xml_importend">
+        <dc:Bounds x="2270" y="435" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_inputerr_di" bpmnElement="xml_inputerr">
+        <dc:Bounds x="1070" y="540" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_inputerrend_di" bpmnElement="xml_inputerrend">
+        <dc:Bounds x="1310" y="540" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="xml_flow_148_di" bpmnElement="xml_flow_148">
+        <di:waypoint x="154" y="457.0" />
+        <di:waypoint x="252.0" y="457.0" />
+        <di:waypoint x="252.0" y="464.0" />
+        <di:waypoint x="350" y="464.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_156_di" bpmnElement="xml_flow_156">
+        <di:waypoint x="408" y="464.0" />
+        <di:waypoint x="499.0" y="464.0" />
+        <di:waypoint x="499.0" y="473.0" />
+        <di:waypoint x="590" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_164_di" bpmnElement="xml_flow_164">
+        <di:waypoint x="408" y="464.0" />
+        <di:waypoint x="859.0" y="464.0" />
+        <di:waypoint x="859.0" y="562.0" />
+        <di:waypoint x="1310" y="562.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_172_di" bpmnElement="xml_flow_172">
+        <di:waypoint x="780" y="473.0" />
+        <di:waypoint x="830" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_178_di" bpmnElement="xml_flow_178">
+        <di:waypoint x="1020" y="473.0" />
+        <di:waypoint x="1045.0" y="473.0" />
+        <di:waypoint x="1045.0" y="464.0" />
+        <di:waypoint x="1070" y="464.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_186_di" bpmnElement="xml_flow_186">
+        <di:waypoint x="1128" y="464.0" />
+        <di:waypoint x="1219.0" y="464.0" />
+        <di:waypoint x="1219.0" y="473.0" />
+        <di:waypoint x="1310" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_194_di" bpmnElement="xml_flow_194">
+        <di:waypoint x="1128" y="464.0" />
+        <di:waypoint x="1143" y="464.0" />
+        <di:waypoint x="1143" y="638" />
+        <di:waypoint x="1055" y="638" />
+        <di:waypoint x="1055" y="578.0" />
+        <di:waypoint x="1070" y="578.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_204_di" bpmnElement="xml_flow_204">
+        <di:waypoint x="1260" y="578.0" />
+        <di:waypoint x="1285.0" y="578.0" />
+        <di:waypoint x="1285.0" y="562.0" />
+        <di:waypoint x="1310" y="562.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_212_di" bpmnElement="xml_flow_212">
+        <di:waypoint x="1500" y="473.0" />
+        <di:waypoint x="1550" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_218_di" bpmnElement="xml_flow_218">
+        <di:waypoint x="1740" y="473.0" />
+        <di:waypoint x="1790" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_224_di" bpmnElement="xml_flow_224">
+        <di:waypoint x="1980" y="473.0" />
+        <di:waypoint x="2030" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_230_di" bpmnElement="xml_flow_230">
+        <di:waypoint x="2220" y="473.0" />
+        <di:waypoint x="2245.0" y="473.0" />
+        <di:waypoint x="2245.0" y="457.0" />
+        <di:waypoint x="2270" y="457.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_238_di" bpmnElement="xml_flow_238">
+        <di:waypoint x="685.0" y="211" />
+        <di:waypoint x="685.0" y="360" />
+        <di:waypoint x="3908" y="360" />
+        <di:waypoint x="3908" y="412" />
+        <di:waypoint x="132.0" y="412" />
+        <di:waypoint x="132.0" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_246_di" bpmnElement="xml_flow_246">
+        <di:waypoint x="1885.0" y="211" />
+        <di:waypoint x="1885.0" y="360" />
+        <di:waypoint x="3926" y="360" />
+        <di:waypoint x="3926" y="412" />
+        <di:waypoint x="132.0" y="412" />
+        <di:waypoint x="132.0" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="xml_dispatch_pool_di" bpmnElement="xml_dispatch_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="670" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_dispatchstart_di" bpmnElement="xml_dispatchstart">
+        <dc:Bounds x="110" y="735" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_condition_di" bpmnElement="xml_condition">
+        <dc:Bounds x="350" y="735" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_prepsend_di" bpmnElement="xml_prepsend">
+        <dc:Bounds x="590" y="735" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_dispatchend_di" bpmnElement="xml_dispatchend">
+        <dc:Bounds x="830" y="735" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="xml_flow_271_di" bpmnElement="xml_flow_271">
+        <di:waypoint x="154" y="757.0" />
+        <di:waypoint x="252.0" y="757.0" />
+        <di:waypoint x="252.0" y="764.0" />
+        <di:waypoint x="350" y="764.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_279_di" bpmnElement="xml_flow_279">
+        <di:waypoint x="379.0" y="793" />
+        <di:waypoint x="379.0" y="832" />
+        <di:waypoint x="852.0" y="832" />
+        <di:waypoint x="852.0" y="779" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_287_di" bpmnElement="xml_flow_287">
+        <di:waypoint x="780" y="773.0" />
+        <di:waypoint x="805.0" y="773.0" />
+        <di:waypoint x="805.0" y="757.0" />
+        <di:waypoint x="830" y="757.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_295_di" bpmnElement="xml_flow_295">
+        <di:waypoint x="1645.0" y="511" />
+        <di:waypoint x="1645.0" y="660" />
+        <di:waypoint x="3944" y="660" />
+        <di:waypoint x="3944" y="712" />
+        <di:waypoint x="132.0" y="712" />
+        <di:waypoint x="132.0" y="735" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_303_di" bpmnElement="xml_flow_303">
+        <di:waypoint x="408" y="764.0" />
+        <di:waypoint x="499.0" y="764.0" />
+        <di:waypoint x="499.0" y="773.0" />
+        <di:waypoint x="590" y="773.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="xml_prep_url_pool_di" bpmnElement="xml_prep_url_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="970" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_start_di" bpmnElement="xml_url_start">
+        <dc:Bounds x="110" y="1035" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_src_di" bpmnElement="xml_url_src">
+        <dc:Bounds x="350" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_need_di" bpmnElement="xml_url_need">
+        <dc:Bounds x="590" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_file_di" bpmnElement="xml_url_file">
+        <dc:Bounds x="830" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_fileok_di" bpmnElement="xml_url_fileok">
+        <dc:Bounds x="1070" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_eligible_di" bpmnElement="xml_url_eligible">
+        <dc:Bounds x="1310" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_data_di" bpmnElement="xml_url_data">
+        <dc:Bounds x="1550" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_indexed_di" bpmnElement="xml_url_indexed">
+        <dc:Bounds x="1790" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_derive_di" bpmnElement="xml_url_derive">
+        <dc:Bounds x="2030" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_score_di" bpmnElement="xml_url_score">
+        <dc:Bounds x="2270" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_date_di" bpmnElement="xml_url_date">
+        <dc:Bounds x="2510" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_ok_di" bpmnElement="xml_url_ok">
+        <dc:Bounds x="2750" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_pub_di" bpmnElement="xml_url_pub">
+        <dc:Bounds x="2990" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_refresh_di" bpmnElement="xml_url_refresh">
+        <dc:Bounds x="3230" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_end_di" bpmnElement="xml_url_end">
+        <dc:Bounds x="3470" y="1035" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_url_problem_di" bpmnElement="xml_url_problem">
+        <dc:Bounds x="2990" y="1140" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="xml_flow_364_di" bpmnElement="xml_flow_364">
+        <di:waypoint x="154" y="1057.0" />
+        <di:waypoint x="252.0" y="1057.0" />
+        <di:waypoint x="252.0" y="1073.0" />
+        <di:waypoint x="350" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_372_di" bpmnElement="xml_flow_372">
+        <di:waypoint x="540" y="1073.0" />
+        <di:waypoint x="565.0" y="1073.0" />
+        <di:waypoint x="565.0" y="1064.0" />
+        <di:waypoint x="590" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_380_di" bpmnElement="xml_flow_380">
+        <di:waypoint x="648" y="1064.0" />
+        <di:waypoint x="739.0" y="1064.0" />
+        <di:waypoint x="739.0" y="1073.0" />
+        <di:waypoint x="830" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_388_di" bpmnElement="xml_flow_388">
+        <di:waypoint x="619.0" y="1093" />
+        <di:waypoint x="619.0" y="1126" />
+        <di:waypoint x="2365.0" y="1126" />
+        <di:waypoint x="2365.0" y="1111" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_396_di" bpmnElement="xml_flow_396">
+        <di:waypoint x="1020" y="1073.0" />
+        <di:waypoint x="1045.0" y="1073.0" />
+        <di:waypoint x="1045.0" y="1064.0" />
+        <di:waypoint x="1070" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_404_di" bpmnElement="xml_flow_404">
+        <di:waypoint x="1128" y="1064.0" />
+        <di:waypoint x="1310" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_410_di" bpmnElement="xml_flow_410">
+        <di:waypoint x="1099.0" y="1093" />
+        <di:waypoint x="1099.0" y="1126" />
+        <di:waypoint x="2365.0" y="1126" />
+        <di:waypoint x="2365.0" y="1111" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_418_di" bpmnElement="xml_flow_418">
+        <di:waypoint x="1368" y="1064.0" />
+        <di:waypoint x="1459.0" y="1064.0" />
+        <di:waypoint x="1459.0" y="1073.0" />
+        <di:waypoint x="1550" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_426_di" bpmnElement="xml_flow_426">
+        <di:waypoint x="1339.0" y="1093" />
+        <di:waypoint x="1339.0" y="1120" />
+        <di:waypoint x="2365.0" y="1120" />
+        <di:waypoint x="2365.0" y="1111" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_434_di" bpmnElement="xml_flow_434">
+        <di:waypoint x="1740" y="1073.0" />
+        <di:waypoint x="1765.0" y="1073.0" />
+        <di:waypoint x="1765.0" y="1064.0" />
+        <di:waypoint x="1790" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_442_di" bpmnElement="xml_flow_442">
+        <di:waypoint x="1848" y="1064.0" />
+        <di:waypoint x="1939.0" y="1064.0" />
+        <di:waypoint x="1939.0" y="1073.0" />
+        <di:waypoint x="2030" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_450_di" bpmnElement="xml_flow_450">
+        <di:waypoint x="1819.0" y="1093" />
+        <di:waypoint x="1819.0" y="1120" />
+        <di:waypoint x="2365.0" y="1120" />
+        <di:waypoint x="2365.0" y="1111" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_458_di" bpmnElement="xml_flow_458">
+        <di:waypoint x="2220" y="1073.0" />
+        <di:waypoint x="2270" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_464_di" bpmnElement="xml_flow_464">
+        <di:waypoint x="2460" y="1073.0" />
+        <di:waypoint x="2510" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_470_di" bpmnElement="xml_flow_470">
+        <di:waypoint x="2700" y="1073.0" />
+        <di:waypoint x="2725.0" y="1073.0" />
+        <di:waypoint x="2725.0" y="1064.0" />
+        <di:waypoint x="2750" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_478_di" bpmnElement="xml_flow_478">
+        <di:waypoint x="2808" y="1064.0" />
+        <di:waypoint x="2990" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_484_di" bpmnElement="xml_flow_484">
+        <di:waypoint x="2808" y="1064.0" />
+        <di:waypoint x="2899.0" y="1064.0" />
+        <di:waypoint x="2899.0" y="1178.0" />
+        <di:waypoint x="2990" y="1178.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_492_di" bpmnElement="xml_flow_492">
+        <di:waypoint x="3048" y="1064.0" />
+        <di:waypoint x="3139.0" y="1064.0" />
+        <di:waypoint x="3139.0" y="1073.0" />
+        <di:waypoint x="3230" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_500_di" bpmnElement="xml_flow_500">
+        <di:waypoint x="3019.0" y="1093" />
+        <di:waypoint x="3019.0" y="1126" />
+        <di:waypoint x="3492.0" y="1126" />
+        <di:waypoint x="3492.0" y="1079" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_508_di" bpmnElement="xml_flow_508">
+        <di:waypoint x="3420" y="1073.0" />
+        <di:waypoint x="3445.0" y="1073.0" />
+        <di:waypoint x="3445.0" y="1057.0" />
+        <di:waypoint x="3470" y="1057.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_516_di" bpmnElement="xml_flow_516">
+        <di:waypoint x="3180" y="1178.0" />
+        <di:waypoint x="3325.0" y="1178.0" />
+        <di:waypoint x="3325.0" y="1057.0" />
+        <di:waypoint x="3470" y="1057.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_526_di" bpmnElement="xml_flow_526">
+        <di:waypoint x="685.0" y="811" />
+        <di:waypoint x="685.0" y="960" />
+        <di:waypoint x="3962" y="960" />
+        <di:waypoint x="3962" y="1012" />
+        <di:waypoint x="132.0" y="1012" />
+        <di:waypoint x="132.0" y="1035" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="xml_conversion_pool_di" bpmnElement="xml_conversion_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="1270" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_convstart_di" bpmnElement="xml_convstart">
+        <dc:Bounds x="110" y="1335" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_xls_di" bpmnElement="xml_xls">
+        <dc:Bounds x="350" y="1335" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_csv_di" bpmnElement="xml_csv">
+        <dc:Bounds x="590" y="1335" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_csvavailable_di" bpmnElement="xml_csvavailable">
+        <dc:Bounds x="830" y="1335" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_jsonld_di" bpmnElement="xml_jsonld">
+        <dc:Bounds x="1070" y="1335" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_archsend_di" bpmnElement="xml_archsend">
+        <dc:Bounds x="1310" y="1335" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_created_di" bpmnElement="xml_created">
+        <dc:Bounds x="1550" y="1335" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_rescore_di" bpmnElement="xml_rescore">
+        <dc:Bounds x="1790" y="1335" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_convpub_di" bpmnElement="xml_convpub">
+        <dc:Bounds x="2030" y="1335" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_convrefresh_di" bpmnElement="xml_convrefresh">
+        <dc:Bounds x="2270" y="1335" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_convend_di" bpmnElement="xml_convend">
+        <dc:Bounds x="2510" y="1335" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="xml_flow_571_di" bpmnElement="xml_flow_571">
+        <di:waypoint x="154" y="1357.0" />
+        <di:waypoint x="252.0" y="1357.0" />
+        <di:waypoint x="252.0" y="1364.0" />
+        <di:waypoint x="350" y="1364.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_579_di" bpmnElement="xml_flow_579">
+        <di:waypoint x="408" y="1364.0" />
+        <di:waypoint x="499.0" y="1364.0" />
+        <di:waypoint x="499.0" y="1373.0" />
+        <di:waypoint x="590" y="1373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_587_di" bpmnElement="xml_flow_587">
+        <di:waypoint x="379.0" y="1393" />
+        <di:waypoint x="379.0" y="1420" />
+        <di:waypoint x="859.0" y="1420" />
+        <di:waypoint x="859.0" y="1393" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_595_di" bpmnElement="xml_flow_595">
+        <di:waypoint x="780" y="1373.0" />
+        <di:waypoint x="805.0" y="1373.0" />
+        <di:waypoint x="805.0" y="1364.0" />
+        <di:waypoint x="830" y="1364.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_603_di" bpmnElement="xml_flow_603">
+        <di:waypoint x="888" y="1364.0" />
+        <di:waypoint x="979.0" y="1364.0" />
+        <di:waypoint x="979.0" y="1373.0" />
+        <di:waypoint x="1070" y="1373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_611_di" bpmnElement="xml_flow_611">
+        <di:waypoint x="859.0" y="1393" />
+        <di:waypoint x="859.0" y="1420" />
+        <di:waypoint x="1405.0" y="1420" />
+        <di:waypoint x="1405.0" y="1411" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_619_di" bpmnElement="xml_flow_619">
+        <di:waypoint x="1260" y="1373.0" />
+        <di:waypoint x="1310" y="1373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_625_di" bpmnElement="xml_flow_625">
+        <di:waypoint x="1500" y="1373.0" />
+        <di:waypoint x="1525.0" y="1373.0" />
+        <di:waypoint x="1525.0" y="1364.0" />
+        <di:waypoint x="1550" y="1364.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_633_di" bpmnElement="xml_flow_633">
+        <di:waypoint x="1608" y="1364.0" />
+        <di:waypoint x="1699.0" y="1364.0" />
+        <di:waypoint x="1699.0" y="1373.0" />
+        <di:waypoint x="1790" y="1373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_641_di" bpmnElement="xml_flow_641">
+        <di:waypoint x="1579.0" y="1393" />
+        <di:waypoint x="1579.0" y="1426" />
+        <di:waypoint x="2532.0" y="1426" />
+        <di:waypoint x="2532.0" y="1379" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_649_di" bpmnElement="xml_flow_649">
+        <di:waypoint x="1980" y="1373.0" />
+        <di:waypoint x="2005.0" y="1373.0" />
+        <di:waypoint x="2005.0" y="1364.0" />
+        <di:waypoint x="2030" y="1364.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_657_di" bpmnElement="xml_flow_657">
+        <di:waypoint x="2088" y="1364.0" />
+        <di:waypoint x="2179.0" y="1364.0" />
+        <di:waypoint x="2179.0" y="1373.0" />
+        <di:waypoint x="2270" y="1373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_665_di" bpmnElement="xml_flow_665">
+        <di:waypoint x="2059.0" y="1393" />
+        <di:waypoint x="2059.0" y="1426" />
+        <di:waypoint x="2532.0" y="1426" />
+        <di:waypoint x="2532.0" y="1379" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_673_di" bpmnElement="xml_flow_673">
+        <di:waypoint x="2460" y="1373.0" />
+        <di:waypoint x="2485.0" y="1373.0" />
+        <di:waypoint x="2485.0" y="1357.0" />
+        <di:waypoint x="2510" y="1357.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_681_di" bpmnElement="xml_flow_681">
+        <di:waypoint x="2125.0" y="1111" />
+        <di:waypoint x="2125.0" y="1260" />
+        <di:waypoint x="3980" y="1260" />
+        <di:waypoint x="3980" y="1312" />
+        <di:waypoint x="132.0" y="1312" />
+        <di:waypoint x="132.0" y="1335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="xml_archive_pool_di" bpmnElement="xml_archive_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="1570" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_archstart_di" bpmnElement="xml_archstart">
+        <dc:Bounds x="110" y="1635" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_disk_di" bpmnElement="xml_disk">
+        <dc:Bounds x="350" y="1635" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_build_di" bpmnElement="xml_build">
+        <dc:Bounds x="590" y="1635" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_archend_di" bpmnElement="xml_archend">
+        <dc:Bounds x="830" y="1635" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_nospace_di" bpmnElement="xml_nospace">
+        <dc:Bounds x="350" y="1740" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="xml_flow_710_di" bpmnElement="xml_flow_710">
+        <di:waypoint x="154" y="1657.0" />
+        <di:waypoint x="252.0" y="1657.0" />
+        <di:waypoint x="252.0" y="1664.0" />
+        <di:waypoint x="350" y="1664.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_718_di" bpmnElement="xml_flow_718">
+        <di:waypoint x="408" y="1664.0" />
+        <di:waypoint x="499.0" y="1664.0" />
+        <di:waypoint x="499.0" y="1673.0" />
+        <di:waypoint x="590" y="1673.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_726_di" bpmnElement="xml_flow_726">
+        <di:waypoint x="408" y="1664.0" />
+        <di:waypoint x="423" y="1664.0" />
+        <di:waypoint x="423" y="1838" />
+        <di:waypoint x="335" y="1838" />
+        <di:waypoint x="335" y="1778.0" />
+        <di:waypoint x="350" y="1778.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_736_di" bpmnElement="xml_flow_736">
+        <di:waypoint x="540" y="1778.0" />
+        <di:waypoint x="685.0" y="1778.0" />
+        <di:waypoint x="685.0" y="1657.0" />
+        <di:waypoint x="830" y="1657.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_744_di" bpmnElement="xml_flow_744">
+        <di:waypoint x="780" y="1673.0" />
+        <di:waypoint x="805.0" y="1673.0" />
+        <di:waypoint x="805.0" y="1657.0" />
+        <di:waypoint x="830" y="1657.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_752_di" bpmnElement="xml_flow_752">
+        <di:waypoint x="1405.0" y="1411" />
+        <di:waypoint x="1405.0" y="1560" />
+        <di:waypoint x="3998" y="1560" />
+        <di:waypoint x="3998" y="1612" />
+        <di:waypoint x="132.0" y="1612" />
+        <di:waypoint x="132.0" y="1635" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="xml_publication_pool_di" bpmnElement="xml_publication_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="1870" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_pubstart_di" bpmnElement="xml_pubstart">
+        <dc:Bounds x="110" y="1935" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_pubtasks_di" bpmnElement="xml_pubtasks">
+        <dc:Bounds x="350" y="1935" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="xml_pubend_di" bpmnElement="xml_pubend">
+        <dc:Bounds x="590" y="1935" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="xml_flow_773_di" bpmnElement="xml_flow_773">
+        <di:waypoint x="154" y="1957.0" />
+        <di:waypoint x="252.0" y="1957.0" />
+        <di:waypoint x="252.0" y="1973.0" />
+        <di:waypoint x="350" y="1973.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_781_di" bpmnElement="xml_flow_781">
+        <di:waypoint x="540" y="1973.0" />
+        <di:waypoint x="565.0" y="1973.0" />
+        <di:waypoint x="565.0" y="1957.0" />
+        <di:waypoint x="590" y="1957.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_790_di" bpmnElement="xml_flow_790">
+        <di:waypoint x="1645.0" y="511" />
+        <di:waypoint x="1645.0" y="660" />
+        <di:waypoint x="4016" y="660" />
+        <di:waypoint x="4016" y="1912" />
+        <di:waypoint x="132.0" y="1912" />
+        <di:waypoint x="132.0" y="1935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_798_di" bpmnElement="xml_flow_798">
+        <di:waypoint x="3325.0" y="1111" />
+        <di:waypoint x="3325.0" y="1260" />
+        <di:waypoint x="4034" y="1260" />
+        <di:waypoint x="4034" y="1912" />
+        <di:waypoint x="132.0" y="1912" />
+        <di:waypoint x="132.0" y="1935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="xml_flow_806_di" bpmnElement="xml_flow_806">
+        <di:waypoint x="2365.0" y="1411" />
+        <di:waypoint x="2365.0" y="1560" />
+        <di:waypoint x="4052" y="1560" />
+        <di:waypoint x="4052" y="1912" />
+        <di:waypoint x="132.0" y="1912" />
+        <di:waypoint x="132.0" y="1935" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmn:documentation>AS-IS mcod 2.62.3. Pule oznaczają niezależne przebiegi; linie przerywane to zlecenia bez oczekiwania. Widok rozwinięty uzupełnia szczegółowy plik *_szczegoly.bpmn. Nie obejmuje projektowanych blokad i nowej flagi is_archive.</bpmn:documentation>
+  <bpmn:process id="xml_setup" isExecutable="false" name="ADMINISTRATOR I HARMONOGRAM — aktywacja lub należny termin">
+    <bpmn:serviceTask id="xml_config" name="Skonfiguruj i zapisz źródło XML">
+      <bpmn:outgoing>xml_flow_21</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="xml_activation" name="Nowe aktywne źródło / aktywacja?">
+      <bpmn:incoming>xml_flow_21</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_29</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_37</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="xml_sendimport" name="Zleć import po zatwierdzeniu zapisu">
+      <bpmn:incoming>xml_flow_29</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_45</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="xml_setupend" name="Koniec konfiguracji">
+      <bpmn:incoming>xml_flow_37</bpmn:incoming>
+      <bpmn:incoming>xml_flow_45</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="xml_flow_21" sourceRef="xml_config" targetRef="xml_activation" />
+    <bpmn:sequenceFlow id="xml_flow_29" sourceRef="xml_activation" targetRef="xml_sendimport" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_37" sourceRef="xml_activation" targetRef="xml_setupend" name="Nie" />
+    <bpmn:sequenceFlow id="xml_flow_45" sourceRef="xml_sendimport" targetRef="xml_setupend" />
+    <bpmn:startEvent id="xml_timer" name="Termin przeglądu źródeł">
+      <bpmn:outgoing>xml_flow_68</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="xml_due" name="Sprawdź aktywność i termin importu">
+      <bpmn:incoming>xml_flow_68</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_76</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="xml_duetest" name="Import należny?">
+      <bpmn:incoming>xml_flow_76</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_84</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_92</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="xml_timersend" name="Zleć import">
+      <bpmn:incoming>xml_flow_84</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_100</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="xml_timerend" name="Koniec cyklu">
+      <bpmn:incoming>xml_flow_92</bpmn:incoming>
+      <bpmn:incoming>xml_flow_100</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="xml_flow_68" sourceRef="xml_timer" targetRef="xml_due" />
+    <bpmn:sequenceFlow id="xml_flow_76" sourceRef="xml_due" targetRef="xml_duetest" />
+    <bpmn:sequenceFlow id="xml_flow_84" sourceRef="xml_duetest" targetRef="xml_timersend" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_92" sourceRef="xml_duetest" targetRef="xml_timerend" name="Nie" />
+    <bpmn:sequenceFlow id="xml_flow_100" sourceRef="xml_timersend" targetRef="xml_timerend" />
+  </bpmn:process>
+  <bpmn:process id="xml_import" isExecutable="false" name="HARWESTER I KATALOG — import metadanych; koniec importu nie czeka na ocenę">
+    <bpmn:startEvent id="xml_importstart" name="Odebrano zlecenie importu">
+      <bpmn:outgoing>xml_flow_148</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="xml_active" name="Źródło nadal aktywne?">
+      <bpmn:incoming>xml_flow_148</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_156</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_164</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="xml_fetch" name="Pobierz XML; sprawdź HTTP, MD5 i XSD">
+      <bpmn:incoming>xml_flow_156</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_172</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="xml_validate" name="Zweryfikuj cały wykaz i opisy zasobów">
+      <bpmn:incoming>xml_flow_172</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_178</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="xml_valid" name="Wymagane kontrole poprawne?">
+      <bpmn:incoming>xml_flow_178</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_186</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_194</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="xml_rules" name="Odczytaj dane, dokumenty, statusy i reguły HVD/DGA">
+      <bpmn:incoming>xml_flow_186</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_212</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="xml_save" name="Zapisz przyjęte zbiory i każdy zasób; obsłuż sygnały">
+      <bpmn:incoming>xml_flow_212</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_218</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="xml_sync" name="Wycofaj pozycje nieobecne na przyjętej liście">
+      <bpmn:incoming>xml_flow_218</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_224</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="xml_result" name="Zapisz wynik, liczniki i koniec importu">
+      <bpmn:incoming>xml_flow_224</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_230</bpmn:outgoing>
+      <bpmn:documentation>CKAN: OK / OK_PARTIAL zależnie od odrzuconych zbiorów. XML: błąd wymaganej walidacji wykazu zatrzymuje przyjęcie; szczegóły i błędy zapisu w *_szczegoly.bpmn.</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="xml_importend" name="Koniec importu metadanych">
+      <bpmn:incoming>xml_flow_230</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="xml_inputerr" name="Zapisz błąd importu; nie zastępuj katalogu błędnym wykazem">
+      <bpmn:incoming>xml_flow_194</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_204</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="xml_inputerrend" name="Koniec z błędem / pominięcie">
+      <bpmn:incoming>xml_flow_164</bpmn:incoming>
+      <bpmn:incoming>xml_flow_204</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="xml_flow_148" sourceRef="xml_importstart" targetRef="xml_active" />
+    <bpmn:sequenceFlow id="xml_flow_156" sourceRef="xml_active" targetRef="xml_fetch" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_164" sourceRef="xml_active" targetRef="xml_inputerrend" name="Nie" />
+    <bpmn:sequenceFlow id="xml_flow_172" sourceRef="xml_fetch" targetRef="xml_validate" />
+    <bpmn:sequenceFlow id="xml_flow_178" sourceRef="xml_validate" targetRef="xml_valid" />
+    <bpmn:sequenceFlow id="xml_flow_186" sourceRef="xml_valid" targetRef="xml_rules" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_194" sourceRef="xml_valid" targetRef="xml_inputerr" name="Nie" />
+    <bpmn:sequenceFlow id="xml_flow_204" sourceRef="xml_inputerr" targetRef="xml_inputerrend" />
+    <bpmn:sequenceFlow id="xml_flow_212" sourceRef="xml_rules" targetRef="xml_save" />
+    <bpmn:sequenceFlow id="xml_flow_218" sourceRef="xml_save" targetRef="xml_sync" />
+    <bpmn:sequenceFlow id="xml_flow_224" sourceRef="xml_sync" targetRef="xml_result" />
+    <bpmn:sequenceFlow id="xml_flow_230" sourceRef="xml_result" targetRef="xml_importend" />
+  </bpmn:process>
+  <bpmn:process id="xml_dispatch" isExecutable="false" name="ZAPIS ZASOBU — decyzja o przygotowaniu; zlecenie po zatwierdzeniu transakcji">
+    <bpmn:startEvent id="xml_dispatchstart" name="Obsługa zapisu / sygnału zasobu">
+      <bpmn:outgoing>xml_flow_271</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="xml_condition" name="Stan i zmiana wymagają przygotowania?">
+      <bpmn:incoming>xml_flow_271</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_279</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_303</bpmn:outgoing>
+      <bpmn:documentation>Zapis nie oznacza zawsze nowej oceny. Nowy opublikowany zasób / zmiana linku lub dostępności / właściwa zmiana wymuszonego typu / przywrócenie; nowy główny plik opublikowanego zasobu ma osobny sygnał. Sam opis lub format nie gwarantuje oceny. Zmiana znaków umownych ma odrębną ścieżkę. Szczegółowe warunki w modelu szczegółowym.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="xml_prepsend" name="Zleć właściwe zadanie przygotowania">
+      <bpmn:outgoing>xml_flow_287</bpmn:outgoing>
+      <bpmn:incoming>xml_flow_303</bpmn:incoming>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="xml_dispatchend" name="Koniec obsługi zapisu">
+      <bpmn:incoming>xml_flow_279</bpmn:incoming>
+      <bpmn:incoming>xml_flow_287</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="xml_flow_271" sourceRef="xml_dispatchstart" targetRef="xml_condition" />
+    <bpmn:sequenceFlow id="xml_flow_279" sourceRef="xml_condition" targetRef="xml_dispatchend" name="Nie — m.in. nowy szkic" />
+    <bpmn:sequenceFlow id="xml_flow_287" sourceRef="xml_prepsend" targetRef="xml_dispatchend" />
+    <bpmn:sequenceFlow id="xml_flow_303" sourceRef="xml_condition" targetRef="xml_prepsend" name="Tak" />
+  </bpmn:process>
+  <bpmn:process id="xml_prep_url" isExecutable="false" name="PRZYGOTOWANIE W TLE — URL zasobu XML">
+    <bpmn:startEvent id="xml_url_start" name="Odebrano zlecenie">
+      <bpmn:outgoing>xml_flow_364</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="xml_url_src" name="Sprawdź URL i rozpoznaj typ; dla pliku zapisz kopię główną">
+      <bpmn:incoming>xml_flow_364</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_372</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="xml_url_need" name="Można i trzeba kontrolować plik?">
+      <bpmn:incoming>xml_flow_372</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_380</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_388</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="xml_url_file" name="Sprawdź plik: format, MIME, kodowanie i archiwum">
+      <bpmn:incoming>xml_flow_380</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_396</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="xml_url_fileok" name="Kontrola pliku udana?">
+      <bpmn:incoming>xml_flow_396</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_404</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_410</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="xml_url_eligible" name="Dane kwalifikują się do tabeli?">
+      <bpmn:incoming>xml_flow_404</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_418</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_426</bpmn:outgoing>
+      <bpmn:documentation>Plik główny; format zasobu lub wnętrza CSV/TSV/XLS/XLSX/ODS/SHP; instytucja inna niż developer. Bez kwalifikacji pomija się dane tabeli, nie samą ocenę. success może współistnieć z failed; nie oznacza poprawności każdego wiersza.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="xml_url_data" name="Ustal schemat, sprawdź i zindeksuj dane">
+      <bpmn:incoming>xml_flow_418</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_434</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="xml_url_indexed" name="Wynik indeksacji success dodatni?">
+      <bpmn:incoming>xml_flow_434</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_442</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_450</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="xml_url_derive" name="Zleć pliki pochodne po zatwierdzeniu indeksacji">
+      <bpmn:incoming>xml_flow_442</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_458</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="xml_url_score" name="Oblicz i zapisz stopień: pliki albo link">
+      <bpmn:incoming>xml_flow_388</bpmn:incoming>
+      <bpmn:incoming>xml_flow_410</bpmn:incoming>
+      <bpmn:incoming>xml_flow_426</bpmn:incoming>
+      <bpmn:incoming>xml_flow_450</bpmn:incoming>
+      <bpmn:incoming>xml_flow_458</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_464</bpmn:outgoing>
+      <bpmn:documentation>Brak wartości formatu całego zasobu: 0. Brak pliku głównego i istniejący link: ocena linku. W przeciwnym razie maksimum ocen pliku głównego i pochodnych. Błąd obliczenia może przerwać zadanie przed nowym zapisem. Reguły archiwów i formatów są rozwinięte w szczegółach. Ocena nie stanowi blokady publikacji w obecnym kodzie.</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="xml_url_date" name="Zapisz datę weryfikacji, jeżeli żądana">
+      <bpmn:incoming>xml_flow_464</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_470</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="xml_url_ok" name="Wymagane etapy udane, bez odroczonych wyjątków?">
+      <bpmn:incoming>xml_flow_470</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_478</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_484</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="xml_url_pub" name="Nadal opublikowany i nieusunięty?">
+      <bpmn:incoming>xml_flow_478</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_492</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_500</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="xml_url_refresh" name="Zleć odświeżenie ES/RDF">
+      <bpmn:incoming>xml_flow_492</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_508</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="xml_url_end" name="Koniec zadania">
+      <bpmn:incoming>xml_flow_500</bpmn:incoming>
+      <bpmn:incoming>xml_flow_508</bpmn:incoming>
+      <bpmn:incoming>xml_flow_516</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="xml_url_problem" name="Zaloguj / zgłoś problem; bez końcowego odświeżenia">
+      <bpmn:incoming>xml_flow_484</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_516</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="xml_flow_364" sourceRef="xml_url_start" targetRef="xml_url_src" />
+    <bpmn:sequenceFlow id="xml_flow_372" sourceRef="xml_url_src" targetRef="xml_url_need" />
+    <bpmn:sequenceFlow id="xml_flow_380" sourceRef="xml_url_need" targetRef="xml_url_file" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_388" sourceRef="xml_url_need" targetRef="xml_url_score" name="Nie / brak pliku" />
+    <bpmn:sequenceFlow id="xml_flow_396" sourceRef="xml_url_file" targetRef="xml_url_fileok" />
+    <bpmn:sequenceFlow id="xml_flow_404" sourceRef="xml_url_fileok" targetRef="xml_url_eligible" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_410" sourceRef="xml_url_fileok" targetRef="xml_url_score" name="Nie — ocena dostępnego stanu" />
+    <bpmn:sequenceFlow id="xml_flow_418" sourceRef="xml_url_eligible" targetRef="xml_url_data" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_426" sourceRef="xml_url_eligible" targetRef="xml_url_score" name="Nie" />
+    <bpmn:sequenceFlow id="xml_flow_434" sourceRef="xml_url_data" targetRef="xml_url_indexed" />
+    <bpmn:sequenceFlow id="xml_flow_442" sourceRef="xml_url_indexed" targetRef="xml_url_derive" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_450" sourceRef="xml_url_indexed" targetRef="xml_url_score" name="Nie" />
+    <bpmn:sequenceFlow id="xml_flow_458" sourceRef="xml_url_derive" targetRef="xml_url_score" />
+    <bpmn:sequenceFlow id="xml_flow_464" sourceRef="xml_url_score" targetRef="xml_url_date" />
+    <bpmn:sequenceFlow id="xml_flow_470" sourceRef="xml_url_date" targetRef="xml_url_ok" />
+    <bpmn:sequenceFlow id="xml_flow_478" sourceRef="xml_url_ok" targetRef="xml_url_pub" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_484" sourceRef="xml_url_ok" targetRef="xml_url_problem" name="Nie" />
+    <bpmn:sequenceFlow id="xml_flow_492" sourceRef="xml_url_pub" targetRef="xml_url_refresh" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_500" sourceRef="xml_url_pub" targetRef="xml_url_end" name="Nie" />
+    <bpmn:sequenceFlow id="xml_flow_508" sourceRef="xml_url_refresh" targetRef="xml_url_end" />
+    <bpmn:sequenceFlow id="xml_flow_516" sourceRef="xml_url_problem" targetRef="xml_url_end" />
+  </bpmn:process>
+  <bpmn:process id="xml_conversion" isExecutable="false" name="PLIKI POCHODNE W TLE — wspólny algorytm XML i ręcznego dodania">
+    <bpmn:startEvent id="xml_convstart" name="Odebrano zlecenie konwersji">
+      <bpmn:outgoing>xml_flow_571</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="xml_xls" name="XLS/XLSX, nie linked, są dane i tabela?">
+      <bpmn:incoming>xml_flow_571</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_579</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_587</bpmn:outgoing>
+      <bpmn:documentation>XML: linked to availability=remote; ręczne: linked to zewnętrzny URL. Konwersja do CSV uwzględnia format zasobu lub wnętrza archiwum. Brak linked nie jest warunkiem próby JSON-LD z dostępnego CSV. Pierwsza ocena nie czeka na to zadanie.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="xml_csv" name="Utwórz lub odtwórz pochodny CSV UTF-8">
+      <bpmn:incoming>xml_flow_579</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_595</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="xml_csvavailable" name="Dostępny CSV do konwersji, poza archiwum?">
+      <bpmn:incoming>xml_flow_587</bpmn:incoming>
+      <bpmn:incoming>xml_flow_595</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_603</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_611</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="xml_jsonld" name="Spróbuj utworzyć / odtworzyć JSON-LD">
+      <bpmn:incoming>xml_flow_603</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_619</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="xml_archsend" name="Zleć paczkę plików zbioru z opóźnieniem">
+      <bpmn:incoming>xml_flow_611</bpmn:incoming>
+      <bpmn:incoming>xml_flow_619</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_625</bpmn:outgoing>
+      <bpmn:documentation>Kod zleca dataset.archive_files po powrocie increase_openness_score, przed warunkowym przeliczeniem oceny; także gdy nie powstał plik. Nieprzechwycony wyjątek wcześniej przerywa tę ścieżkę. Paczka plików to nie projektowana flaga archiwum.</bpmn:documentation>
+    </bpmn:sendTask>
+    <bpmn:exclusiveGateway id="xml_created" name="Powstał / odtworzono plik pochodny?">
+      <bpmn:incoming>xml_flow_625</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_633</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_641</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="xml_rescore" name="Ponownie oblicz i zapisz ocenę wszystkich plików">
+      <bpmn:incoming>xml_flow_633</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_649</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="xml_convpub" name="Nadal opublikowany i nieusunięty?">
+      <bpmn:incoming>xml_flow_649</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_657</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_665</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="xml_convrefresh" name="Zleć odświeżenie ES/RDF z nową oceną">
+      <bpmn:incoming>xml_flow_657</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_673</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="xml_convend" name="Koniec konwersji">
+      <bpmn:incoming>xml_flow_641</bpmn:incoming>
+      <bpmn:incoming>xml_flow_665</bpmn:incoming>
+      <bpmn:incoming>xml_flow_673</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="xml_flow_571" sourceRef="xml_convstart" targetRef="xml_xls" />
+    <bpmn:sequenceFlow id="xml_flow_579" sourceRef="xml_xls" targetRef="xml_csv" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_587" sourceRef="xml_xls" targetRef="xml_csvavailable" name="Nie" />
+    <bpmn:sequenceFlow id="xml_flow_595" sourceRef="xml_csv" targetRef="xml_csvavailable" />
+    <bpmn:sequenceFlow id="xml_flow_603" sourceRef="xml_csvavailable" targetRef="xml_jsonld" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_611" sourceRef="xml_csvavailable" targetRef="xml_archsend" name="Nie" />
+    <bpmn:sequenceFlow id="xml_flow_619" sourceRef="xml_jsonld" targetRef="xml_archsend" />
+    <bpmn:sequenceFlow id="xml_flow_625" sourceRef="xml_archsend" targetRef="xml_created" />
+    <bpmn:sequenceFlow id="xml_flow_633" sourceRef="xml_created" targetRef="xml_rescore" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_641" sourceRef="xml_created" targetRef="xml_convend" name="Nie — bez ponownej oceny" />
+    <bpmn:sequenceFlow id="xml_flow_649" sourceRef="xml_rescore" targetRef="xml_convpub" />
+    <bpmn:sequenceFlow id="xml_flow_657" sourceRef="xml_convpub" targetRef="xml_convrefresh" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_665" sourceRef="xml_convpub" targetRef="xml_convend" name="Nie" />
+    <bpmn:sequenceFlow id="xml_flow_673" sourceRef="xml_convrefresh" targetRef="xml_convend" />
+  </bpmn:process>
+  <bpmn:process id="xml_archive" isExecutable="false" name="PACZKA PLIKÓW ZBIORU — niezależne zadanie">
+    <bpmn:startEvent id="xml_archstart" name="Odebrano zlecenie po opóźnieniu">
+      <bpmn:outgoing>xml_flow_710</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="xml_disk" name="Wystarczające wolne miejsce?">
+      <bpmn:incoming>xml_flow_710</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_718</bpmn:outgoing>
+      <bpmn:outgoing>xml_flow_726</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="xml_build" name="Przygotuj ZIP plików zbioru i zaktualizuj odnośnik">
+      <bpmn:incoming>xml_flow_718</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_744</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="xml_archend" name="Koniec zadania paczki">
+      <bpmn:incoming>xml_flow_736</bpmn:incoming>
+      <bpmn:incoming>xml_flow_744</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="xml_nospace" name="Zaloguj brak miejsca; pomiń budowę">
+      <bpmn:incoming>xml_flow_726</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_736</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="xml_flow_710" sourceRef="xml_archstart" targetRef="xml_disk" />
+    <bpmn:sequenceFlow id="xml_flow_718" sourceRef="xml_disk" targetRef="xml_build" name="Tak" />
+    <bpmn:sequenceFlow id="xml_flow_726" sourceRef="xml_disk" targetRef="xml_nospace" name="Nie" />
+    <bpmn:sequenceFlow id="xml_flow_736" sourceRef="xml_nospace" targetRef="xml_archend" />
+    <bpmn:sequenceFlow id="xml_flow_744" sourceRef="xml_build" targetRef="xml_archend" />
+  </bpmn:process>
+  <bpmn:process id="xml_publication" isExecutable="false" name="PUBLIKACJA W TLE — osobne zadania zależne od zdarzenia zapisu / oceny">
+    <bpmn:startEvent id="xml_pubstart" name="Odebrano odpowiednie zlecenie">
+      <bpmn:outgoing>xml_flow_773</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="xml_pubtasks" name="Wykonaj zlecone aktualizacje ES/API, RDF i powiadomień">
+      <bpmn:incoming>xml_flow_773</bpmn:incoming>
+      <bpmn:outgoing>xml_flow_781</bpmn:outgoing>
+      <bpmn:documentation>To agregacja niezależnych zadań, a nie ich kolejność. Zapis/zmiana stanu może zlecić publikację przed ukończeniem przygotowania. Końcowe odświeżenie po ocenie zleca ES/RDF, nie automatycznie każdy rodzaj powiadomienia. Szczegóły mapy sygnałów i odbiorców w modelach szczegółowych.</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="xml_pubend" name="Koniec danego zadania publikacji">
+      <bpmn:incoming>xml_flow_781</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="xml_flow_773" sourceRef="xml_pubstart" targetRef="xml_pubtasks" />
+    <bpmn:sequenceFlow id="xml_flow_781" sourceRef="xml_pubtasks" targetRef="xml_pubend" />
+  </bpmn:process>
+</bpmn:definitions>

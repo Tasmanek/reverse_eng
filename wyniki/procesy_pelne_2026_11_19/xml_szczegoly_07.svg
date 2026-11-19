@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="142.0 70.0 906.0 445.0" role="img" aria-label="Sprawdź dokumenty zbioru"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="142.0" y="70.0" width="906.0" height="445.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 673.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="727.0,180.0 932.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="834.5" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="727.0,180.0 821.0,180.0 821.0,300.0 700.0,300.0 700.0,325.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="826.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="795.0,370.0 820.0,370.0 820.0,180.0 932.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Kolejny dokument
+Źródło HTML: #tab=xml&amp;node=X18
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-131</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Kolejny dokument</tspan></text></g><g class="node"><title>Sprawdź HTTPS, pobranie, format i język
+Każdy dokument: https, udane pobranie; doc/docx/odt/pdf/txt; język pl/en. Dokumenty zbioru i zasobu. Błąd download_file_exc we wspólnym kontekście może powielać komunikat dla następnych dokumentów (U-9).
+
+Źródło HTML: #tab=xml&amp;node=X18
+
+Źródło HTML: #tab=katalog&amp;id=XS-05
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-131</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Sprawdź HTTPS, pobranie,</tspan><tspan x="450.0" dy="15">format i język</tspan></text></g><g class="node"><title>Dokument poprawny?
+Źródło HTML: #tab=xml&amp;node=X18
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-131</title><polygon points="700.0,153.0 727.0,180.0 700.0,207.0 673.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="700.0" y="185.0" text-anchor="middle">×</text><text x="700.0" y="141.0" text-anchor="middle"><tspan x="700.0" dy="0">Dokument poprawny?</tspan></text></g><g class="node"><title>Zapamiętaj błąd dokumentu
+Źródło HTML: #tab=xml&amp;node=X18
+
+Źródło HTML: #tab=cmp&amp;id=U-9
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-131</title><rect x="605.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="374.0" text-anchor="middle"><tspan x="700.0" dy="0">Zapamiętaj błąd dokumentu</tspan></text></g><g class="node"><title>Dokument sprawdzony
+Źródło HTML: #tab=xml&amp;node=X18
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-131</title><circle cx="950.0" cy="180.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="950.0" y="215.0" text-anchor="middle"><tspan x="950.0" dy="0">Dokument sprawdzony</tspan></text></g></svg>

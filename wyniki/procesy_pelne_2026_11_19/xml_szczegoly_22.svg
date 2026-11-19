@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60.0 -45.0 1488.0 750.0" role="img" aria-label="Pobierz i rozpoznaj zasób"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="60.0" y="-45.0" width="1488.0" height="750.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 673.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="727.0,180.0 923.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="830.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="727.0,180.0 830.0,180.0 830.0,560.0 855.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="835.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="977.0,180.0 1105.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1046.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="977.0,180.0 1080.0,180.0 1080.0,370.0 1105.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1085.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie — API lub WWW</text><polyline points="1295.0,180.0 1320.0,180.0 1320.0,370.0 1432.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1295.0,370.0 1432.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1045.0,560.0 1326.0,560.0 1326.0,370.0 1432.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Zapisany link zasobu
+Źródło HTML: #tab=xml&amp;node=OURL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-307</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Zapisany link zasobu</tspan></text></g><g class="node"><title>Pobierz link; ustal typ i format odpowiedzi
+Typ: file/api/website; JSON/XML bez attachment może być API (U-17), text/html stroną. Format z Content-Disposition, inaczej URL/MIME; różni się od heurystyki walidacji importu. Błąd jsonstat U-11 pozostaje AS-IS. remote także może mieć kopię główną.
+
+Źródło HTML: #tab=xml&amp;node=OURL
+
+Źródło HTML: #tab=pliki&amp;id=SECTION-pliki-8
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-307</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Pobierz link; ustal typ i</tspan><tspan x="450.0" dy="15">format odpowiedzi</tspan></text></g><g class="node"><title>Etap URL udany?
+Źródło HTML: #tab=xml&amp;node=OURL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-307</title><polygon points="700.0,153.0 727.0,180.0 700.0,207.0 673.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="700.0" y="185.0" text-anchor="middle">×</text><text x="700.0" y="141.0" text-anchor="middle"><tspan x="700.0" dy="0">Etap URL udany?</tspan></text></g><g class="node"><title>Typ to plik?
+Źródło HTML: #tab=xml&amp;node=OURL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-307</title><polygon points="950.0,153.0 977.0,180.0 950.0,207.0 923.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="185.0" text-anchor="middle">×</text><text x="950.0" y="141.0" text-anchor="middle"><tspan x="950.0" dy="0">Typ to plik?</tspan></text></g><g class="node"><title>Zapisz lub wymień plik główny i format
+Wymiana pliku głównego nie gwarantuje usunięcia starych pochodnych CSV/JSON-LD. availability remote nie zabrania pobrania kopii.
+
+Źródło HTML: #tab=xml&amp;node=OURL
+
+Źródło HTML: #tab=cmp&amp;id=U-12
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-307</title><rect x="1105.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="177.0" text-anchor="middle"><tspan x="1200.0" dy="0">Zapisz lub wymień plik</tspan><tspan x="1200.0" dy="15">główny i format</tspan></text></g><g class="node"><title>Zapisz API/WWW i usuń pliki zasobu
+Źródło HTML: #tab=xml&amp;node=OURL
+
+Źródło HTML: #tab=pliki&amp;id=SECTION-pliki-8
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-307</title><rect x="1105.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="367.0" text-anchor="middle"><tspan x="1200.0" dy="0">Zapisz API/WWW i usuń pliki</tspan><tspan x="1200.0" dy="15">zasobu</tspan></text></g><g class="node"><title>Zapisz nieudany status URL / log
+Brak nowej kopii. Zapisz wynik etapu; dalszy entrypoint może nadal policzyć ocenę z dostępnego stanu.
+
+Źródło HTML: #tab=xml&amp;node=OFAIL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-319</title><rect x="855.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="950.0" y="557.0" text-anchor="middle"><tspan x="950.0" dy="0">Zapisz nieudany status URL</tspan><tspan x="950.0" dy="15">/ log</tspan></text></g><g class="node"><title>Wynik etapu URL dostępny
+Źródło HTML: #tab=xml&amp;node=OURL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-307</title><circle cx="1450.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1450.0" y="405.0" text-anchor="middle"><tspan x="1450.0" dy="0">Wynik etapu URL dostępny</tspan></text></g><g class="node"><title>Synchroniczny etap URL bieżącego zadania zasobu; .apply() nie publikuje nowego zlecenia. Błąd pobrania nie pomija automatycznie późniejszego obliczenia oceny.
+</title><text x="784.0" y="36.0" text-anchor="middle"><tspan x="784.0" dy="0">Synchroniczny etap URL bieżącego zadania zasobu; .apply() nie publikuje nowego zlecenia. Błąd pobrania nie pomija automatycznie późniejszego obliczenia oceny.</tspan></text></g></svg>

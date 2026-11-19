@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="142.0 65.0 2906.0 455.0" role="img" aria-label="Sprawdź każdy zasób"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="142.0" y="65.0" width="2906.0" height="455.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 673.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="727.0,180.0 850.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="793.5" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="727.0,180.0 821.0,180.0 821.0,300.0 700.0,300.0 700.0,325.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="826.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="795.0,370.0 820.0,370.0 820.0,299.0 2148.0,299.0 2148.0,370.0 2173.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1050.0,180.0 1105.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1295.0,180.0 1355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1545.0,180.0 1605.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1795.0,180.0 1923.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1977.0,180.0 2074.0,180.0 2074.0,295.0 1950.0,295.0 1950.0,320.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="2079.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1977.0,180.0 2148.0,180.0 2148.0,370.0 2173.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="2153.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="2050.0,370.0 2173.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2227.0,370.0 2350.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2550.0,370.0 2605.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2795.0,370.0 2932.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Kolejny zasób
+Źródło HTML: #tab=xml&amp;node=X13
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-126</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Kolejny zasób</tspan></text></g><g class="node"><title>Sprawdź wymagane pola, URL i słowniki
+extIdent ≤36, status, wymagane pola tytułu/opisu według XSD; poprawny URL z https; availability local/remote; dataDateUpdatePeriod daily/weekly/monthly.
+
+Źródło HTML: #tab=xml&amp;node=X13
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-126</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Sprawdź wymagane pola, URL</tspan><tspan x="450.0" dy="15">i słowniki</tspan></text></g><g class="node"><title>Pola pozwalają uruchomić walidatory zasobu?
+Źródło HTML: #tab=xml&amp;node=XERR
+
+Źródło HTML: #tab=bledy&amp;id=SECTION-bledy-8
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-132</title><polygon points="700.0,153.0 727.0,180.0 700.0,207.0 673.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="700.0" y="185.0" text-anchor="middle">×</text><text x="700.0" y="128.0" text-anchor="middle"><tspan x="700.0" dy="0">Pola pozwalają uruchomić</tspan><tspan x="700.0" dy="15">walidatory zasobu?</tspan></text></g><g class="node"><title>Zapamiętaj błędy; pomiń walidatory obiektu
+Źródło HTML: #tab=xml&amp;node=XERR
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-132</title><rect x="605.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="367.0" text-anchor="middle"><tspan x="700.0" dy="0">Zapamiętaj błędy; pomiń</tspan><tspan x="700.0" dy="15">walidatory obiektu</tspan></text></g><g class="node"><title>Pobierz zasób i zweryfikuj format
+
+Pobranie: poprawny URL i HTTPS także po przekierowaniach; dokładnie HTTP 200; poprawny i dozwolony Content-Type (octet-stream akceptowany), treść niepusta i bez niebezpiecznego załącznika. Heurystyka formatu walidacji: URL → magic → Content-Type → Content-Disposition. Nie jest to heurystyka późniejszego przygotowania pliku. Nieznany format przechodzi; rozpoznany nieobsługiwany jest blokowany tylko przy włączonej fladze.
+
+Źródło HTML: #tab=xml&amp;node=X14
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-128</title><rect x="850.0" y="130.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="950.0" y="226.0" text-anchor="middle" font-weight="bold">⊞</text><text x="950.0" y="177.0" text-anchor="middle"><tspan x="950.0" dy="0">Pobierz zasób i zweryfikuj</tspan><tspan x="950.0" dy="15">format</tspan></text></g><g class="node"><title>Sprawdź intIdent i konfigurację dat
+intIdent zasobu wymaga intIdent zbioru i zgodności instytucji/zbioru; U-9 zakłóca kontekst. Auto-data wymaga daty początku i okresu; koniec albo endless; koniec &gt; początek. Błędy zapamiętywane.
+
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=katalog&amp;id=XS-06
+
+Źródło HTML: #tab=katalog&amp;id=XS-07
+
+Źródło HTML: #tab=katalog&amp;id=XS-15
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><rect x="1105.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="177.0" text-anchor="middle"><tspan x="1200.0" dy="0">Sprawdź intIdent i</tspan><tspan x="1200.0" dy="15">konfigurację dat</tspan></text></g><g class="node"><title>Sprawdź podane kody TERYT
+Tylko gdy są kody. Kontrola zapisu i rozpoznania w Pelias; brak kodów nie oznacza dodatkowego wywołania usługi.
+
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=katalog&amp;id=XS-16
+
+Źródło HTML: #tab=katalog&amp;id=XS-17
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><rect x="1355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1450.0" y="184.0" text-anchor="middle"><tspan x="1450.0" dy="0">Sprawdź podane kody TERYT</tspan></text></g><g class="node"><title>Sprawdź reguły HVD zasobu
+HVD z wykazu KE: typ instytucji state/local/other i hasHighValueData=true; sprawdzane osobno dla zbioru i zasobu. Samo hasHighValueData nie ma tych dodatkowych warunków. Wynik gromadzony w błędach.
+
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-6
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><rect x="1605.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1700.0" y="184.0" text-anchor="middle"><tspan x="1700.0" dy="0">Sprawdź reguły HVD zasobu</tspan></text></g><g class="node"><title>containsProtectedData = true?
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><polygon points="1950.0,153.0 1977.0,180.0 1950.0,207.0 1923.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="1950.0" y="185.0" text-anchor="middle">×</text><text x="1950.0" y="141.0" text-anchor="middle"><tspan x="1950.0" dy="0">containsProtectedData = true?</tspan></text></g><g class="node"><title>Sprawdź wykaz chronionych danych
+
+Tylko state/local; inne flagi dynamic/research/HVD/KE false lub brak. GET: dokładnie 200; Content-Type odpowiada xls/xlsx/csv. Dokładnie 5 kolumn w kolejności: Lp.; Zasób chronionych danych; Format danych; Rozmiar danych; Warunki ponownego wykorzystywania. Najwyżej jeden DGA w całym XML, a w CKAN jeden na instytucję w imporcie. Sprawdzenie istniejących opublikowanych DGA: brak więcej niż jednego i brak DGA dodanego ręcznie lub innym źródłem.
+
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><rect x="1850.0" y="320.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1950.0" y="416.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1950.0" y="367.0" text-anchor="middle"><tspan x="1950.0" dy="0">Sprawdź wykaz chronionych</tspan><tspan x="1950.0" dy="15">danych</tspan></text></g><g class="node"><title>Scal wynik kontroli zasobu
+Źródło HTML: #tab=xml&amp;node=XRMERGE</title><polygon points="2200.0,343.0 2227.0,370.0 2200.0,397.0 2173.0,370.0" fill="#fff0d4" stroke="#b58030"/><text x="2200.0" y="375.0" text-anchor="middle">×</text><text x="2200.0" y="331.0" text-anchor="middle"><tspan x="2200.0" dy="0">Scal wynik kontroli zasobu</tspan></text></g><g class="node"><title>Sprawdź dokumenty zasobu
+Źródło HTML: #tab=xml&amp;node=X18
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-131</title><rect x="2350.0" y="320.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="2450.0" y="416.0" text-anchor="middle" font-weight="bold">⊞</text><text x="2450.0" y="374.0" text-anchor="middle"><tspan x="2450.0" dy="0">Sprawdź dokumenty zasobu</tspan></text></g><g class="node"><title>Dołącz błędy zasobu i dokumentów
+Źródło HTML: #tab=xml&amp;node=XERR
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-132</title><rect x="2605.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="2700.0" y="367.0" text-anchor="middle"><tspan x="2700.0" dy="0">Dołącz błędy zasobu i</tspan><tspan x="2700.0" dy="15">dokumentów</tspan></text></g><g class="node"><title>Przejdź do następnego zasobu
+Źródło HTML: #tab=xml&amp;node=XRNEXT</title><circle cx="2950.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="2950.0" y="405.0" text-anchor="middle"><tspan x="2950.0" dy="0">Przejdź do następnego zasobu</tspan></text></g></svg>

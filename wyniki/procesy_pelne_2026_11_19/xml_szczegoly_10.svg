@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60.0 -45.0 2238.0 750.0" role="img" aria-label="Sprawdź wykaz chronionych danych"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="60.0" y="-45.0" width="2238.0" height="750.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="2045.0,370.0 2182.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="218.0,180.0 321.0,180.0 321.0,490.0 200.0,490.0 200.0,515.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="295.0,560.0 423.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="477.0,560.0 502.0,560.0 502.0,370.0 1855.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="507.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="477.0,560.0 605.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="546.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="795.0,560.0 923.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="977.0,560.0 1002.0,560.0 1002.0,379.0 1830.0,379.0 1830.0,370.0 1855.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1007.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="977.0,560.0 1105.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1046.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1295.0,560.0 1423.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1477.0,560.0 1502.0,560.0 1502.0,370.0 1855.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1507.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1477.0,560.0 1605.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1546.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1795.0,560.0 1923.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1950.0,533.0 1950.0,508.0 2070.0,508.0 2070.0,370.0 2045.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1955.0" y="500.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1977.0,560.0 2182.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="2084.5" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><g class="node"><title>Zasób z oznaczeniem DGA
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Zasób z oznaczeniem DGA</tspan></text></g><g class="node"><title>Zapamiętaj błąd DGA
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><rect x="1855.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1950.0" y="374.0" text-anchor="middle"><tspan x="1950.0" dy="0">Zapamiętaj błąd DGA</tspan></text></g><g class="node"><title>Wynik DGA: błąd
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><circle cx="2200.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="2200.0" y="405.0" text-anchor="middle"><tspan x="2200.0" dy="0">Wynik DGA: błąd</tspan></text></g><g class="node"><title>Sprawdź typ instytucji i brak konfliktu flag
+Tylko state/local; inne flagi dynamic/research/HVD/KE false lub brak. GET: dokładnie 200; Content-Type odpowiada xls/xlsx/csv. Dokładnie 5 kolumn w kolejności: Lp.; Zasób chronionych danych; Format danych; Rozmiar danych; Warunki ponownego wykorzystywania. Najwyżej jeden DGA w całym XML, a w CKAN jeden na instytucję w imporcie. Sprawdzenie istniejących opublikowanych DGA: brak więcej niż jednego i brak DGA dodanego ręcznie lub innym źródłem.
+
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><rect x="105.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="200.0" y="557.0" text-anchor="middle"><tspan x="200.0" dy="0">Sprawdź typ instytucji i</tspan><tspan x="200.0" dy="15">brak konfliktu flag</tspan></text></g><g class="node"><title>Typ i flagi dozwolone?
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><polygon points="450.0,533.0 477.0,560.0 450.0,587.0 423.0,560.0" fill="#fff0d4" stroke="#b58030"/><text x="450.0" y="565.0" text-anchor="middle">×</text><text x="450.0" y="521.0" text-anchor="middle"><tspan x="450.0" dy="0">Typ i flagi dozwolone?</tspan></text></g><g class="node"><title>Pobierz DGA i sprawdź HTTP oraz Content-Type
+Tylko state/local; inne flagi dynamic/research/HVD/KE false lub brak. GET: dokładnie 200; Content-Type odpowiada xls/xlsx/csv. Dokładnie 5 kolumn w kolejności: Lp.; Zasób chronionych danych; Format danych; Rozmiar danych; Warunki ponownego wykorzystywania. Najwyżej jeden DGA w całym XML, a w CKAN jeden na instytucję w imporcie. Sprawdzenie istniejących opublikowanych DGA: brak więcej niż jednego i brak DGA dodanego ręcznie lub innym źródłem.
+
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><rect x="605.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="557.0" text-anchor="middle"><tspan x="700.0" dy="0">Pobierz DGA i sprawdź HTTP</tspan><tspan x="700.0" dy="15">oraz Content-Type</tspan></text></g><g class="node"><title>HTTP 200 i format XLS/XLSX/CSV?
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><polygon points="950.0,533.0 977.0,560.0 950.0,587.0 923.0,560.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="565.0" text-anchor="middle">×</text><text x="950.0" y="508.0" text-anchor="middle"><tspan x="950.0" dy="0">HTTP 200 i format</tspan><tspan x="950.0" dy="15">XLS/XLSX/CSV?</tspan></text></g><g class="node"><title>Sprawdź pięć wymaganych kolumn
+Tylko state/local; inne flagi dynamic/research/HVD/KE false lub brak. GET: dokładnie 200; Content-Type odpowiada xls/xlsx/csv. Dokładnie 5 kolumn w kolejności: Lp.; Zasób chronionych danych; Format danych; Rozmiar danych; Warunki ponownego wykorzystywania. Najwyżej jeden DGA w całym XML, a w CKAN jeden na instytucję w imporcie. Sprawdzenie istniejących opublikowanych DGA: brak więcej niż jednego i brak DGA dodanego ręcznie lub innym źródłem.
+
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><rect x="1105.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="557.0" text-anchor="middle"><tspan x="1200.0" dy="0">Sprawdź pięć wymaganych</tspan><tspan x="1200.0" dy="15">kolumn</tspan></text></g><g class="node"><title>Nazwy, liczba i kolejność zgodne?
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><polygon points="1450.0,533.0 1477.0,560.0 1450.0,587.0 1423.0,560.0" fill="#fff0d4" stroke="#b58030"/><text x="1450.0" y="565.0" text-anchor="middle">×</text><text x="1450.0" y="508.0" text-anchor="middle"><tspan x="1450.0" dy="0">Nazwy, liczba i kolejność</tspan><tspan x="1450.0" dy="15">zgodne?</tspan></text></g><g class="node"><title>Sprawdź liczbę DGA w imporcie i portalu
+Tylko state/local; inne flagi dynamic/research/HVD/KE false lub brak. GET: dokładnie 200; Content-Type odpowiada xls/xlsx/csv. Dokładnie 5 kolumn w kolejności: Lp.; Zasób chronionych danych; Format danych; Rozmiar danych; Warunki ponownego wykorzystywania. Najwyżej jeden DGA w całym XML, a w CKAN jeden na instytucję w imporcie. Sprawdzenie istniejących opublikowanych DGA: brak więcej niż jednego i brak DGA dodanego ręcznie lub innym źródłem.
+
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><rect x="1605.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1700.0" y="557.0" text-anchor="middle"><tspan x="1700.0" dy="0">Sprawdź liczbę DGA w</tspan><tspan x="1700.0" dy="15">imporcie i portalu</tspan></text></g><g class="node"><title>Limit i wyłączność źródła zachowane?
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><polygon points="1950.0,533.0 1977.0,560.0 1950.0,587.0 1923.0,560.0" fill="#fff0d4" stroke="#b58030"/><text x="1950.0" y="565.0" text-anchor="middle">×</text><text x="1950.0" y="508.0" text-anchor="middle"><tspan x="1950.0" dy="0">Limit i wyłączność źródła</tspan><tspan x="1950.0" dy="15">zachowane?</tspan></text></g><g class="node"><title>Reguły DGA spełnione
+Źródło HTML: #tab=xml&amp;node=X16
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-129</title><circle cx="2200.0" cy="560.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="2200.0" y="595.0" text-anchor="middle"><tspan x="2200.0" dy="0">Reguły DGA spełnione</tspan></text></g><g class="node"><title>Tylko state/local; inne flagi dynamic/research/HVD/KE false lub brak. GET: dokładnie 200; Content-Type odpowiada xls/xlsx/csv. Dokładnie 5 kolumn w kolejności: Lp.; Zasób chronionych danych; Format danych; Rozmiar danych; Warunki ponownego wykorzystywania. Najwyżej jeden DGA w całym XML, a w CKAN jeden na instytucję w imporcie. Sprawdzenie istniejących opublikowanych DGA: brak więcej niż jednego i brak DGA dodanego ręcznie lub innym źródłem.
+</title><text x="1159.0" y="36.0" text-anchor="middle"><tspan x="1159.0" dy="0">Tylko state/local; inne flagi dynamic/research/HVD/KE false lub brak. GET: dokładnie 200; Content-Type odpowiada xls/xlsx/csv. Dokładnie 5 kolumn w kolejności: Lp.; Zasób chronionych danych; Format danych; Rozmiar danych; Warunki ponownego wykorzystywania. Najwyżej jeden DGA w całym XML, a w CKAN</tspan><tspan x="1159.0" dy="15">jeden na instytucję w imporcie. Sprawdzenie istniejących opublikowanych DGA: brak więcej niż jednego i brak DGA dodanego ręcznie lub innym źródłem.</tspan></text></g></svg>

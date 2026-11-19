@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="210.0 25.0 3280.0 3140.0" role="img" aria-label="CKAN_L2 — widok główny"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="210.0" y="25.0" width="3280.0" height="3140.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><rect x="250.0" y="90.0" width="3160.0" height="685.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="114.0" font-weight="bold">Portal — konfiguracja i harmonogram</text><rect x="280.0" y="90.0" width="3130.0" height="400.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="295.0" y="114.0" font-weight="bold">Administrator i panel</text><rect x="280.0" y="490.0" width="3130.0" height="285.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="295.0" y="514.0" font-weight="bold">Harmonogram portalu</text><rect x="250.0" y="815.0" width="3160.0" height="685.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="839.0" font-weight="bold">Portal — import metadanych CKAN</text><rect x="250.0" y="1540.0" width="3160.0" height="685.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="1564.0" font-weight="bold">Portal — niezależne zadania publikacji</text><rect x="280.0" y="1540.0" width="3130.0" height="210.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="295.0" y="1564.0" font-weight="bold">Wyszukiwarka / API</text><rect x="280.0" y="1750.0" width="3130.0" height="190.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="295.0" y="1774.0" font-weight="bold">Katalog RDF</text><rect x="280.0" y="1940.0" width="3130.0" height="285.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="295.0" y="1964.0" font-weight="bold">Obserwujący</text><rect x="250.0" y="2265.0" width="3160.0" height="495.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="2289.0" font-weight="bold">Portal — niezależne zadania zasobów</text><rect x="250.0" y="2800.0" width="3160.0" height="265.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="2824.0" font-weight="bold">Instytucja — API CKAN i serwery zasobów</text><polyline points="498.0,205.0 630.0,205.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,205.0 953.0,205.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1007.0,205.0 1135.0,205.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1076.0" y="197.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1325.0,205.0 1462.0,205.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1007.0,205.0 1104.0,205.0 1104.0,395.0 1212.0,395.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1109.0" y="197.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="804.0,273.0 804.0,395.0 962.0,395.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="498.0,585.0 630.0,585.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,585.0 962.0,585.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,205.0 855.0,205.0 855.0,351.0 1673.0,351.0 1673.0,395.0 1698.0,395.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><polyline points="498.0,930.0 703.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="757.0,930.0 854.0,930.0 854.0,1077.0 730.0,1077.0 730.0,1102.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="859.0" y="922.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="757.0,930.0 880.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="823.5" y="922.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1080.0,930.0 1130.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1330.0,930.0 1380.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1580.0,930.0 1635.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2054.0,998.0 2054.0,1310.0 2212.0,1310.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1825.0,930.0 1880.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2080.0,930.0 2130.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2330.0,930.0 2385.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2575.0,930.0 2703.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2757.0,930.0 2962.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="2864.5" y="922.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="2757.0,930.0 2854.0,930.0 2854.0,1120.0 2962.0,1120.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="2859.0" y="922.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1054.0,998.0 1054.0,1310.0 1385.0,1310.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1304.0,998.0 1304.0,1023.0 1360.0,1023.0 1360.0,1310.0 1385.0,1310.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1575.0,1310.0 1712.0,1310.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2575.0,930.0 2600.0,930.0 2600.0,1310.0 2698.0,1310.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><polyline points="2080.0,930.0 2105.0,930.0 2105.0,1120.0 2448.0,1120.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><polyline points="498.0,1655.0 635.0,1655.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="825.0,1655.0 962.0,1655.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="498.0,1845.0 635.0,1845.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="825.0,1845.0 962.0,1845.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="498.0,2035.0 635.0,2035.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="825.0,2035.0 962.0,2035.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="498.0,2380.0 630.0,2380.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,2380.0 962.0,2380.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="804.0,2448.0 804.0,2570.0 962.0,2570.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,2380.0 855.0,2380.0 855.0,2526.0 1173.0,2526.0 1173.0,2570.0 1198.0,2570.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><polyline points="250.0,140.0 20.0,140.0 20.0,930.0 462.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="25.0" y="132.0" paint-order="stroke" stroke="white" stroke-width="4">Zlecenie importu źródła</text><polyline points="250.0,865.0 28.0,865.0 28.0,1655.0 462.0,1655.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="33.0" y="857.0" paint-order="stroke" stroke="white" stroke-width="4">Zlecenie ES</text><polyline points="250.0,1015.0 36.0,1015.0 36.0,1845.0 462.0,1845.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="41.0" y="1007.0" paint-order="stroke" stroke="white" stroke-width="4">Zlecenie RDF</text><polyline points="250.0,1165.0 44.0,1165.0 44.0,2035.0 462.0,2035.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="49.0" y="1157.0" paint-order="stroke" stroke="white" stroke-width="4">Zlecenie powiadomienia</text><polyline points="250.0,1315.0 52.0,1315.0 52.0,2380.0 462.0,2380.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="57.0" y="1307.0" paint-order="stroke" stroke="white" stroke-width="4">Zlecenie zasobu po commicie</text><polyline points="250.0,2315.0 60.0,2315.0 60.0,1655.0 462.0,1655.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="65.0" y="2307.0" paint-order="stroke" stroke="white" stroke-width="4">Odświeżenie ES po ocenie</text><polyline points="250.0,2520.0 68.0,2520.0 68.0,1845.0 462.0,1845.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="73.0" y="2512.0" paint-order="stroke" stroke="white" stroke-width="4">Odświeżenie RDF po ocenie</text><polyline points="250.0,1465.0 76.0,1465.0 76.0,2932.5 250.0,2932.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="81.0" y="1457.0" paint-order="stroke" stroke="white" stroke-width="4">Żądania HTTP importu</text><polyline points="250.0,2850.0 84.0,2850.0 84.0,1157.5 250.0,1157.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="89.0" y="2842.0" paint-order="stroke" stroke="white" stroke-width="4">Odpowiedzi HTTP</text><polyline points="250.0,2725.0 92.0,2725.0 92.0,2932.5 250.0,2932.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="97.0" y="2717.0" paint-order="stroke" stroke="white" stroke-width="4">Pobranie zasobu lub treści do oceny</text><polyline points="250.0,2940.0 100.0,2940.0 100.0,2512.5 250.0,2512.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="105.0" y="2932.0" paint-order="stroke" stroke="white" stroke-width="4">Treść odpowiedzi na potrzeby zadania</text><polyline points="250.0,740.0 108.0,740.0 108.0,2932.5 250.0,2932.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="113.0" y="732.0" paint-order="stroke" stroke="white" stroke-width="4">Próbny GET API przy konfiguracji</text><polyline points="250.0,3030.0 116.0,3030.0 116.0,432.5 250.0,432.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="121.0" y="3022.0" paint-order="stroke" stroke="white" stroke-width="4">Wynik i typ odpowiedzi API</text><g class="node"><title>Konfiguracja źródła
+Źródło HTML: #tab=ckan&amp;node=A1
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-03</title><circle cx="480.0" cy="205.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="240.0" text-anchor="middle"><tspan x="480.0" dy="0">Konfiguracja źródła</tspan></text></g><g class="node"><title>Skonfiguruj źródło CKAN
+
+Formularz i ewentualne kontrole; nie jest to import danych.
+
+Źródło HTML: #tab=ckan&amp;node=A1
+
+Źródło HTML: #tab=ckan&amp;node=A9
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-03
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-06</title><rect x="630.0" y="155.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="251.0" text-anchor="middle" font-weight="bold">⊞</text><text x="730.0" y="209.0" text-anchor="middle"><tspan x="730.0" dy="0">Skonfiguruj źródło CKAN</tspan></text></g><g class="node"><title>Nowe aktywne źródło lub aktywacja?
+Źródło HTML: #tab=ckan&amp;node=A9
+
+Źródło HTML: #tab=testy&amp;id=T-ADMIN
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-06</title><polygon points="980.0,178.0 1007.0,205.0 980.0,232.0 953.0,205.0" fill="#fff0d4" stroke="#b58030"/><text x="980.0" y="210.0" text-anchor="middle">×</text><text x="980.0" y="153.0" text-anchor="middle"><tspan x="980.0" dy="0">Nowe aktywne źródło lub</tspan><tspan x="980.0" dy="15">aktywacja?</tspan></text></g><g class="node"><title>Zleć import po commicie
+Źródło HTML: #tab=ckan&amp;node=B6
+
+Źródło HTML: #tab=ckan&amp;node=A9
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-07
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-06</title><rect x="1135.0" y="160.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1230.0" y="209.0" text-anchor="middle"><tspan x="1230.0" dy="0">Zleć import po commicie</tspan></text></g><g class="node"><title>Import zlecony
+Źródło HTML: #tab=ckan&amp;node=B6
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-07</title><circle cx="1480.0" cy="205.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1480.0" y="240.0" text-anchor="middle"><tspan x="1480.0" dy="0">Import zlecony</tspan></text></g><g class="node"><title>Zapisano; bez zlecenia importu
+Źródło HTML: #tab=scen&amp;id=SCEN-18
+
+Źródło HTML: #tab=testy&amp;id=T-ADMIN</title><circle cx="1230.0" cy="395.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1230.0" y="430.0" text-anchor="middle"><tspan x="1230.0" dy="0">Zapisano; bez zlecenia</tspan><tspan x="1230.0" dy="15">importu</tspan></text></g><g class="node"><title>
+Źródło HTML: #tab=ckan&amp;node=AERR
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-05</title><circle cx="804.0" cy="255.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="804.0" y="290.0" text-anchor="middle"></text></g><g class="node"><title>Źródło niezapisane
+Źródło HTML: #tab=ckan&amp;node=AERR
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-05</title><circle cx="980.0" cy="395.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="430.0" text-anchor="middle"><tspan x="980.0" dy="0">Źródło niezapisane</tspan></text></g><g class="node"><title>Codzienny przegląd o 03:00
+Godzina opisana w ustawieniach; działanie i konfiguracja produkcyjnego beat nieznane. Wyrażenie opisowe: model niewykonywalny.
+
+Źródło HTML: #tab=ckan&amp;node=B1
+
+Źródło HTML: #tab=ckan&amp;node=B3
+
+Źródło HTML: #tab=cmp&amp;id=UNVERIFIED</title><circle cx="480.0" cy="585.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="620.0" text-anchor="middle"><tspan x="480.0" dy="0">Codzienny przegląd o 03:00</tspan></text></g><g class="node"><title>Przejrzyj aktywne źródła i zleć należne importy
+
+Dla każdego aktywnego źródła osobno. Brak terminu / nieaktywny to pominięcie, nie błąd importu.
+
+Źródło HTML: #tab=ckan&amp;node=B1
+
+Źródło HTML: #tab=ckan&amp;node=B3
+
+Źródło HTML: #tab=ckan&amp;node=B6
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-07</title><rect x="630.0" y="535.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="631.0" text-anchor="middle" font-weight="bold">⊞</text><text x="730.0" y="582.0" text-anchor="middle"><tspan x="730.0" dy="0">Przejrzyj aktywne źródła i</tspan><tspan x="730.0" dy="15">zleć należne importy</tspan></text></g><g class="node"><title>Zakończono przegląd
+Źródło HTML: #tab=ckan&amp;node=B1</title><circle cx="980.0" cy="585.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="620.0" text-anchor="middle"><tspan x="980.0" dy="0">Zakończono przegląd</tspan></text></g><g class="node"><title>Ustawienia źródła
+Źródło HTML: #tab=pola&amp;id=SECTION-pola-5</title><rect x="1698.0" y="363.0" width="64.0" height="64.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1730.0" y="392.0" text-anchor="middle"><tspan x="1730.0" dy="0">Ustawienia</tspan><tspan x="1730.0" dy="15">źródła</tspan></text></g><g class="node"><title>Nowe aktywne źródło albo aktywacja uruchamia import wymuszony po commicie. Zwykła edycja nie zleca importu. Harmonogram przegląda aktywne źródła i warunek ostatni import + częstotliwość ≤ teraz. Produkcyjny beat niepotwierdzony.
+</title><text x="1071.0" y="118.0" text-anchor="middle"><tspan x="1071.0" dy="0">Nowe aktywne źródło albo aktywacja uruchamia import wymuszony po commicie. Zwykła edycja nie zleca importu. Harmonogram przegląda aktywne źródła i warunek ostatni import + częstotliwość ≤ teraz.</tspan><tspan x="1071.0" dy="15">Produkcyjny beat niepotwierdzony.</tspan></text></g><g class="node"><title>Zlecenie importu odebrane
+Źródło HTML: #tab=ckan&amp;node=B6
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-07</title><circle cx="480.0" cy="930.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="965.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie importu odebrane</tspan></text></g><g class="node"><title>Źródło nadal aktywne?
+Źródło HTML: #tab=ckan&amp;node=B5
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-101</title><polygon points="730.0,903.0 757.0,930.0 730.0,957.0 703.0,930.0" fill="#fff0d4" stroke="#b58030"/><text x="730.0" y="935.0" text-anchor="middle">×</text><text x="730.0" y="891.0" text-anchor="middle"><tspan x="730.0" dy="0">Źródło nadal aktywne?</tspan></text></g><g class="node"><title>Pominięto: źródło nieaktywne
+Log i return; bez DataSourceImport. Istniejące publikacje pozostają.
+
+Źródło HTML: #tab=ckan&amp;node=B5
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-101</title><circle cx="730.0" cy="1120.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="730.0" y="1155.0" text-anchor="middle"><tspan x="730.0" dy="0">Pominięto: źródło nieaktywne</tspan></text></g><g class="node"><title>Pobierz i odczytaj odpowiedź API
+
+Odczyt result.results albo result z JSON. Brak odpowiedzi, niepoprawny JSON lub niewłaściwa struktura odrzuca całą próbę. Endpoint i parametry wynikają z konfiguracji, bez dopisanego stronicowania.
+
+Źródło HTML: #tab=ckan&amp;node=K1
+
+Źródło HTML: #tab=ckan&amp;node=K2
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-102
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-105</title><rect x="880.0" y="880.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="980.0" y="976.0" text-anchor="middle" font-weight="bold">⊞</text><text x="980.0" y="927.0" text-anchor="middle"><tspan x="980.0" dy="0">Pobierz i odczytaj odpowiedź</tspan><tspan x="980.0" dy="15">API</tspan></text></g><g class="node"><title>Zweryfikuj wszystkie opisy i adresy
+Źródło HTML: #tab=ckan&amp;node=K12
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-114</title><rect x="1130.0" y="880.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1230.0" y="976.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1230.0" y="927.0" text-anchor="middle"><tspan x="1230.0" dy="0">Zweryfikuj wszystkie opisy i</tspan><tspan x="1230.0" dy="15">adresy</tspan></text></g><g class="node"><title>Utwórz historię próby i zapisz czas importu źródła
+Początek próby opisuje czas rozpoczęcia, lecz rekord powstaje po pobraniu/walidacji, przed zapisem zbiorów. status wyliczany z error_desc i liczby odrzuceń. last_import_timestamp także przy błędach; brak natychmiastowego automatycznego retry.
+
+Źródło HTML: #tab=ckan&amp;node=Brecord
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-201</title><rect x="1635.0" y="885.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1730.0" y="927.0" text-anchor="middle"><tspan x="1730.0" dy="0">Utwórz historię próby i</tspan><tspan x="1730.0" dy="15">zapisz czas importu źródła</tspan></text></g><g class="node"><title>Zapisz przyjęte zbiory, zasoby i skutki publikacji
+Źródło HTML: #tab=ckan&amp;node=B10
+
+Źródło HTML: #tab=ckan&amp;node=PB3
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-15</title><rect x="1880.0" y="880.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1980.0" y="976.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1980.0" y="927.0" text-anchor="middle"><tspan x="1980.0" dy="0">Zapisz przyjęte zbiory,</tspan><tspan x="1980.0" dy="15">zasoby i skutki publikacji</tspan></text></g><g class="node"><title>Wycofaj pozycje spoza przyjętej listy
+Źródło HTML: #tab=ckan&amp;node=B12
+
+Źródło HTML: #tab=cmp&amp;id=U-7
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-215</title><rect x="2130.0" y="880.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="2230.0" y="976.0" text-anchor="middle" font-weight="bold">⊞</text><text x="2230.0" y="927.0" text-anchor="middle"><tspan x="2230.0" dy="0">Wycofaj pozycje spoza</tspan><tspan x="2230.0" dy="15">przyjętej listy</tspan></text></g><g class="node"><title>Zapisz koniec, liczniki i wynik źródła
+datasets/resources_updated_count obejmuje również obiekty bez zmiany. Usunięte zasoby kaskadowo wraz ze zbiorem nie muszą być w liczniku zasobów. Zakończenie nie potwierdza ukończenia innych kolejek.
+
+Źródło HTML: #tab=ckan&amp;node=B13
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-218</title><rect x="2385.0" y="885.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="2480.0" y="927.0" text-anchor="middle"><tspan x="2480.0" dy="0">Zapisz koniec, liczniki i</tspan><tspan x="2480.0" dy="15">wynik źródła</tspan></text></g><g class="node"><title>Wybierz zbiory spełniające reguły biznesowe
+Źródło HTML: #tab=ckan&amp;node=K13
+
+Źródło HTML: #tab=ckan&amp;node=K14
+
+Źródło HTML: #tab=ckan&amp;node=K15
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-117
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-118
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-120</title><rect x="1380.0" y="880.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1480.0" y="976.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1480.0" y="927.0" text-anchor="middle"><tspan x="1480.0" dy="0">Wybierz zbiory spełniające</tspan><tspan x="1480.0" dy="15">reguły biznesowe</tspan></text></g><g class="node"><title>
+Źródło HTML: #tab=cmp&amp;id=U-15</title><circle cx="2054.0" cy="980.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="2054.0" y="1015.0" text-anchor="middle"></text></g><g class="node"><title>Przerwano zapis; historia może mieć OK bez daty końca
+Nie jest to obsłużony ERROR walidacji ani potwierdzenie pełnej synchronizacji. Dalsze zbiory i porządkowanie mogą się nie wykonać; wcześniejsze zapisy mogły już zajść. Granica błędu opisuje obserwację przerwania, nie nowy handler w kodzie.
+
+Źródło HTML: #tab=cmp&amp;id=U-15
+
+Źródło HTML: #tab=katalog&amp;id=CF-05</title><circle cx="2230.0" cy="1310.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="2230.0" y="1345.0" text-anchor="middle"><tspan x="2230.0" dy="0">Przerwano zapis; historia</tspan><tspan x="2230.0" dy="15">może mieć OK bez daty końca</tspan></text></g><g class="node"><title>Odrzucono co najmniej jeden zbiór?
+Źródło HTML: #tab=ckan&amp;node=B13
+
+Źródło HTML: #tab=ckan&amp;node=K14r
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-218
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-119</title><polygon points="2730.0,903.0 2757.0,930.0 2730.0,957.0 2703.0,930.0" fill="#fff0d4" stroke="#b58030"/><text x="2730.0" y="935.0" text-anchor="middle">×</text><text x="2730.0" y="878.0" text-anchor="middle"><tspan x="2730.0" dy="0">Odrzucono co najmniej jeden</tspan><tspan x="2730.0" dy="15">zbiór?</tspan></text></g><g class="node"><title>OK — import metadanych zakończony
+Źródło HTML: #tab=ckan&amp;node=B13
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-218</title><circle cx="2980.0" cy="930.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="2980.0" y="965.0" text-anchor="middle"><tspan x="2980.0" dy="0">OK — import metadanych</tspan><tspan x="2980.0" dy="15">zakończony</tspan></text></g><g class="node"><title>OK_PARTIAL — import metadanych zakończony
+Źródło HTML: #tab=ckan&amp;node=B13
+
+Źródło HTML: #tab=ckan&amp;node=K14r
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-218
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-119</title><circle cx="2980.0" cy="1120.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="2980.0" y="1155.0" text-anchor="middle"><tspan x="2980.0" dy="0">OK_PARTIAL — import</tspan><tspan x="2980.0" dy="15">metadanych zakończony</tspan></text></g><g class="node"><title>Zapisz ERROR i czas próby; zachowaj poprzednie dane
+Błąd pobrania lub walidacji podstawowej: items=[]; error_desc; bez update_from_items i bez delete_stale. Przewidziany koniec próby i wynik źródła; last_import_timestamp przesuwa następny termin.
+
+Źródło HTML: #tab=ckan&amp;node=KS
+
+Źródło HTML: #tab=ckan&amp;node=Brecord
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-115
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-201</title><rect x="1385.0" y="1265.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1480.0" y="1307.0" text-anchor="middle"><tspan x="1480.0" dy="0">Zapisz ERROR i czas próby;</tspan><tspan x="1480.0" dy="15">zachowaj poprzednie dane</tspan></text></g><g class="node"><title>ERROR — cały import odrzucony
+Źródło HTML: #tab=ckan&amp;node=KS
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-115</title><circle cx="1730.0" cy="1310.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1730.0" y="1345.0" text-anchor="middle"><tspan x="1730.0" dy="0">ERROR — cały import</tspan><tspan x="1730.0" dy="15">odrzucony</tspan></text></g><g class="node"><title>
+Źródło HTML: #tab=ckan&amp;node=K1Reject</title><circle cx="1054.0" cy="980.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="1054.0" y="1015.0" text-anchor="middle"></text></g><g class="node"><title>
+Źródło HTML: #tab=ckan&amp;node=KS
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-115</title><circle cx="1304.0" cy="980.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="1304.0" y="1015.0" text-anchor="middle"></text></g><g class="node"><title>Historia prób importu
+Źródło HTML: #tab=pola&amp;id=SECTION-pola-7</title><rect x="2698.0" y="1278.0" width="64.0" height="64.0" rx="8" fill="#fff" stroke="#46637f"/><text x="2730.0" y="1307.0" text-anchor="middle"><tspan x="2730.0" dy="0">Historia prób</tspan><tspan x="2730.0" dy="15">importu</tspan></text></g><g class="node"><title>Zbiory, zasoby i powiązania
+Źródło HTML: #tab=ckan&amp;node=B10</title><rect x="2448.0" y="1088.0" width="64.0" height="64.0" rx="8" fill="#fff" stroke="#46637f"/><text x="2480.0" y="1117.0" text-anchor="middle"><tspan x="2480.0" dy="0">Zbiory, zasoby i</tspan><tspan x="2480.0" dy="15">powiązania</tspan></text></g><g class="node"><title>Wynik dotyczy pobrania, walidacji, zapisu i synchronizacji metadanych. Nie czeka na indeksy, pliki, ocenę, konwersję ani archiwum.
+</title><text x="1689.0" y="843.0" text-anchor="middle"><tspan x="1689.0" dy="0">Wynik dotyczy pobrania, walidacji, zapisu i synchronizacji metadanych. Nie czeka na indeksy, pliki, ocenę, konwersję ani archiwum.</tspan></text></g><g class="node"><title>Zlecenie ES
+Źródło HTML: #tab=ckan&amp;node=PES
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-208</title><circle cx="480.0" cy="1655.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="1690.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie ES</tspan></text></g><g class="node"><title>Zaktualizuj lub usuń opis w wyszukiwarce i API
+Odrębne zadanie zgodnie ze stanem obiektu. Publikacja obejmuje tylko obiekty kwalifikujące się do widoczności; nie jest potwierdzeniem gotowości pliku.
+
+Źródło HTML: #tab=ckan&amp;node=PES
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-208</title><rect x="635.0" y="1610.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="1652.0" text-anchor="middle"><tspan x="730.0" dy="0">Zaktualizuj lub usuń opis w</tspan><tspan x="730.0" dy="15">wyszukiwarce i API</tspan></text></g><g class="node"><title>Zlecenie obsłużone
+Źródło HTML: #tab=ckan&amp;node=PES
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-208</title><circle cx="980.0" cy="1655.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="1690.0" text-anchor="middle"><tspan x="980.0" dy="0">Zlecenie obsłużone</tspan></text></g><g class="node"><title>Zlecenie RDF
+Źródło HTML: #tab=ckan&amp;node=PRDF
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-209</title><circle cx="480.0" cy="1845.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="1880.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie RDF</tspan></text></g><g class="node"><title>Zaktualizuj lub usuń opis RDF
+Odrębne zadanie zgodnie ze stanem obiektu. Publikacja obejmuje tylko obiekty kwalifikujące się do widoczności; nie jest potwierdzeniem gotowości pliku.
+
+Źródło HTML: #tab=ckan&amp;node=PRDF
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-209</title><rect x="635.0" y="1800.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="1842.0" text-anchor="middle"><tspan x="730.0" dy="0">Zaktualizuj lub usuń opis</tspan><tspan x="730.0" dy="15">RDF</tspan></text></g><g class="node"><title>Zlecenie obsłużone
+Źródło HTML: #tab=ckan&amp;node=PRDF
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-209</title><circle cx="980.0" cy="1845.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="1880.0" text-anchor="middle"><tspan x="980.0" dy="0">Zlecenie obsłużone</tspan></text></g><g class="node"><title>Zlecenie powiadomienia
+Źródło HTML: #tab=ckan&amp;node=PWATCH
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-210</title><circle cx="480.0" cy="2035.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="2070.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie powiadomienia</tspan></text></g><g class="node"><title>Obsłuż powiadomienie odpowiednie do zmiany
+Odrębne zadanie zgodnie ze stanem obiektu. Publikacja obejmuje tylko obiekty kwalifikujące się do widoczności; nie jest potwierdzeniem gotowości pliku.
+
+Źródło HTML: #tab=ckan&amp;node=PWATCH
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-210</title><rect x="635.0" y="1990.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="2032.0" text-anchor="middle"><tspan x="730.0" dy="0">Obsłuż powiadomienie</tspan><tspan x="730.0" dy="15">odpowiednie do zmiany</tspan></text></g><g class="node"><title>Zlecenie obsłużone
+Źródło HTML: #tab=ckan&amp;node=PWATCH
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-210</title><circle cx="980.0" cy="2035.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="2070.0" text-anchor="middle"><tspan x="980.0" dy="0">Zlecenie obsłużone</tspan></text></g><g class="node"><title>Każde zlecenie uruchamia właściwe zadanie. ES, RDF i powiadomienia mogą kończyć się w różnym czasie. Brak wspólnej bariery zakończenia.
+</title><text x="805.0" y="1573.0" text-anchor="middle"><tspan x="805.0" dy="0">Każde zlecenie uruchamia właściwe zadanie. ES, RDF i powiadomienia mogą kończyć się w różnym czasie. Brak wspólnej</tspan><tspan x="805.0" dy="15">bariery zakończenia.</tspan></text></g><g class="node"><title>Zlecenie przygotowania zasobu
+Źródło HTML: #tab=ckan&amp;node=O3
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-211</title><circle cx="480.0" cy="2380.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="2415.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie przygotowania</tspan><tspan x="480.0" dy="15">zasobu</tspan></text></g><g class="node"><title>Oceń zasób CKAN bez tworzenia kopii
+Źródło HTML: #tab=ckan&amp;node=O3
+
+Źródło HTML: #tab=ckan&amp;node=O9
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-211
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-309</title><rect x="630.0" y="2330.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="2426.0" text-anchor="middle" font-weight="bold">⊞</text><text x="730.0" y="2377.0" text-anchor="middle"><tspan x="730.0" dy="0">Oceń zasób CKAN bez</tspan><tspan x="730.0" dy="15">tworzenia kopii</tspan></text></g><g class="node"><title>Zadanie zasobu zakończone
+Źródło HTML: #tab=ckan&amp;node=O3
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-211</title><circle cx="980.0" cy="2380.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="2415.0" text-anchor="middle"><tspan x="980.0" dy="0">Zadanie zasobu zakończone</tspan></text></g><g class="node"><title>
+Źródło HTML: #tab=ckan&amp;node=OFAIL
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-312</title><circle cx="804.0" cy="2430.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="804.0" y="2465.0" text-anchor="middle"></text></g><g class="node"><title>Zadanie zasobu przerwane wyjątkiem
+Źródło HTML: #tab=ckan&amp;node=OFAIL
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-312</title><circle cx="980.0" cy="2570.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="2605.0" text-anchor="middle"><tspan x="980.0" dy="0">Zadanie zasobu przerwane</tspan><tspan x="980.0" dy="15">wyjątkiem</tspan></text></g><g class="node"><title>Zapisane dane zasobu i ocena
+Źródło HTML: #tab=ckan&amp;node=O9
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-309</title><rect x="1198.0" y="2538.0" width="64.0" height="64.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1230.0" y="2567.0" text-anchor="middle"><tspan x="1230.0" dy="0">Zapisane dane</tspan><tspan x="1230.0" dy="15">zasobu i ocena</tspan></text></g><g class="node"><title>Każda instancja dotyczy pojedynczego zasobu. Nie jest częścią oczekiwania importu metadanych. Błąd zadania nie przelicza statusu wcześniejszego importu.
+</title><text x="821.0" y="2293.0" text-anchor="middle"><tspan x="821.0" dy="0">Każda instancja dotyczy pojedynczego zasobu. Nie jest częścią oczekiwania importu metadanych. Błąd zadania nie przelicza</tspan><tspan x="821.0" dy="15">statusu wcześniejszego importu.</tspan></text></g></svg>

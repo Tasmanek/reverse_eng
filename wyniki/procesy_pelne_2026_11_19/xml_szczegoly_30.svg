@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="65.0 70.0 2483.0 798.0" role="img" aria-label="Sprawdź XML według kontroli wykazu"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="65.0" y="70.0" width="2483.0" height="798.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 673.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="727.0,180.0 855.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="796.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1045.0,180.0 1173.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1227.0,180.0 1355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1296.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1545.0,180.0 1673.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1727.0,180.0 1855.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1796.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="2045.0,180.0 2173.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2227.0,180.0 2252.0,180.0 2252.0,136.0 2071.0,136.0 2071.0,490.0 200.0,490.0 200.0,515.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="2257.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="295.0,560.0 423.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="477.0,560.0 605.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="546.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="795.0,560.0 923.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="977.0,560.0 1105.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1046.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1295.0,560.0 1423.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1477.0,560.0 1605.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1546.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1795.0,560.0 1923.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1977.0,560.0 2105.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="2046.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="2295.0,560.0 2432.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="727.0,180.0 821.0,180.0 821.0,327.0 700.0,327.0 700.0,352.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="826.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1227.0,180.0 1321.0,180.0 1321.0,327.0 1200.0,327.0 1200.0,352.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1326.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1727.0,180.0 1821.0,180.0 1821.0,327.0 1700.0,327.0 1700.0,352.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1826.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="2227.0,180.0 2321.0,180.0 2321.0,327.0 2200.0,327.0 2200.0,352.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="2326.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="477.0,560.0 571.0,560.0 571.0,707.0 450.0,707.0 450.0,732.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="576.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="977.0,560.0 1071.0,560.0 1071.0,707.0 950.0,707.0 950.0,732.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1076.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1477.0,560.0 1571.0,560.0 1571.0,707.0 1450.0,707.0 1450.0,732.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1576.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1977.0,560.0 2071.0,560.0 2071.0,707.0 1950.0,707.0 1950.0,732.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="2076.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><g class="node"><title>Adres wykazu XML
+Źródło HTML: #tab=xml&amp;node=X1
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-06</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Adres wykazu XML</tspan></text></g><g class="node"><title>Sprawdź nazwę, jeżeli URL kończy się .xml
+Po unquote nazwa nie może zawierać spacji. Brak końcówki .xml sam nie odrzuca. To nie jest bramka wymagająca rozszerzenia .xml.
+
+Źródło HTML: #tab=xml&amp;node=X2
+
+Źródło HTML: #tab=cmp&amp;id=U-6
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-102</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Sprawdź nazwę, jeżeli URL</tspan><tspan x="450.0" dy="15">kończy się .xml</tspan></text></g><g class="node"><title>Nazwa dopuszczona?
+Źródło HTML: #tab=xml&amp;node=X2
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-102</title><polygon points="700.0,153.0 727.0,180.0 700.0,207.0 673.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="700.0" y="185.0" text-anchor="middle">×</text><text x="700.0" y="141.0" text-anchor="middle"><tspan x="700.0" dy="0">Nazwa dopuszczona?</tspan></text></g><g class="node"><title>Wyślij HEAD i odczytaj odpowiedź HTTP
+Kontrola response.ok, nie warunek dokładnie 200. 4xx/5xx i błędy sieci dają ogólną niedostępność; kod może zniknąć z komunikatu.
+
+Źródło HTML: #tab=xml&amp;node=X3
+
+Źródło HTML: #tab=katalog&amp;id=HTTP-PATH-1
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-105</title><rect x="855.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="950.0" y="177.0" text-anchor="middle"><tspan x="950.0" dy="0">Wyślij HEAD i odczytaj</tspan><tspan x="950.0" dy="15">odpowiedź HTTP</tspan></text></g><g class="node"><title>Odpowiedź HEAD OK?
+Źródło HTML: #tab=xml&amp;node=X3
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-105</title><polygon points="1200.0,153.0 1227.0,180.0 1200.0,207.0 1173.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="1200.0" y="185.0" text-anchor="middle">×</text><text x="1200.0" y="141.0" text-anchor="middle"><tspan x="1200.0" dy="0">Odpowiedź HEAD OK?</tspan></text></g><g class="node"><title>Sprawdź Content-Type wykazu
+Musi zawierać text/xml lub application/xml; samo rozszerzenie nie wystarcza.
+
+Źródło HTML: #tab=xml&amp;node=X4
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-107</title><rect x="1355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1450.0" y="184.0" text-anchor="middle"><tspan x="1450.0" dy="0">Sprawdź Content-Type wykazu</tspan></text></g><g class="node"><title>Typ wskazuje XML?
+Źródło HTML: #tab=xml&amp;node=X4
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-107</title><polygon points="1700.0,153.0 1727.0,180.0 1700.0,207.0 1673.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="1700.0" y="185.0" text-anchor="middle">×</text><text x="1700.0" y="141.0" text-anchor="middle"><tspan x="1700.0" dy="0">Typ wskazuje XML?</tspan></text></g><g class="node"><title>Pobierz i odczytaj plik .md5
+Adres powstaje przez zastąpienie rozszerzenia przez .md5. HTTP OK, treść niepusta; pierwszy ciąg 32 znaków szesnastkowych. Nie zakładamy, że to URL.xml.md5.
+
+Źródło HTML: #tab=xml&amp;node=X5
+
+Źródło HTML: #tab=katalog&amp;id=HTTP-PATH-2
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-110</title><rect x="1855.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1950.0" y="177.0" text-anchor="middle"><tspan x="1950.0" dy="0">Pobierz i odczytaj plik</tspan><tspan x="1950.0" dy="15">.md5</tspan></text></g><g class="node"><title>Pobrano poprawny hash?
+Źródło HTML: #tab=xml&amp;node=X5
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-110</title><polygon points="2200.0,153.0 2227.0,180.0 2200.0,207.0 2173.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="2200.0" y="185.0" text-anchor="middle">×</text><text x="2200.0" y="141.0" text-anchor="middle"><tspan x="2200.0" dy="0">Pobrano poprawny hash?</tspan></text></g><g class="node"><title>Pobierz XML przez GET do pliku tymczasowego
+Strumieniowo; błędny HTTP/wyjątek przerywa. Samo pobranie może dopuścić 204, lecz dalsze kontrole wciąż obowiązują.
+
+Źródło HTML: #tab=xml&amp;node=X6
+
+Źródło HTML: #tab=katalog&amp;id=HTTP-PATH-3
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-113</title><rect x="105.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="200.0" y="557.0" text-anchor="middle"><tspan x="200.0" dy="0">Pobierz XML przez GET do</tspan><tspan x="200.0" dy="15">pliku tymczasowego</tspan></text></g><g class="node"><title>Pobranie XML udane?
+Źródło HTML: #tab=xml&amp;node=X6
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-113</title><polygon points="450.0,533.0 477.0,560.0 450.0,587.0 423.0,560.0" fill="#fff0d4" stroke="#b58030"/><text x="450.0" y="565.0" text-anchor="middle">×</text><text x="450.0" y="521.0" text-anchor="middle"><tspan x="450.0" dy="0">Pobranie XML udane?</tspan></text></g><g class="node"><title>Oblicz MD5 XML i porównaj z .md5
+Kontrola integralności, nie autentyczności. Każdy import liczy MD5 ponownie.
+
+Źródło HTML: #tab=xml&amp;node=X7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-115</title><rect x="605.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="557.0" text-anchor="middle"><tspan x="700.0" dy="0">Oblicz MD5 XML i porównaj z</tspan><tspan x="700.0" dy="15">.md5</tspan></text></g><g class="node"><title>Sumy zgodne?
+Źródło HTML: #tab=xml&amp;node=X7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-115</title><polygon points="950.0,533.0 977.0,560.0 950.0,587.0 923.0,560.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="565.0" text-anchor="middle">×</text><text x="950.0" y="521.0" text-anchor="middle"><tspan x="950.0" dy="0">Sumy zgodne?</tspan></text></g><g class="node"><title>Odczytaj wersję XSD z przestrzeni nazw
+Obsługiwane 1.0-rc1 oraz 1.1–1.13. Brak wersji i wersja nieobsługiwana mają osobne komunikaty.
+
+Źródło HTML: #tab=xml&amp;node=X8
+
+Źródło HTML: #tab=zrodla&amp;id=SECTION-zrodla-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-117</title><rect x="1105.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="557.0" text-anchor="middle"><tspan x="1200.0" dy="0">Odczytaj wersję XSD z</tspan><tspan x="1200.0" dy="15">przestrzeni nazw</tspan></text></g><g class="node"><title>Wersja znana i obsługiwana?
+Źródło HTML: #tab=xml&amp;node=X8
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-117</title><polygon points="1450.0,533.0 1477.0,560.0 1450.0,587.0 1423.0,560.0" fill="#fff0d4" stroke="#b58030"/><text x="1450.0" y="565.0" text-anchor="middle">×</text><text x="1450.0" y="521.0" text-anchor="middle"><tspan x="1450.0" dy="0">Wersja znana i obsługiwana?</tspan></text></g><g class="node"><title>Zweryfikuj cały XML względem wybranego XSD
+Struktura, typy, wymagane pola i ograniczenia wybranej wersji. XSD 1.13 używa xs:all; nie przenosimy reguł kolejności na starsze wersje.
+
+Źródło HTML: #tab=xml&amp;node=X9
+
+Źródło HTML: #tab=katalog&amp;id=XF-09
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-119</title><rect x="1605.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1700.0" y="557.0" text-anchor="middle"><tspan x="1700.0" dy="0">Zweryfikuj cały XML</tspan><tspan x="1700.0" dy="15">względem wybranego XSD</tspan></text></g><g class="node"><title>XML zgodny z XSD?
+Źródło HTML: #tab=xml&amp;node=X9
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-119</title><polygon points="1950.0,533.0 1977.0,560.0 1950.0,587.0 1923.0,560.0" fill="#fff0d4" stroke="#b58030"/><text x="1950.0" y="565.0" text-anchor="middle">×</text><text x="1950.0" y="521.0" text-anchor="middle"><tspan x="1950.0" dy="0">XML zgodny z XSD?</tspan></text></g><g class="node"><title>Odczytaj listę zbiorów i wersję schematu
+Źródło HTML: #tab=xml&amp;node=X10
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-135</title><rect x="2105.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="2200.0" y="557.0" text-anchor="middle"><tspan x="2200.0" dy="0">Odczytaj listę zbiorów i</tspan><tspan x="2200.0" dy="15">wersję schematu</tspan></text></g><g class="node"><title>Wykaz gotowy do kontroli opisów
+Źródło HTML: #tab=xml&amp;node=X10
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-135</title><circle cx="2450.0" cy="560.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="2450.0" y="595.0" text-anchor="middle"><tspan x="2450.0" dy="0">Wykaz gotowy do kontroli</tspan><tspan x="2450.0" dy="15">opisów</tspan></text></g><g class="node"><title>Błąd nazwy pliku
+Dowolny błąd X2–X9 kończy pobranie/walidację wykazu. Komunikat XML Validation error! trafia do historii importu; poprzednie dane pozostają.
+
+Źródło HTML: #tab=xml&amp;node=X2
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-102</title><circle cx="700.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="700.0" y="405.0" text-anchor="middle"><tspan x="700.0" dy="0">Błąd nazwy pliku</tspan></text></g><g class="node"><title>Błąd HEAD / dostępności
+Dowolny błąd X2–X9 kończy pobranie/walidację wykazu. Komunikat XML Validation error! trafia do historii importu; poprzednie dane pozostają.
+
+Źródło HTML: #tab=xml&amp;node=X3
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-105</title><circle cx="1200.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1200.0" y="405.0" text-anchor="middle"><tspan x="1200.0" dy="0">Błąd HEAD / dostępności</tspan></text></g><g class="node"><title>Błędny typ XML
+Dowolny błąd X2–X9 kończy pobranie/walidację wykazu. Komunikat XML Validation error! trafia do historii importu; poprzednie dane pozostają.
+
+Źródło HTML: #tab=xml&amp;node=X4
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-107</title><circle cx="1700.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1700.0" y="405.0" text-anchor="middle"><tspan x="1700.0" dy="0">Błędny typ XML</tspan></text></g><g class="node"><title>Błąd odczytu .md5
+Dowolny błąd X2–X9 kończy pobranie/walidację wykazu. Komunikat XML Validation error! trafia do historii importu; poprzednie dane pozostają.
+
+Źródło HTML: #tab=xml&amp;node=X5
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-110</title><circle cx="2200.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="2200.0" y="405.0" text-anchor="middle"><tspan x="2200.0" dy="0">Błąd odczytu .md5</tspan></text></g><g class="node"><title>Błąd pobrania XML
+Dowolny błąd X2–X9 kończy pobranie/walidację wykazu. Komunikat XML Validation error! trafia do historii importu; poprzednie dane pozostają.
+
+Źródło HTML: #tab=xml&amp;node=X6
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-113</title><circle cx="450.0" cy="750.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="450.0" y="785.0" text-anchor="middle"><tspan x="450.0" dy="0">Błąd pobrania XML</tspan></text></g><g class="node"><title>Niezgodne sumy MD5
+Dowolny błąd X2–X9 kończy pobranie/walidację wykazu. Komunikat XML Validation error! trafia do historii importu; poprzednie dane pozostają.
+
+Źródło HTML: #tab=xml&amp;node=X7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-115</title><circle cx="950.0" cy="750.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="950.0" y="785.0" text-anchor="middle"><tspan x="950.0" dy="0">Niezgodne sumy MD5</tspan></text></g><g class="node"><title>Brak / nieobsługiwana wersja XSD
+Dowolny błąd X2–X9 kończy pobranie/walidację wykazu. Komunikat XML Validation error! trafia do historii importu; poprzednie dane pozostają.
+
+Źródło HTML: #tab=xml&amp;node=X8
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-117</title><circle cx="1450.0" cy="750.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1450.0" y="785.0" text-anchor="middle"><tspan x="1450.0" dy="0">Brak / nieobsługiwana wersja</tspan><tspan x="1450.0" dy="15">XSD</tspan></text></g><g class="node"><title>XML niezgodny z XSD
+Dowolny błąd X2–X9 kończy pobranie/walidację wykazu. Komunikat XML Validation error! trafia do historii importu; poprzednie dane pozostają.
+
+Źródło HTML: #tab=xml&amp;node=X9
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-119</title><circle cx="1950.0" cy="750.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1950.0" y="785.0" text-anchor="middle"><tspan x="1950.0" dy="0">XML niezgodny z XSD</tspan></text></g></svg>

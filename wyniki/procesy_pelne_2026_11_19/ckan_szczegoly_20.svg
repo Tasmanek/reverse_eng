@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="142.0 65.0 1656.0 450.0" role="img" aria-label="Wyznacz ocenę otwartości"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="142.0" y="65.0" width="1656.0" height="450.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 423.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="477.0,180.0 580.0,180.0 580.0,370.0 605.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="585.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="795.0,370.0 1682.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="477.0,180.0 605.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="546.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="795.0,180.0 850.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1050.0,180.0 1657.0,180.0 1657.0,370.0 1682.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Zasób i format zapisane w bazie
+Źródło HTML: #tab=ckan&amp;node=O9
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-309</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Zasób i format zapisane w</tspan><tspan x="200.0" dy="15">bazie</tspan></text></g><g class="node"><title>Format zasobu jest None?
+Źródło HTML: #tab=ckan&amp;node=O10</title><polygon points="450.0,153.0 477.0,180.0 450.0,207.0 423.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="450.0" y="185.0" text-anchor="middle">×</text><text x="450.0" y="141.0" text-anchor="middle"><tspan x="450.0" dy="0">Format zasobu jest None?</tspan></text></g><g class="node"><title>Ustal ocenę zasobu 0
+Źródło HTML: #tab=ckan&amp;node=O10</title><rect x="605.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff0d4" stroke="#46637f"/><text x="700.0" y="374.0" text-anchor="middle"><tspan x="700.0" dy="0">Ustal ocenę zasobu 0</tspan></text></g><g class="node"><title>Wartość oceny wyznaczona
+Źródło HTML: #tab=ckan&amp;node=O9
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-309</title><circle cx="1700.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1700.0" y="405.0" text-anchor="middle"><tspan x="1700.0" dy="0">Wartość oceny wyznaczona</tspan></text></g><g class="node"><title>Pobierz treść linku na potrzeby oceny
+GET z verify=False, treść w pamięci; rozszerzenie = format z bazy. Nie tworzy pliku głównego. CKAN: nie rozpoznaje archiwum jak lokalnego pliku; deklaracja/format po U-1 steruje oceną.
+
+Źródło HTML: #tab=ckan&amp;node=O12
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-307</title><rect x="605.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff0d4" stroke="#46637f"/><text x="700.0" y="177.0" text-anchor="middle"><tspan x="700.0" dy="0">Pobierz treść linku na</tspan><tspan x="700.0" dy="15">potrzeby oceny</tspan></text></g><g class="node"><title>Oblicz ocenę według zapisanego formatu
+
+Ocena linku używa formatu z bazy, także deklaracji CKAN. PDF opisany jako CSV może dostać 3; nie tworzy to kopii pliku. JSON/XML/RDF mają analizę treści; pozostałe formaty ocenę domyślną.
+
+Źródło HTML: #tab=ckan&amp;node=O14
+
+Źródło HTML: #tab=ckan&amp;node=O14b
+
+Źródło HTML: #tab=ocena&amp;id=SECTION-ocena-6</title><rect x="850.0" y="130.0" width="200.0" height="100.0" rx="8" fill="#fff0d4" stroke="#46637f"/><text x="950.0" y="226.0" text-anchor="middle" font-weight="bold">⊞</text><text x="950.0" y="177.0" text-anchor="middle"><tspan x="950.0" dy="0">Oblicz ocenę według</tspan><tspan x="950.0" dy="15">zapisanego formatu</tspan></text></g></svg>

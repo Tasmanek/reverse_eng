@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="142.0 65.0 1406.0 265.0" role="img" aria-label="Sprawdź każdy pakiet i jego zasoby"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="142.0" y="65.0" width="1406.0" height="265.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 600.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="800.0,180.0 855.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1045.0,180.0 1105.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1295.0,180.0 1432.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Kolejny pakiet
+Źródło HTML: #tab=ckan&amp;node=K5</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Kolejny pakiet</tspan></text></g><g class="node"><title>Sprawdź id, title i zagnieżdżoną instytucję
+id wymagany ≤36; title wymagany; organization i organization.title wymagane. Walidacja struktury instytucji. Nie wymuszamy UUID tutaj: błąd zapisu UUID opisano w U-15.
+
+Źródło HTML: #tab=ckan&amp;node=K5
+
+Źródło HTML: #tab=katalog&amp;id=CS-01</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Sprawdź id, title i</tspan><tspan x="450.0" dy="15">zagnieżdżoną instytucję</tspan></text></g><g class="node"><title>Sprawdź każdy zasób pakietu
+Źródło HTML: #tab=ckan&amp;node=K6
+
+Źródło HTML: #tab=ckan&amp;node=K7
+
+Źródło HTML: #tab=ckan&amp;node=K11
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-108
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-112</title><rect x="600.0" y="130.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="226.0" text-anchor="middle" font-weight="bold">⊞</text><text x="700.0" y="184.0" text-anchor="middle"><tspan x="700.0" dy="0">Sprawdź każdy zasób pakietu</tspan></text></g><g class="node"><title>Przekaż format ze wspólnego kontekstu — U-1
+Gdy context[format] istnieje, post_load nadpisuje także wcześniej zadeklarowane formaty zasobów bieżącego zbioru i kolejnych zbiorów. Wcześniej zakończone zbiory nie są retrospektywnie zmieniane; test F.
+
+Źródło HTML: #tab=ckan&amp;node=K11
+
+Źródło HTML: #tab=cmp&amp;id=U-1
+
+Źródło HTML: #tab=pelne&amp;id=T-F
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-112</title><rect x="855.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="950.0" y="177.0" text-anchor="middle"><tspan x="950.0" dy="0">Przekaż format ze wspólnego</tspan><tspan x="950.0" dy="15">kontekstu — U-1</tspan></text></g><g class="node"><title>Zbierz błędy pakietu i zasobów
+Źródło HTML: #tab=ckan&amp;node=KERR
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-113</title><rect x="1105.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="177.0" text-anchor="middle"><tspan x="1200.0" dy="0">Zbierz błędy pakietu i</tspan><tspan x="1200.0" dy="15">zasobów</tspan></text></g><g class="node"><title>Przejdź do następnego pakietu
+Źródło HTML: #tab=ckan&amp;node=KNEXT</title><circle cx="1450.0" cy="180.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1450.0" y="215.0" text-anchor="middle"><tspan x="1450.0" dy="0">Przejdź do następnego</tspan><tspan x="1450.0" dy="15">pakietu</tspan></text></g></svg>

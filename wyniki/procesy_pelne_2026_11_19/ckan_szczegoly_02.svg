@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60.0 -45.0 1988.0 560.0" role="img" aria-label="Skonfiguruj źródło CKAN"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="60.0" y="-45.0" width="1988.0" height="560.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 605.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="795.0,180.0 923.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="977.0,180.0 1071.0,180.0 1071.0,300.0 950.0,300.0 950.0,325.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1076.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1045.0,370.0 1182.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="977.0,180.0 1105.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1046.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1295.0,180.0 1423.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1477.0,180.0 1571.0,180.0 1571.0,300.0 1450.0,300.0 1450.0,325.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1576.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1355.0,370.0 1218.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1477.0,180.0 1605.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1546.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1795.0,180.0 1932.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Otwarty formularz
+Źródło HTML: #tab=ckan&amp;node=A1
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-03</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Otwarty formularz</tspan></text></g><g class="node"><title>Wprowadź adresy, aktywność i częstotliwość
+Nazwa, opis, typ, status, częstotliwość i poprawna niepusta lista e-maili. XML: instytucja i xml_url. CKAN: portal_url, api_url, kategorie, zasady i typ nowych instytucji. E-maile służą komentarzom, nie raportom importu.
+
+Źródło HTML: #tab=ckan&amp;node=A1
+
+Źródło HTML: #tab=pola&amp;id=SECTION-pola-5
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-03</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Wprowadź adresy, aktywność</tspan><tspan x="450.0" dy="15">i częstotliwość</tspan></text></g><g class="node"><title>Sprawdź wymagane pola formularza
+Źródło HTML: #tab=ckan&amp;node=A1
+
+Źródło HTML: #tab=katalog&amp;id=ADM-01
+
+Źródło HTML: #tab=katalog&amp;id=ADM-04
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-03</title><rect x="605.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="177.0" text-anchor="middle"><tspan x="700.0" dy="0">Sprawdź wymagane pola</tspan><tspan x="700.0" dy="15">formularza</tspan></text></g><g class="node"><title>Pola poprawne?
+Źródło HTML: #tab=ckan&amp;node=A1
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-03</title><polygon points="950.0,153.0 977.0,180.0 950.0,207.0 923.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="185.0" text-anchor="middle">×</text><text x="950.0" y="141.0" text-anchor="middle"><tspan x="950.0" dy="0">Pola poprawne?</tspan></text></g><g class="node"><title>Pokaż błędy pól; nie zapisuj
+Źródło HTML: #tab=katalog&amp;id=ADM-01
+
+Źródło HTML: #tab=katalog&amp;id=ADM-04</title><rect x="855.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="950.0" y="367.0" text-anchor="middle"><tspan x="950.0" dy="0">Pokaż błędy pól; nie</tspan><tspan x="950.0" dy="15">zapisuj</tspan></text></g><g class="node"><title>Konfiguracja odrzucona
+Źródło HTML: #tab=ckan&amp;node=AERR
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-05</title><circle cx="1200.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1200.0" y="405.0" text-anchor="middle"><tspan x="1200.0" dy="0">Konfiguracja odrzucona</tspan></text></g><g class="node"><title>Wywołaj GET API i sprawdź odpowiedź
+Przy zapisie tylko response.ok oraz Content-Type zawierający application/json. Bez walidacji struktury JSON i zasobów.
+
+Źródło HTML: #tab=ckan&amp;node=A1
+
+Źródło HTML: #tab=katalog&amp;id=ADM-02
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-03</title><rect x="1105.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="177.0" text-anchor="middle"><tspan x="1200.0" dy="0">Wywołaj GET API i sprawdź</tspan><tspan x="1200.0" dy="15">odpowiedź</tspan></text></g><g class="node"><title>HTTP OK i application/json?
+Źródło HTML: #tab=katalog&amp;id=ADM-02</title><polygon points="1450.0,153.0 1477.0,180.0 1450.0,207.0 1423.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="1450.0" y="185.0" text-anchor="middle">×</text><text x="1450.0" y="141.0" text-anchor="middle"><tspan x="1450.0" dy="0">HTTP OK i application/json?</tspan></text></g><g class="node"><title>Pokaż „Niedostępne API!”
+Źródło HTML: #tab=katalog&amp;id=ADM-02</title><rect x="1355.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1450.0" y="374.0" text-anchor="middle"><tspan x="1450.0" dy="0">Pokaż „Niedostępne API!”</tspan></text></g><g class="node"><title>Zapisz ustawienia źródła
+XML: zapis bez obowiązkowego pobrania i walidacji wykazu. ONE_DATASOURCE_PER_ORGANIZATION=False w opisanej konfiguracji. source_hash z walidacji panelu nie służy do pomijania importu.
+
+Źródło HTML: #tab=ckan&amp;node=A9
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-06</title><rect x="1605.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1700.0" y="184.0" text-anchor="middle"><tspan x="1700.0" dy="0">Zapisz ustawienia źródła</tspan></text></g><g class="node"><title>Konfiguracja zapisana
+Źródło HTML: #tab=ckan&amp;node=A9
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-06</title><circle cx="1950.0" cy="180.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1950.0" y="215.0" text-anchor="middle"><tspan x="1950.0" dy="0">Konfiguracja zapisana</tspan></text></g><g class="node"><title>Formularz i ewentualne kontrole; nie jest to import danych.
+</title><text x="1034.0" y="36.0" text-anchor="middle"><tspan x="1034.0" dy="0">Formularz i ewentualne kontrole; nie jest to import danych.</tspan></text></g></svg>

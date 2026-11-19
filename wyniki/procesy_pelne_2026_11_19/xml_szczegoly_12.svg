@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="142.0 65.0 2406.0 455.0" role="img" aria-label="Zapisz przyjęte zbiory, zasoby i skutki publikacji"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="142.0" y="65.0" width="2406.0" height="455.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 605.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="795.0,180.0 923.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="977.0,180.0 1105.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1046.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1295.0,180.0 1350.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1550.0,180.0 1575.0,180.0 1575.0,318.0 1450.0,318.0 1450.0,343.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="977.0,180.0 1074.0,180.0 1074.0,370.0 1423.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1079.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie — brak save pól zbioru</text><polyline points="1477.0,370.0 1605.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1795.0,370.0 1850.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2050.0,370.0 2100.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2300.0,370.0 2432.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Kolejny przyjęty zbiór
+Źródło HTML: #tab=xml&amp;node=B10</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Kolejny przyjęty zbiór</tspan></text></g><g class="node"><title>Dopasuj zbiór po identyfikatorze
+XML: intIdent wskazuje istniejący zbiór; bez niego ext_ident + źródło. CKAN: id → ext_ident + źródło. Zmiana zewnętrznego identyfikatora może utworzyć nowy rekord i wycofać stary. Trwale usunięty rekord nie zostaje zwyczajnie przywrócony (T-USUW).
+
+Źródło HTML: #tab=xml&amp;node=BSAVE
+
+Źródło HTML: #tab=pola&amp;id=SECTION-pola-8
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-204</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Dopasuj zbiór po</tspan><tspan x="450.0" dy="15">identyfikatorze</tspan></text></g><g class="node"><title>Przygotuj pola zbioru i status publikacji
+XML: @status draft/published, domyślnie published; pola licencji i kategorii z XML; kategorie starszych XSD mapowane.
+
+Źródło HTML: #tab=xml&amp;node=B10
+
+Źródło HTML: #tab=xml&amp;node=PB1</title><rect x="605.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="177.0" text-anchor="middle"><tspan x="700.0" dy="0">Przygotuj pola zbioru i</tspan><tspan x="700.0" dy="15">status publikacji</tspan></text></g><g class="node"><title>Zbiór nowy lub zmieniony?
+Źródło HTML: #tab=xml&amp;node=B10
+
+Źródło HTML: #tab=zmiany&amp;id=ROW-zmiany-019</title><polygon points="950.0,153.0 977.0,180.0 950.0,207.0 923.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="185.0" text-anchor="middle">×</text><text x="950.0" y="141.0" text-anchor="middle"><tspan x="950.0" dy="0">Zbiór nowy lub zmieniony?</tspan></text></g><g class="node"><title>Utwórz lub zapisz zmiany zbioru
+Źródło HTML: #tab=xml&amp;node=BSAVE
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-204</title><rect x="1105.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="177.0" text-anchor="middle"><tspan x="1200.0" dy="0">Utwórz lub zapisz zmiany</tspan><tspan x="1200.0" dy="15">zbioru</tspan></text></g><g class="node"><title>Obsłuż stan publikacji zbioru
+Źródło HTML: #tab=xml&amp;node=PB2
+
+Źródło HTML: #tab=xml&amp;node=PB3
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-207
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-12</title><rect x="1350.0" y="130.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1450.0" y="226.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1450.0" y="177.0" text-anchor="middle"><tspan x="1450.0" dy="0">Obsłuż stan publikacji</tspan><tspan x="1450.0" dy="15">zbioru</tspan></text></g><g class="node"><title>Kontynuuj synchronizację powiązań
+Źródło HTML: #tab=xml&amp;node=B10</title><polygon points="1450.0,343.0 1477.0,370.0 1450.0,397.0 1423.0,370.0" fill="#fff0d4" stroke="#b58030"/><text x="1450.0" y="375.0" text-anchor="middle">×</text><text x="1450.0" y="318.0" text-anchor="middle"><tspan x="1450.0" dy="0">Kontynuuj synchronizację</tspan><tspan x="1450.0" dy="15">powiązań</tspan></text></g><g class="node"><title>Zastąp kategorie i tagi; obsłuż sygnały powiązań
+Listy ustawiane przez set; ich zmiana może zlecać ES/RDF nawet przy braku zapisu głównych pól. Daty źródłowe mogą być wpisywane bezpośrednim UPDATE bez sygnałów.
+
+Źródło HTML: #tab=xml&amp;node=B10
+
+Źródło HTML: #tab=scen&amp;id=SCEN-07</title><rect x="1605.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1700.0" y="367.0" text-anchor="middle"><tspan x="1700.0" dy="0">Zastąp kategorie i tagi;</tspan><tspan x="1700.0" dy="15">obsłuż sygnały powiązań</tspan></text></g><g class="node"><title>Zapisz i uzgodnij dokumenty zbioru
+Źródło HTML: #tab=xml&amp;node=BSSAVE
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-214</title><rect x="1850.0" y="320.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1950.0" y="416.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1950.0" y="367.0" text-anchor="middle"><tspan x="1950.0" dy="0">Zapisz i uzgodnij dokumenty</tspan><tspan x="1950.0" dy="15">zbioru</tspan></text></g><g class="node"><title>Utwórz lub uzgodnij każdy zasób
+Źródło HTML: #tab=xml&amp;node=BRSAVE
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-213</title><rect x="2100.0" y="320.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="2200.0" y="416.0" text-anchor="middle" font-weight="bold">⊞</text><text x="2200.0" y="367.0" text-anchor="middle"><tspan x="2200.0" dy="0">Utwórz lub uzgodnij każdy</tspan><tspan x="2200.0" dy="15">zasób</tspan></text></g><g class="node"><title>Zbiór i zasoby zapisane
+Źródło HTML: #tab=xml&amp;node=B10</title><circle cx="2450.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="2450.0" y="405.0" text-anchor="middle"><tspan x="2450.0" dy="0">Zbiór i zasoby zapisane</tspan></text></g></svg>

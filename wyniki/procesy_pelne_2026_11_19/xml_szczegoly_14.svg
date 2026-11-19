@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="142.0 70.0 906.0 255.0" role="img" aria-label="Zapisz i uzgodnij dokumenty zbioru"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="142.0" y="70.0" width="906.0" height="255.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 605.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="795.0,180.0 932.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Lista dokumentów po walidacji
+Źródło HTML: #tab=xml&amp;node=BSSAVE
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-214</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Lista dokumentów po</tspan><tspan x="200.0" dy="15">walidacji</tspan></text></g><g class="node"><title>Dopasuj po polskiej nazwie i zapisz dokumenty
+Dopasowanie po name_pl i obiekcie nadrzędnym. Dokument był pobierany i walidowany wcześniej. Zachowaj plik dokumentu i powiązanie.
+
+Źródło HTML: #tab=xml&amp;node=BSSAVE
+
+Źródło HTML: #tab=scen&amp;id=SCEN-07
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-214</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Dopasuj po polskiej nazwie</tspan><tspan x="450.0" dy="15">i zapisz dokumenty</tspan></text></g><g class="node"><title>Usuń dokumenty nieobecne w bieżącej liście
+Źródło HTML: #tab=xml&amp;node=BSSAVE
+
+Źródło HTML: #tab=scen&amp;id=SCEN-07
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-214</title><rect x="605.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="177.0" text-anchor="middle"><tspan x="700.0" dy="0">Usuń dokumenty nieobecne w</tspan><tspan x="700.0" dy="15">bieżącej liście</tspan></text></g><g class="node"><title>Dokumenty uzgodnione
+Źródło HTML: #tab=xml&amp;node=BSSAVE
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-214</title><circle cx="950.0" cy="180.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="950.0" y="215.0" text-anchor="middle"><tspan x="950.0" dy="0">Dokumenty uzgodnione</tspan></text></g></svg>

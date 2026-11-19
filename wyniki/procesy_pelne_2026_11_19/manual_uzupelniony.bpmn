@@ -1,0 +1,1125 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="VIEW_manual" targetNamespace="urn:mcod:as-is:2026-11-19" exporter="Lokalna analiza kodu" exporterVersion="2.0">
+  <bpmn:collaboration id="VIEW_manual_coll" name="3. Ręczne dodanie — plik lub URL, ocena i konwersje">
+    <bpmn:participant id="manual_form_pool" name="PANEL ADMINISTRACYJNY — formularz i zapis" processRef="manual_form" />
+    <bpmn:participant id="manual_dispatch_pool" name="ZAPIS ZASOBU — decyzja o przygotowaniu; zlecenie po zatwierdzeniu transakcji" processRef="manual_dispatch" />
+    <bpmn:messageFlow id="manual_flow_128" sourceRef="manual_save" targetRef="manual_dispatchstart" />
+    <bpmn:participant id="manual_prep_url_pool" name="PRZYGOTOWANIE W TLE — URL zasobu" processRef="manual_prep_url" />
+    <bpmn:messageFlow id="manual_flow_387" sourceRef="manual_prepsend" targetRef="manual_url_start" name="URL" />
+    <bpmn:participant id="manual_prep_upload_pool" name="PRZYGOTOWANIE W TLE — plik z dysku" processRef="manual_prep_upload" />
+    <bpmn:messageFlow id="manual_flow_591" sourceRef="manual_uploadsend" targetRef="manual_upload_start" name="Upload" />
+    <bpmn:participant id="manual_conversion_pool" name="PLIKI POCHODNE W TLE — wspólny algorytm XML i ręcznego dodania" processRef="manual_conversion" />
+    <bpmn:messageFlow id="manual_flow_746" sourceRef="manual_url_derive" targetRef="manual_convstart" />
+    <bpmn:messageFlow id="manual_flow_754" sourceRef="manual_upload_derive" targetRef="manual_convstart" />
+    <bpmn:participant id="manual_archive_pool" name="PACZKA PLIKÓW ZBIORU — niezależne zadanie" processRef="manual_archive" />
+    <bpmn:messageFlow id="manual_flow_825" sourceRef="manual_archsend" targetRef="manual_archstart" />
+    <bpmn:participant id="manual_publication_pool" name="PUBLIKACJA W TLE — osobne zadania zależne od zdarzenia zapisu / oceny" processRef="manual_publication" />
+    <bpmn:messageFlow id="manual_flow_863" sourceRef="manual_save" targetRef="manual_pubstart" name="Według zdarzenia zapisu" />
+    <bpmn:messageFlow id="manual_flow_871" sourceRef="manual_url_refresh" targetRef="manual_pubstart" name="ES/RDF" />
+    <bpmn:messageFlow id="manual_flow_879" sourceRef="manual_upload_refresh" targetRef="manual_pubstart" name="ES/RDF" />
+    <bpmn:messageFlow id="manual_flow_887" sourceRef="manual_convrefresh" targetRef="manual_pubstart" name="ES/RDF" />
+  </bpmn:collaboration>
+  <bpmndi:BPMNDiagram id="VIEW_manual_diagram" name="3. Ręczne dodanie — plik lub URL, ocena i konwersje">
+    <bpmndi:BPMNPlane id="VIEW_manual_plane" bpmnElement="VIEW_manual_coll">
+      <bpmndi:BPMNShape id="manual_form_pool_di" bpmnElement="manual_form_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="70" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_formstart_di" bpmnElement="manual_formstart">
+        <dc:Bounds x="110" y="135" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_form_input_di" bpmnElement="manual_form_input">
+        <dc:Bounds x="350" y="135" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_formvalidation_di" bpmnElement="manual_formvalidation">
+        <dc:Bounds x="590" y="135" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_formok_di" bpmnElement="manual_formok">
+        <dc:Bounds x="830" y="135" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_fix_di" bpmnElement="manual_fix">
+        <dc:Bounds x="830" y="240" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_save_di" bpmnElement="manual_save">
+        <dc:Bounds x="1070" y="135" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_formend_di" bpmnElement="manual_formend">
+        <dc:Bounds x="1310" y="135" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="manual_flow_30_di" bpmnElement="manual_flow_30">
+        <di:waypoint x="1260" y="173.0" />
+        <di:waypoint x="1285.0" y="173.0" />
+        <di:waypoint x="1285.0" y="157.0" />
+        <di:waypoint x="1310" y="157.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_38_di" bpmnElement="manual_flow_38">
+        <di:waypoint x="154" y="157.0" />
+        <di:waypoint x="252.0" y="157.0" />
+        <di:waypoint x="252.0" y="173.0" />
+        <di:waypoint x="350" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_46_di" bpmnElement="manual_flow_46">
+        <di:waypoint x="540" y="173.0" />
+        <di:waypoint x="590" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_52_di" bpmnElement="manual_flow_52">
+        <di:waypoint x="780" y="173.0" />
+        <di:waypoint x="805.0" y="173.0" />
+        <di:waypoint x="805.0" y="164.0" />
+        <di:waypoint x="830" y="164.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_60_di" bpmnElement="manual_flow_60">
+        <di:waypoint x="888" y="164.0" />
+        <di:waypoint x="903" y="164.0" />
+        <di:waypoint x="903" y="338" />
+        <di:waypoint x="815" y="338" />
+        <di:waypoint x="815" y="278.0" />
+        <di:waypoint x="830" y="278.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_70_di" bpmnElement="manual_flow_70">
+        <di:waypoint x="1020" y="278.0" />
+        <di:waypoint x="1035" y="278.0" />
+        <di:waypoint x="1035" y="338" />
+        <di:waypoint x="335" y="338" />
+        <di:waypoint x="335" y="173.0" />
+        <di:waypoint x="350" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_80_di" bpmnElement="manual_flow_80">
+        <di:waypoint x="888" y="164.0" />
+        <di:waypoint x="979.0" y="164.0" />
+        <di:waypoint x="979.0" y="173.0" />
+        <di:waypoint x="1070" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="manual_dispatch_pool_di" bpmnElement="manual_dispatch_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="370" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_dispatchstart_di" bpmnElement="manual_dispatchstart">
+        <dc:Bounds x="110" y="435" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_condition_di" bpmnElement="manual_condition">
+        <dc:Bounds x="350" y="435" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_prepsend_di" bpmnElement="manual_prepsend">
+        <dc:Bounds x="830" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_dispatchend_di" bpmnElement="manual_dispatchend">
+        <dc:Bounds x="1310" y="435" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="manual_flow_104_di" bpmnElement="manual_flow_104">
+        <di:waypoint x="154" y="457.0" />
+        <di:waypoint x="252.0" y="457.0" />
+        <di:waypoint x="252.0" y="464.0" />
+        <di:waypoint x="350" y="464.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_112_di" bpmnElement="manual_flow_112">
+        <di:waypoint x="379.0" y="493" />
+        <di:waypoint x="379.0" y="532" />
+        <di:waypoint x="1332.0" y="532" />
+        <di:waypoint x="1332.0" y="479" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_120_di" bpmnElement="manual_flow_120">
+        <di:waypoint x="925.0" y="511" />
+        <di:waypoint x="925.0" y="520" />
+        <di:waypoint x="1332.0" y="520" />
+        <di:waypoint x="1332.0" y="479" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_128_di" bpmnElement="manual_flow_128">
+        <di:waypoint x="1165.0" y="211" />
+        <di:waypoint x="1165.0" y="360" />
+        <di:waypoint x="3908" y="360" />
+        <di:waypoint x="3908" y="412" />
+        <di:waypoint x="132.0" y="412" />
+        <di:waypoint x="132.0" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="manual_inputchoice_di" bpmnElement="manual_inputchoice">
+        <dc:Bounds x="590" y="435" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_uploadsend_di" bpmnElement="manual_uploadsend">
+        <dc:Bounds x="830" y="540" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="manual_flow_142_di" bpmnElement="manual_flow_142">
+        <di:waypoint x="408" y="464.0" />
+        <di:waypoint x="590" y="464.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_148_di" bpmnElement="manual_flow_148">
+        <di:waypoint x="648" y="464.0" />
+        <di:waypoint x="739.0" y="464.0" />
+        <di:waypoint x="739.0" y="473.0" />
+        <di:waypoint x="830" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_156_di" bpmnElement="manual_flow_156">
+        <di:waypoint x="648" y="464.0" />
+        <di:waypoint x="739.0" y="464.0" />
+        <di:waypoint x="739.0" y="578.0" />
+        <di:waypoint x="830" y="578.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_164_di" bpmnElement="manual_flow_164">
+        <di:waypoint x="1020" y="578.0" />
+        <di:waypoint x="1165.0" y="578.0" />
+        <di:waypoint x="1165.0" y="457.0" />
+        <di:waypoint x="1310" y="457.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="manual_prep_url_pool_di" bpmnElement="manual_prep_url_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="670" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_start_di" bpmnElement="manual_url_start">
+        <dc:Bounds x="110" y="735" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_src_di" bpmnElement="manual_url_src">
+        <dc:Bounds x="350" y="735" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_need_di" bpmnElement="manual_url_need">
+        <dc:Bounds x="590" y="735" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_file_di" bpmnElement="manual_url_file">
+        <dc:Bounds x="830" y="735" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_fileok_di" bpmnElement="manual_url_fileok">
+        <dc:Bounds x="1070" y="735" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_eligible_di" bpmnElement="manual_url_eligible">
+        <dc:Bounds x="1310" y="735" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_data_di" bpmnElement="manual_url_data">
+        <dc:Bounds x="1550" y="735" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_indexed_di" bpmnElement="manual_url_indexed">
+        <dc:Bounds x="1790" y="735" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_derive_di" bpmnElement="manual_url_derive">
+        <dc:Bounds x="2030" y="735" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_score_di" bpmnElement="manual_url_score">
+        <dc:Bounds x="2270" y="735" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_date_di" bpmnElement="manual_url_date">
+        <dc:Bounds x="2510" y="735" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_ok_di" bpmnElement="manual_url_ok">
+        <dc:Bounds x="2750" y="735" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_pub_di" bpmnElement="manual_url_pub">
+        <dc:Bounds x="2990" y="735" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_refresh_di" bpmnElement="manual_url_refresh">
+        <dc:Bounds x="3230" y="735" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_end_di" bpmnElement="manual_url_end">
+        <dc:Bounds x="3470" y="735" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_url_problem_di" bpmnElement="manual_url_problem">
+        <dc:Bounds x="2990" y="840" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="manual_flow_225_di" bpmnElement="manual_flow_225">
+        <di:waypoint x="154" y="757.0" />
+        <di:waypoint x="252.0" y="757.0" />
+        <di:waypoint x="252.0" y="773.0" />
+        <di:waypoint x="350" y="773.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_233_di" bpmnElement="manual_flow_233">
+        <di:waypoint x="540" y="773.0" />
+        <di:waypoint x="565.0" y="773.0" />
+        <di:waypoint x="565.0" y="764.0" />
+        <di:waypoint x="590" y="764.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_241_di" bpmnElement="manual_flow_241">
+        <di:waypoint x="648" y="764.0" />
+        <di:waypoint x="739.0" y="764.0" />
+        <di:waypoint x="739.0" y="773.0" />
+        <di:waypoint x="830" y="773.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_249_di" bpmnElement="manual_flow_249">
+        <di:waypoint x="619.0" y="793" />
+        <di:waypoint x="619.0" y="826" />
+        <di:waypoint x="2365.0" y="826" />
+        <di:waypoint x="2365.0" y="811" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_257_di" bpmnElement="manual_flow_257">
+        <di:waypoint x="1020" y="773.0" />
+        <di:waypoint x="1045.0" y="773.0" />
+        <di:waypoint x="1045.0" y="764.0" />
+        <di:waypoint x="1070" y="764.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_265_di" bpmnElement="manual_flow_265">
+        <di:waypoint x="1128" y="764.0" />
+        <di:waypoint x="1310" y="764.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_271_di" bpmnElement="manual_flow_271">
+        <di:waypoint x="1099.0" y="793" />
+        <di:waypoint x="1099.0" y="826" />
+        <di:waypoint x="2365.0" y="826" />
+        <di:waypoint x="2365.0" y="811" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_279_di" bpmnElement="manual_flow_279">
+        <di:waypoint x="1368" y="764.0" />
+        <di:waypoint x="1459.0" y="764.0" />
+        <di:waypoint x="1459.0" y="773.0" />
+        <di:waypoint x="1550" y="773.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_287_di" bpmnElement="manual_flow_287">
+        <di:waypoint x="1339.0" y="793" />
+        <di:waypoint x="1339.0" y="820" />
+        <di:waypoint x="2365.0" y="820" />
+        <di:waypoint x="2365.0" y="811" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_295_di" bpmnElement="manual_flow_295">
+        <di:waypoint x="1740" y="773.0" />
+        <di:waypoint x="1765.0" y="773.0" />
+        <di:waypoint x="1765.0" y="764.0" />
+        <di:waypoint x="1790" y="764.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_303_di" bpmnElement="manual_flow_303">
+        <di:waypoint x="1848" y="764.0" />
+        <di:waypoint x="1939.0" y="764.0" />
+        <di:waypoint x="1939.0" y="773.0" />
+        <di:waypoint x="2030" y="773.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_311_di" bpmnElement="manual_flow_311">
+        <di:waypoint x="1819.0" y="793" />
+        <di:waypoint x="1819.0" y="820" />
+        <di:waypoint x="2365.0" y="820" />
+        <di:waypoint x="2365.0" y="811" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_319_di" bpmnElement="manual_flow_319">
+        <di:waypoint x="2220" y="773.0" />
+        <di:waypoint x="2270" y="773.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_325_di" bpmnElement="manual_flow_325">
+        <di:waypoint x="2460" y="773.0" />
+        <di:waypoint x="2510" y="773.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_331_di" bpmnElement="manual_flow_331">
+        <di:waypoint x="2700" y="773.0" />
+        <di:waypoint x="2725.0" y="773.0" />
+        <di:waypoint x="2725.0" y="764.0" />
+        <di:waypoint x="2750" y="764.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_339_di" bpmnElement="manual_flow_339">
+        <di:waypoint x="2808" y="764.0" />
+        <di:waypoint x="2990" y="764.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_345_di" bpmnElement="manual_flow_345">
+        <di:waypoint x="2808" y="764.0" />
+        <di:waypoint x="2899.0" y="764.0" />
+        <di:waypoint x="2899.0" y="878.0" />
+        <di:waypoint x="2990" y="878.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_353_di" bpmnElement="manual_flow_353">
+        <di:waypoint x="3048" y="764.0" />
+        <di:waypoint x="3139.0" y="764.0" />
+        <di:waypoint x="3139.0" y="773.0" />
+        <di:waypoint x="3230" y="773.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_361_di" bpmnElement="manual_flow_361">
+        <di:waypoint x="3019.0" y="793" />
+        <di:waypoint x="3019.0" y="826" />
+        <di:waypoint x="3492.0" y="826" />
+        <di:waypoint x="3492.0" y="779" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_369_di" bpmnElement="manual_flow_369">
+        <di:waypoint x="3420" y="773.0" />
+        <di:waypoint x="3445.0" y="773.0" />
+        <di:waypoint x="3445.0" y="757.0" />
+        <di:waypoint x="3470" y="757.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_377_di" bpmnElement="manual_flow_377">
+        <di:waypoint x="3180" y="878.0" />
+        <di:waypoint x="3325.0" y="878.0" />
+        <di:waypoint x="3325.0" y="757.0" />
+        <di:waypoint x="3470" y="757.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_387_di" bpmnElement="manual_flow_387">
+        <di:waypoint x="925.0" y="511" />
+        <di:waypoint x="925.0" y="660" />
+        <di:waypoint x="3926" y="660" />
+        <di:waypoint x="3926" y="712" />
+        <di:waypoint x="132.0" y="712" />
+        <di:waypoint x="132.0" y="735" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="manual_prep_upload_pool_di" bpmnElement="manual_prep_upload_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="970" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_start_di" bpmnElement="manual_upload_start">
+        <dc:Bounds x="110" y="1035" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_src_di" bpmnElement="manual_upload_src">
+        <dc:Bounds x="350" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_file_di" bpmnElement="manual_upload_file">
+        <dc:Bounds x="830" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_fileok_di" bpmnElement="manual_upload_fileok">
+        <dc:Bounds x="1070" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_eligible_di" bpmnElement="manual_upload_eligible">
+        <dc:Bounds x="1310" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_data_di" bpmnElement="manual_upload_data">
+        <dc:Bounds x="1550" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_indexed_di" bpmnElement="manual_upload_indexed">
+        <dc:Bounds x="1790" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_derive_di" bpmnElement="manual_upload_derive">
+        <dc:Bounds x="2030" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_score_di" bpmnElement="manual_upload_score">
+        <dc:Bounds x="2270" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_date_di" bpmnElement="manual_upload_date">
+        <dc:Bounds x="2510" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_ok_di" bpmnElement="manual_upload_ok">
+        <dc:Bounds x="2750" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_pub_di" bpmnElement="manual_upload_pub">
+        <dc:Bounds x="2990" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_refresh_di" bpmnElement="manual_upload_refresh">
+        <dc:Bounds x="3230" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_end_di" bpmnElement="manual_upload_end">
+        <dc:Bounds x="3470" y="1035" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_upload_problem_di" bpmnElement="manual_upload_problem">
+        <dc:Bounds x="2990" y="1140" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="manual_flow_444_di" bpmnElement="manual_flow_444">
+        <di:waypoint x="154" y="1057.0" />
+        <di:waypoint x="252.0" y="1057.0" />
+        <di:waypoint x="252.0" y="1073.0" />
+        <di:waypoint x="350" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_452_di" bpmnElement="manual_flow_452">
+        <di:waypoint x="445.0" y="1111" />
+        <di:waypoint x="445.0" y="1132" />
+        <di:waypoint x="925.0" y="1132" />
+        <di:waypoint x="925.0" y="1111" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_460_di" bpmnElement="manual_flow_460">
+        <di:waypoint x="1020" y="1073.0" />
+        <di:waypoint x="1045.0" y="1073.0" />
+        <di:waypoint x="1045.0" y="1064.0" />
+        <di:waypoint x="1070" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_468_di" bpmnElement="manual_flow_468">
+        <di:waypoint x="1128" y="1064.0" />
+        <di:waypoint x="1310" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_474_di" bpmnElement="manual_flow_474">
+        <di:waypoint x="1099.0" y="1093" />
+        <di:waypoint x="1099.0" y="1132" />
+        <di:waypoint x="2365.0" y="1132" />
+        <di:waypoint x="2365.0" y="1111" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_482_di" bpmnElement="manual_flow_482">
+        <di:waypoint x="1368" y="1064.0" />
+        <di:waypoint x="1459.0" y="1064.0" />
+        <di:waypoint x="1459.0" y="1073.0" />
+        <di:waypoint x="1550" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_490_di" bpmnElement="manual_flow_490">
+        <di:waypoint x="1339.0" y="1093" />
+        <di:waypoint x="1339.0" y="1126" />
+        <di:waypoint x="2365.0" y="1126" />
+        <di:waypoint x="2365.0" y="1111" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_498_di" bpmnElement="manual_flow_498">
+        <di:waypoint x="1740" y="1073.0" />
+        <di:waypoint x="1765.0" y="1073.0" />
+        <di:waypoint x="1765.0" y="1064.0" />
+        <di:waypoint x="1790" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_506_di" bpmnElement="manual_flow_506">
+        <di:waypoint x="1848" y="1064.0" />
+        <di:waypoint x="1939.0" y="1064.0" />
+        <di:waypoint x="1939.0" y="1073.0" />
+        <di:waypoint x="2030" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_514_di" bpmnElement="manual_flow_514">
+        <di:waypoint x="1819.0" y="1093" />
+        <di:waypoint x="1819.0" y="1126" />
+        <di:waypoint x="2365.0" y="1126" />
+        <di:waypoint x="2365.0" y="1111" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_522_di" bpmnElement="manual_flow_522">
+        <di:waypoint x="2220" y="1073.0" />
+        <di:waypoint x="2270" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_528_di" bpmnElement="manual_flow_528">
+        <di:waypoint x="2460" y="1073.0" />
+        <di:waypoint x="2510" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_534_di" bpmnElement="manual_flow_534">
+        <di:waypoint x="2700" y="1073.0" />
+        <di:waypoint x="2725.0" y="1073.0" />
+        <di:waypoint x="2725.0" y="1064.0" />
+        <di:waypoint x="2750" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_542_di" bpmnElement="manual_flow_542">
+        <di:waypoint x="2808" y="1064.0" />
+        <di:waypoint x="2990" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_548_di" bpmnElement="manual_flow_548">
+        <di:waypoint x="2808" y="1064.0" />
+        <di:waypoint x="2899.0" y="1064.0" />
+        <di:waypoint x="2899.0" y="1178.0" />
+        <di:waypoint x="2990" y="1178.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_556_di" bpmnElement="manual_flow_556">
+        <di:waypoint x="3048" y="1064.0" />
+        <di:waypoint x="3139.0" y="1064.0" />
+        <di:waypoint x="3139.0" y="1073.0" />
+        <di:waypoint x="3230" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_564_di" bpmnElement="manual_flow_564">
+        <di:waypoint x="3019.0" y="1093" />
+        <di:waypoint x="3019.0" y="1132" />
+        <di:waypoint x="3492.0" y="1132" />
+        <di:waypoint x="3492.0" y="1079" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_572_di" bpmnElement="manual_flow_572">
+        <di:waypoint x="3420" y="1073.0" />
+        <di:waypoint x="3445.0" y="1073.0" />
+        <di:waypoint x="3445.0" y="1057.0" />
+        <di:waypoint x="3470" y="1057.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_580_di" bpmnElement="manual_flow_580">
+        <di:waypoint x="3180" y="1178.0" />
+        <di:waypoint x="3325.0" y="1178.0" />
+        <di:waypoint x="3325.0" y="1057.0" />
+        <di:waypoint x="3470" y="1057.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_591_di" bpmnElement="manual_flow_591">
+        <di:waypoint x="925.0" y="616" />
+        <di:waypoint x="925.0" y="660" />
+        <di:waypoint x="3944" y="660" />
+        <di:waypoint x="3944" y="1012" />
+        <di:waypoint x="132.0" y="1012" />
+        <di:waypoint x="132.0" y="1035" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="manual_conversion_pool_di" bpmnElement="manual_conversion_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="1270" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_convstart_di" bpmnElement="manual_convstart">
+        <dc:Bounds x="110" y="1335" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_xls_di" bpmnElement="manual_xls">
+        <dc:Bounds x="350" y="1335" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_csv_di" bpmnElement="manual_csv">
+        <dc:Bounds x="590" y="1335" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_csvavailable_di" bpmnElement="manual_csvavailable">
+        <dc:Bounds x="830" y="1335" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_jsonld_di" bpmnElement="manual_jsonld">
+        <dc:Bounds x="1070" y="1335" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_archsend_di" bpmnElement="manual_archsend">
+        <dc:Bounds x="1310" y="1335" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_created_di" bpmnElement="manual_created">
+        <dc:Bounds x="1550" y="1335" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_rescore_di" bpmnElement="manual_rescore">
+        <dc:Bounds x="1790" y="1335" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_convpub_di" bpmnElement="manual_convpub">
+        <dc:Bounds x="2030" y="1335" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_convrefresh_di" bpmnElement="manual_convrefresh">
+        <dc:Bounds x="2270" y="1335" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_convend_di" bpmnElement="manual_convend">
+        <dc:Bounds x="2510" y="1335" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="manual_flow_636_di" bpmnElement="manual_flow_636">
+        <di:waypoint x="154" y="1357.0" />
+        <di:waypoint x="252.0" y="1357.0" />
+        <di:waypoint x="252.0" y="1364.0" />
+        <di:waypoint x="350" y="1364.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_644_di" bpmnElement="manual_flow_644">
+        <di:waypoint x="408" y="1364.0" />
+        <di:waypoint x="499.0" y="1364.0" />
+        <di:waypoint x="499.0" y="1373.0" />
+        <di:waypoint x="590" y="1373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_652_di" bpmnElement="manual_flow_652">
+        <di:waypoint x="379.0" y="1393" />
+        <di:waypoint x="379.0" y="1420" />
+        <di:waypoint x="859.0" y="1420" />
+        <di:waypoint x="859.0" y="1393" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_660_di" bpmnElement="manual_flow_660">
+        <di:waypoint x="780" y="1373.0" />
+        <di:waypoint x="805.0" y="1373.0" />
+        <di:waypoint x="805.0" y="1364.0" />
+        <di:waypoint x="830" y="1364.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_668_di" bpmnElement="manual_flow_668">
+        <di:waypoint x="888" y="1364.0" />
+        <di:waypoint x="979.0" y="1364.0" />
+        <di:waypoint x="979.0" y="1373.0" />
+        <di:waypoint x="1070" y="1373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_676_di" bpmnElement="manual_flow_676">
+        <di:waypoint x="859.0" y="1393" />
+        <di:waypoint x="859.0" y="1420" />
+        <di:waypoint x="1405.0" y="1420" />
+        <di:waypoint x="1405.0" y="1411" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_684_di" bpmnElement="manual_flow_684">
+        <di:waypoint x="1260" y="1373.0" />
+        <di:waypoint x="1310" y="1373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_690_di" bpmnElement="manual_flow_690">
+        <di:waypoint x="1500" y="1373.0" />
+        <di:waypoint x="1525.0" y="1373.0" />
+        <di:waypoint x="1525.0" y="1364.0" />
+        <di:waypoint x="1550" y="1364.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_698_di" bpmnElement="manual_flow_698">
+        <di:waypoint x="1608" y="1364.0" />
+        <di:waypoint x="1699.0" y="1364.0" />
+        <di:waypoint x="1699.0" y="1373.0" />
+        <di:waypoint x="1790" y="1373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_706_di" bpmnElement="manual_flow_706">
+        <di:waypoint x="1579.0" y="1393" />
+        <di:waypoint x="1579.0" y="1426" />
+        <di:waypoint x="2532.0" y="1426" />
+        <di:waypoint x="2532.0" y="1379" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_714_di" bpmnElement="manual_flow_714">
+        <di:waypoint x="1980" y="1373.0" />
+        <di:waypoint x="2005.0" y="1373.0" />
+        <di:waypoint x="2005.0" y="1364.0" />
+        <di:waypoint x="2030" y="1364.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_722_di" bpmnElement="manual_flow_722">
+        <di:waypoint x="2088" y="1364.0" />
+        <di:waypoint x="2179.0" y="1364.0" />
+        <di:waypoint x="2179.0" y="1373.0" />
+        <di:waypoint x="2270" y="1373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_730_di" bpmnElement="manual_flow_730">
+        <di:waypoint x="2059.0" y="1393" />
+        <di:waypoint x="2059.0" y="1426" />
+        <di:waypoint x="2532.0" y="1426" />
+        <di:waypoint x="2532.0" y="1379" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_738_di" bpmnElement="manual_flow_738">
+        <di:waypoint x="2460" y="1373.0" />
+        <di:waypoint x="2485.0" y="1373.0" />
+        <di:waypoint x="2485.0" y="1357.0" />
+        <di:waypoint x="2510" y="1357.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_746_di" bpmnElement="manual_flow_746">
+        <di:waypoint x="2125.0" y="811" />
+        <di:waypoint x="2125.0" y="960" />
+        <di:waypoint x="3962" y="960" />
+        <di:waypoint x="3962" y="1312" />
+        <di:waypoint x="132.0" y="1312" />
+        <di:waypoint x="132.0" y="1335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_754_di" bpmnElement="manual_flow_754">
+        <di:waypoint x="2125.0" y="1111" />
+        <di:waypoint x="2125.0" y="1260" />
+        <di:waypoint x="3980" y="1260" />
+        <di:waypoint x="3980" y="1312" />
+        <di:waypoint x="132.0" y="1312" />
+        <di:waypoint x="132.0" y="1335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="manual_archive_pool_di" bpmnElement="manual_archive_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="1570" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_archstart_di" bpmnElement="manual_archstart">
+        <dc:Bounds x="110" y="1635" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_disk_di" bpmnElement="manual_disk">
+        <dc:Bounds x="350" y="1635" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_build_di" bpmnElement="manual_build">
+        <dc:Bounds x="590" y="1635" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_archend_di" bpmnElement="manual_archend">
+        <dc:Bounds x="830" y="1635" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_nospace_di" bpmnElement="manual_nospace">
+        <dc:Bounds x="350" y="1740" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="manual_flow_783_di" bpmnElement="manual_flow_783">
+        <di:waypoint x="154" y="1657.0" />
+        <di:waypoint x="252.0" y="1657.0" />
+        <di:waypoint x="252.0" y="1664.0" />
+        <di:waypoint x="350" y="1664.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_791_di" bpmnElement="manual_flow_791">
+        <di:waypoint x="408" y="1664.0" />
+        <di:waypoint x="499.0" y="1664.0" />
+        <di:waypoint x="499.0" y="1673.0" />
+        <di:waypoint x="590" y="1673.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_799_di" bpmnElement="manual_flow_799">
+        <di:waypoint x="408" y="1664.0" />
+        <di:waypoint x="423" y="1664.0" />
+        <di:waypoint x="423" y="1838" />
+        <di:waypoint x="335" y="1838" />
+        <di:waypoint x="335" y="1778.0" />
+        <di:waypoint x="350" y="1778.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_809_di" bpmnElement="manual_flow_809">
+        <di:waypoint x="540" y="1778.0" />
+        <di:waypoint x="685.0" y="1778.0" />
+        <di:waypoint x="685.0" y="1657.0" />
+        <di:waypoint x="830" y="1657.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_817_di" bpmnElement="manual_flow_817">
+        <di:waypoint x="780" y="1673.0" />
+        <di:waypoint x="805.0" y="1673.0" />
+        <di:waypoint x="805.0" y="1657.0" />
+        <di:waypoint x="830" y="1657.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_825_di" bpmnElement="manual_flow_825">
+        <di:waypoint x="1405.0" y="1411" />
+        <di:waypoint x="1405.0" y="1560" />
+        <di:waypoint x="3998" y="1560" />
+        <di:waypoint x="3998" y="1612" />
+        <di:waypoint x="132.0" y="1612" />
+        <di:waypoint x="132.0" y="1635" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="manual_publication_pool_di" bpmnElement="manual_publication_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="1870" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_pubstart_di" bpmnElement="manual_pubstart">
+        <dc:Bounds x="110" y="1935" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_pubtasks_di" bpmnElement="manual_pubtasks">
+        <dc:Bounds x="350" y="1935" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manual_pubend_di" bpmnElement="manual_pubend">
+        <dc:Bounds x="590" y="1935" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="manual_flow_846_di" bpmnElement="manual_flow_846">
+        <di:waypoint x="154" y="1957.0" />
+        <di:waypoint x="252.0" y="1957.0" />
+        <di:waypoint x="252.0" y="1973.0" />
+        <di:waypoint x="350" y="1973.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_854_di" bpmnElement="manual_flow_854">
+        <di:waypoint x="540" y="1973.0" />
+        <di:waypoint x="565.0" y="1973.0" />
+        <di:waypoint x="565.0" y="1957.0" />
+        <di:waypoint x="590" y="1957.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_863_di" bpmnElement="manual_flow_863">
+        <di:waypoint x="1165.0" y="211" />
+        <di:waypoint x="1165.0" y="360" />
+        <di:waypoint x="4016" y="360" />
+        <di:waypoint x="4016" y="1912" />
+        <di:waypoint x="132.0" y="1912" />
+        <di:waypoint x="132.0" y="1935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_871_di" bpmnElement="manual_flow_871">
+        <di:waypoint x="3325.0" y="811" />
+        <di:waypoint x="3325.0" y="960" />
+        <di:waypoint x="4034" y="960" />
+        <di:waypoint x="4034" y="1912" />
+        <di:waypoint x="132.0" y="1912" />
+        <di:waypoint x="132.0" y="1935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_879_di" bpmnElement="manual_flow_879">
+        <di:waypoint x="3325.0" y="1111" />
+        <di:waypoint x="3325.0" y="1260" />
+        <di:waypoint x="4052" y="1260" />
+        <di:waypoint x="4052" y="1912" />
+        <di:waypoint x="132.0" y="1912" />
+        <di:waypoint x="132.0" y="1935" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="manual_flow_887_di" bpmnElement="manual_flow_887">
+        <di:waypoint x="2365.0" y="1411" />
+        <di:waypoint x="2365.0" y="1560" />
+        <di:waypoint x="4070" y="1560" />
+        <di:waypoint x="4070" y="1912" />
+        <di:waypoint x="132.0" y="1912" />
+        <di:waypoint x="132.0" y="1935" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmn:documentation>AS-IS mcod 2.62.3. Pule oznaczają niezależne przebiegi; linie przerywane to zlecenia bez oczekiwania. Widok rozwinięty uzupełnia szczegółowy plik *_szczegoly.bpmn. Nie obejmuje projektowanych blokad i nowej flagi is_archive.</bpmn:documentation>
+  <bpmn:process id="manual_form" isExecutable="false" name="PANEL ADMINISTRACYJNY — formularz i zapis">
+    <bpmn:startEvent id="manual_formstart" name="Dodawanie zasobu">
+      <bpmn:outgoing>manual_flow_38</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="manual_form_input" name="Wskaż plik z dysku lub URL; uzupełnij opis i status">
+      <bpmn:incoming>manual_flow_38</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_46</bpmn:outgoing>
+      <bpmn:incoming>manual_flow_70</bpmn:incoming>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="manual_formvalidation" name="Sprawdź formularz i szczególne wymagania">
+      <bpmn:incoming>manual_flow_46</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_52</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="manual_formok" name="Formularz poprawny?">
+      <bpmn:incoming>manual_flow_52</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_60</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_80</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="manual_fix" name="Pokaż błędy; popraw formularz">
+      <bpmn:incoming>manual_flow_60</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_70</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="manual_save" name="Zapisz zasób; dla uploadu zapisz plik główny">
+      <bpmn:outgoing>manual_flow_30</bpmn:outgoing>
+      <bpmn:incoming>manual_flow_80</bpmn:incoming>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="manual_formend" name="Zapis zakończony; praca w tle może trwać">
+      <bpmn:incoming>manual_flow_30</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="manual_flow_30" sourceRef="manual_save" targetRef="manual_formend" />
+    <bpmn:sequenceFlow id="manual_flow_38" sourceRef="manual_formstart" targetRef="manual_form_input" />
+    <bpmn:sequenceFlow id="manual_flow_46" sourceRef="manual_form_input" targetRef="manual_formvalidation" />
+    <bpmn:sequenceFlow id="manual_flow_52" sourceRef="manual_formvalidation" targetRef="manual_formok" />
+    <bpmn:sequenceFlow id="manual_flow_60" sourceRef="manual_formok" targetRef="manual_fix" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_70" sourceRef="manual_fix" targetRef="manual_form_input" />
+    <bpmn:sequenceFlow id="manual_flow_80" sourceRef="manual_formok" targetRef="manual_save" name="Tak" />
+  </bpmn:process>
+  <bpmn:process id="manual_dispatch" isExecutable="false" name="ZAPIS ZASOBU — decyzja o przygotowaniu; zlecenie po zatwierdzeniu transakcji">
+    <bpmn:startEvent id="manual_dispatchstart" name="Obsługa zapisu / sygnału zasobu">
+      <bpmn:outgoing>manual_flow_104</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="manual_condition" name="Stan i zmiana wymagają przygotowania?">
+      <bpmn:incoming>manual_flow_104</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_112</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_142</bpmn:outgoing>
+      <bpmn:documentation>Zapis nie oznacza zawsze nowej oceny. Nowy opublikowany zasób / zmiana linku lub dostępności / właściwa zmiana wymuszonego typu / przywrócenie; nowy główny plik opublikowanego zasobu ma osobny sygnał. Sam opis lub format nie gwarantuje oceny. Zmiana znaków umownych ma odrębną ścieżkę. Szczegółowe warunki w modelu szczegółowym.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="manual_prepsend" name="Zleć przygotowanie URL">
+      <bpmn:outgoing>manual_flow_120</bpmn:outgoing>
+      <bpmn:incoming>manual_flow_148</bpmn:incoming>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="manual_dispatchend" name="Koniec obsługi zapisu">
+      <bpmn:incoming>manual_flow_112</bpmn:incoming>
+      <bpmn:incoming>manual_flow_120</bpmn:incoming>
+      <bpmn:incoming>manual_flow_164</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="manual_flow_104" sourceRef="manual_dispatchstart" targetRef="manual_condition" />
+    <bpmn:sequenceFlow id="manual_flow_112" sourceRef="manual_condition" targetRef="manual_dispatchend" name="Nie — m.in. nowy szkic" />
+    <bpmn:sequenceFlow id="manual_flow_120" sourceRef="manual_prepsend" targetRef="manual_dispatchend" />
+    <bpmn:exclusiveGateway id="manual_inputchoice" name="Nowy plik główny czy zewnętrzny URL?">
+      <bpmn:incoming>manual_flow_142</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_148</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_156</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="manual_uploadsend" name="Zleć kontrolę zapisanego pliku głównego">
+      <bpmn:incoming>manual_flow_156</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_164</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="manual_flow_142" sourceRef="manual_condition" targetRef="manual_inputchoice" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_148" sourceRef="manual_inputchoice" targetRef="manual_prepsend" name="URL" />
+    <bpmn:sequenceFlow id="manual_flow_156" sourceRef="manual_inputchoice" targetRef="manual_uploadsend" name="Plik" />
+    <bpmn:sequenceFlow id="manual_flow_164" sourceRef="manual_uploadsend" targetRef="manual_dispatchend" />
+  </bpmn:process>
+  <bpmn:process id="manual_prep_url" isExecutable="false" name="PRZYGOTOWANIE W TLE — URL zasobu">
+    <bpmn:startEvent id="manual_url_start" name="Odebrano zlecenie">
+      <bpmn:outgoing>manual_flow_225</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="manual_url_src" name="Sprawdź URL i rozpoznaj typ; dla pliku zapisz kopię główną">
+      <bpmn:incoming>manual_flow_225</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_233</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="manual_url_need" name="Można i trzeba kontrolować plik?">
+      <bpmn:incoming>manual_flow_233</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_241</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_249</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="manual_url_file" name="Sprawdź plik: format, MIME, kodowanie i archiwum">
+      <bpmn:incoming>manual_flow_241</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_257</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="manual_url_fileok" name="Kontrola pliku udana?">
+      <bpmn:incoming>manual_flow_257</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_265</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_271</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="manual_url_eligible" name="Dane kwalifikują się do tabeli?">
+      <bpmn:incoming>manual_flow_265</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_279</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_287</bpmn:outgoing>
+      <bpmn:documentation>Plik główny; format zasobu lub wnętrza CSV/TSV/XLS/XLSX/ODS/SHP; instytucja inna niż developer. Bez kwalifikacji pomija się dane tabeli, nie samą ocenę. success może współistnieć z failed; nie oznacza poprawności każdego wiersza.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="manual_url_data" name="Ustal schemat, sprawdź i zindeksuj dane">
+      <bpmn:incoming>manual_flow_279</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_295</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="manual_url_indexed" name="Wynik indeksacji success dodatni?">
+      <bpmn:incoming>manual_flow_295</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_303</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_311</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="manual_url_derive" name="Zleć pliki pochodne po zatwierdzeniu indeksacji">
+      <bpmn:incoming>manual_flow_303</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_319</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="manual_url_score" name="Oblicz i zapisz stopień: pliki albo link">
+      <bpmn:incoming>manual_flow_249</bpmn:incoming>
+      <bpmn:incoming>manual_flow_271</bpmn:incoming>
+      <bpmn:incoming>manual_flow_287</bpmn:incoming>
+      <bpmn:incoming>manual_flow_311</bpmn:incoming>
+      <bpmn:incoming>manual_flow_319</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_325</bpmn:outgoing>
+      <bpmn:documentation>Brak wartości formatu całego zasobu: 0. Brak pliku głównego i istniejący link: ocena linku. W przeciwnym razie maksimum ocen pliku głównego i pochodnych. Błąd obliczenia może przerwać zadanie przed nowym zapisem. Reguły archiwów i formatów są rozwinięte w szczegółach. Ocena nie stanowi blokady publikacji w obecnym kodzie.</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="manual_url_date" name="Zapisz datę weryfikacji, jeżeli żądana">
+      <bpmn:incoming>manual_flow_325</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_331</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="manual_url_ok" name="Wymagane etapy udane, bez odroczonych wyjątków?">
+      <bpmn:incoming>manual_flow_331</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_339</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_345</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="manual_url_pub" name="Nadal opublikowany i nieusunięty?">
+      <bpmn:incoming>manual_flow_339</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_353</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_361</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="manual_url_refresh" name="Zleć odświeżenie ES/RDF">
+      <bpmn:incoming>manual_flow_353</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_369</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="manual_url_end" name="Koniec zadania">
+      <bpmn:incoming>manual_flow_361</bpmn:incoming>
+      <bpmn:incoming>manual_flow_369</bpmn:incoming>
+      <bpmn:incoming>manual_flow_377</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="manual_url_problem" name="Zaloguj / zgłoś problem; bez końcowego odświeżenia">
+      <bpmn:incoming>manual_flow_345</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_377</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="manual_flow_225" sourceRef="manual_url_start" targetRef="manual_url_src" />
+    <bpmn:sequenceFlow id="manual_flow_233" sourceRef="manual_url_src" targetRef="manual_url_need" />
+    <bpmn:sequenceFlow id="manual_flow_241" sourceRef="manual_url_need" targetRef="manual_url_file" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_249" sourceRef="manual_url_need" targetRef="manual_url_score" name="Nie / brak pliku" />
+    <bpmn:sequenceFlow id="manual_flow_257" sourceRef="manual_url_file" targetRef="manual_url_fileok" />
+    <bpmn:sequenceFlow id="manual_flow_265" sourceRef="manual_url_fileok" targetRef="manual_url_eligible" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_271" sourceRef="manual_url_fileok" targetRef="manual_url_score" name="Nie — ocena dostępnego stanu" />
+    <bpmn:sequenceFlow id="manual_flow_279" sourceRef="manual_url_eligible" targetRef="manual_url_data" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_287" sourceRef="manual_url_eligible" targetRef="manual_url_score" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_295" sourceRef="manual_url_data" targetRef="manual_url_indexed" />
+    <bpmn:sequenceFlow id="manual_flow_303" sourceRef="manual_url_indexed" targetRef="manual_url_derive" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_311" sourceRef="manual_url_indexed" targetRef="manual_url_score" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_319" sourceRef="manual_url_derive" targetRef="manual_url_score" />
+    <bpmn:sequenceFlow id="manual_flow_325" sourceRef="manual_url_score" targetRef="manual_url_date" />
+    <bpmn:sequenceFlow id="manual_flow_331" sourceRef="manual_url_date" targetRef="manual_url_ok" />
+    <bpmn:sequenceFlow id="manual_flow_339" sourceRef="manual_url_ok" targetRef="manual_url_pub" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_345" sourceRef="manual_url_ok" targetRef="manual_url_problem" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_353" sourceRef="manual_url_pub" targetRef="manual_url_refresh" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_361" sourceRef="manual_url_pub" targetRef="manual_url_end" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_369" sourceRef="manual_url_refresh" targetRef="manual_url_end" />
+    <bpmn:sequenceFlow id="manual_flow_377" sourceRef="manual_url_problem" targetRef="manual_url_end" />
+  </bpmn:process>
+  <bpmn:process id="manual_prep_upload" isExecutable="false" name="PRZYGOTOWANIE W TLE — plik z dysku">
+    <bpmn:startEvent id="manual_upload_start" name="Odebrano zlecenie">
+      <bpmn:outgoing>manual_flow_444</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="manual_upload_src" name="Wczytaj zapisany plik główny">
+      <bpmn:incoming>manual_flow_444</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_452</bpmn:outgoing>
+      <bpmn:documentation>Entrypoint pliku najpierw ładuje ResourceFile i nieusunięty Resource; brak rekordu może przerwać zadanie. Po kontroli danych, przy update_link, udanej kontroli pliku i braku odroczonych błędów zapisuje wynik linku SUCCESS bez pobierania HTTP, a potem oblicza ocenę. Szczegóły w entrypoint_res_file.py.</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="manual_upload_file" name="Sprawdź plik: format, MIME, kodowanie i archiwum">
+      <bpmn:incoming>manual_flow_452</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_460</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="manual_upload_fileok" name="Kontrola pliku udana?">
+      <bpmn:incoming>manual_flow_460</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_468</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_474</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="manual_upload_eligible" name="Dane kwalifikują się do tabeli?">
+      <bpmn:incoming>manual_flow_468</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_482</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_490</bpmn:outgoing>
+      <bpmn:documentation>Plik główny; format zasobu lub wnętrza CSV/TSV/XLS/XLSX/ODS/SHP; instytucja inna niż developer. Bez kwalifikacji pomija się dane tabeli, nie samą ocenę. success może współistnieć z failed; nie oznacza poprawności każdego wiersza.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="manual_upload_data" name="Ustal schemat, sprawdź i zindeksuj dane">
+      <bpmn:incoming>manual_flow_482</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_498</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="manual_upload_indexed" name="Wynik indeksacji success dodatni?">
+      <bpmn:incoming>manual_flow_498</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_506</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_514</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="manual_upload_derive" name="Zleć pliki pochodne po zatwierdzeniu indeksacji">
+      <bpmn:incoming>manual_flow_506</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_522</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="manual_upload_score" name="Oblicz i zapisz stopień: pliki albo link">
+      <bpmn:incoming>manual_flow_474</bpmn:incoming>
+      <bpmn:incoming>manual_flow_490</bpmn:incoming>
+      <bpmn:incoming>manual_flow_514</bpmn:incoming>
+      <bpmn:incoming>manual_flow_522</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_528</bpmn:outgoing>
+      <bpmn:documentation>Brak wartości formatu całego zasobu: 0. Brak pliku głównego i istniejący link: ocena linku. W przeciwnym razie maksimum ocen pliku głównego i pochodnych. Błąd obliczenia może przerwać zadanie przed nowym zapisem. Reguły archiwów i formatów są rozwinięte w szczegółach. Ocena nie stanowi blokady publikacji w obecnym kodzie.</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="manual_upload_date" name="Zapisz datę weryfikacji, jeżeli żądana">
+      <bpmn:incoming>manual_flow_528</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_534</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="manual_upload_ok" name="Wymagane etapy udane, bez odroczonych wyjątków?">
+      <bpmn:incoming>manual_flow_534</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_542</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_548</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="manual_upload_pub" name="Nadal opublikowany i nieusunięty?">
+      <bpmn:incoming>manual_flow_542</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_556</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_564</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="manual_upload_refresh" name="Zleć odświeżenie ES/RDF">
+      <bpmn:incoming>manual_flow_556</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_572</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="manual_upload_end" name="Koniec zadania">
+      <bpmn:incoming>manual_flow_564</bpmn:incoming>
+      <bpmn:incoming>manual_flow_572</bpmn:incoming>
+      <bpmn:incoming>manual_flow_580</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="manual_upload_problem" name="Zaloguj / zgłoś problem; bez końcowego odświeżenia">
+      <bpmn:incoming>manual_flow_548</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_580</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="manual_flow_444" sourceRef="manual_upload_start" targetRef="manual_upload_src" />
+    <bpmn:sequenceFlow id="manual_flow_452" sourceRef="manual_upload_src" targetRef="manual_upload_file" />
+    <bpmn:sequenceFlow id="manual_flow_460" sourceRef="manual_upload_file" targetRef="manual_upload_fileok" />
+    <bpmn:sequenceFlow id="manual_flow_468" sourceRef="manual_upload_fileok" targetRef="manual_upload_eligible" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_474" sourceRef="manual_upload_fileok" targetRef="manual_upload_score" name="Nie — ocena dostępnego stanu" />
+    <bpmn:sequenceFlow id="manual_flow_482" sourceRef="manual_upload_eligible" targetRef="manual_upload_data" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_490" sourceRef="manual_upload_eligible" targetRef="manual_upload_score" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_498" sourceRef="manual_upload_data" targetRef="manual_upload_indexed" />
+    <bpmn:sequenceFlow id="manual_flow_506" sourceRef="manual_upload_indexed" targetRef="manual_upload_derive" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_514" sourceRef="manual_upload_indexed" targetRef="manual_upload_score" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_522" sourceRef="manual_upload_derive" targetRef="manual_upload_score" />
+    <bpmn:sequenceFlow id="manual_flow_528" sourceRef="manual_upload_score" targetRef="manual_upload_date" />
+    <bpmn:sequenceFlow id="manual_flow_534" sourceRef="manual_upload_date" targetRef="manual_upload_ok" />
+    <bpmn:sequenceFlow id="manual_flow_542" sourceRef="manual_upload_ok" targetRef="manual_upload_pub" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_548" sourceRef="manual_upload_ok" targetRef="manual_upload_problem" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_556" sourceRef="manual_upload_pub" targetRef="manual_upload_refresh" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_564" sourceRef="manual_upload_pub" targetRef="manual_upload_end" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_572" sourceRef="manual_upload_refresh" targetRef="manual_upload_end" />
+    <bpmn:sequenceFlow id="manual_flow_580" sourceRef="manual_upload_problem" targetRef="manual_upload_end" />
+  </bpmn:process>
+  <bpmn:process id="manual_conversion" isExecutable="false" name="PLIKI POCHODNE W TLE — wspólny algorytm XML i ręcznego dodania">
+    <bpmn:startEvent id="manual_convstart" name="Odebrano zlecenie konwersji">
+      <bpmn:outgoing>manual_flow_636</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="manual_xls" name="XLS/XLSX, nie linked, są dane i tabela?">
+      <bpmn:incoming>manual_flow_636</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_644</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_652</bpmn:outgoing>
+      <bpmn:documentation>XML: linked to availability=remote; ręczne: linked to zewnętrzny URL. Konwersja do CSV uwzględnia format zasobu lub wnętrza archiwum. Brak linked nie jest warunkiem próby JSON-LD z dostępnego CSV. Pierwsza ocena nie czeka na to zadanie.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="manual_csv" name="Utwórz lub odtwórz pochodny CSV UTF-8">
+      <bpmn:incoming>manual_flow_644</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_660</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="manual_csvavailable" name="Dostępny CSV do konwersji, poza archiwum?">
+      <bpmn:incoming>manual_flow_652</bpmn:incoming>
+      <bpmn:incoming>manual_flow_660</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_668</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_676</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="manual_jsonld" name="Spróbuj utworzyć / odtworzyć JSON-LD">
+      <bpmn:incoming>manual_flow_668</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_684</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="manual_archsend" name="Zleć paczkę plików zbioru z opóźnieniem">
+      <bpmn:incoming>manual_flow_676</bpmn:incoming>
+      <bpmn:incoming>manual_flow_684</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_690</bpmn:outgoing>
+      <bpmn:documentation>Kod zleca dataset.archive_files po powrocie increase_openness_score, przed warunkowym przeliczeniem oceny; także gdy nie powstał plik. Nieprzechwycony wyjątek wcześniej przerywa tę ścieżkę. Paczka plików to nie projektowana flaga archiwum.</bpmn:documentation>
+    </bpmn:sendTask>
+    <bpmn:exclusiveGateway id="manual_created" name="Powstał / odtworzono plik pochodny?">
+      <bpmn:incoming>manual_flow_690</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_698</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_706</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="manual_rescore" name="Ponownie oblicz i zapisz ocenę wszystkich plików">
+      <bpmn:incoming>manual_flow_698</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_714</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="manual_convpub" name="Nadal opublikowany i nieusunięty?">
+      <bpmn:incoming>manual_flow_714</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_722</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_730</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="manual_convrefresh" name="Zleć odświeżenie ES/RDF z nową oceną">
+      <bpmn:incoming>manual_flow_722</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_738</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="manual_convend" name="Koniec konwersji">
+      <bpmn:incoming>manual_flow_706</bpmn:incoming>
+      <bpmn:incoming>manual_flow_730</bpmn:incoming>
+      <bpmn:incoming>manual_flow_738</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="manual_flow_636" sourceRef="manual_convstart" targetRef="manual_xls" />
+    <bpmn:sequenceFlow id="manual_flow_644" sourceRef="manual_xls" targetRef="manual_csv" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_652" sourceRef="manual_xls" targetRef="manual_csvavailable" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_660" sourceRef="manual_csv" targetRef="manual_csvavailable" />
+    <bpmn:sequenceFlow id="manual_flow_668" sourceRef="manual_csvavailable" targetRef="manual_jsonld" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_676" sourceRef="manual_csvavailable" targetRef="manual_archsend" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_684" sourceRef="manual_jsonld" targetRef="manual_archsend" />
+    <bpmn:sequenceFlow id="manual_flow_690" sourceRef="manual_archsend" targetRef="manual_created" />
+    <bpmn:sequenceFlow id="manual_flow_698" sourceRef="manual_created" targetRef="manual_rescore" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_706" sourceRef="manual_created" targetRef="manual_convend" name="Nie — bez ponownej oceny" />
+    <bpmn:sequenceFlow id="manual_flow_714" sourceRef="manual_rescore" targetRef="manual_convpub" />
+    <bpmn:sequenceFlow id="manual_flow_722" sourceRef="manual_convpub" targetRef="manual_convrefresh" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_730" sourceRef="manual_convpub" targetRef="manual_convend" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_738" sourceRef="manual_convrefresh" targetRef="manual_convend" />
+  </bpmn:process>
+  <bpmn:process id="manual_archive" isExecutable="false" name="PACZKA PLIKÓW ZBIORU — niezależne zadanie">
+    <bpmn:startEvent id="manual_archstart" name="Odebrano zlecenie po opóźnieniu">
+      <bpmn:outgoing>manual_flow_783</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="manual_disk" name="Wystarczające wolne miejsce?">
+      <bpmn:incoming>manual_flow_783</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_791</bpmn:outgoing>
+      <bpmn:outgoing>manual_flow_799</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="manual_build" name="Przygotuj ZIP plików zbioru i zaktualizuj odnośnik">
+      <bpmn:incoming>manual_flow_791</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_817</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="manual_archend" name="Koniec zadania paczki">
+      <bpmn:incoming>manual_flow_809</bpmn:incoming>
+      <bpmn:incoming>manual_flow_817</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="manual_nospace" name="Zaloguj brak miejsca; pomiń budowę">
+      <bpmn:incoming>manual_flow_799</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_809</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="manual_flow_783" sourceRef="manual_archstart" targetRef="manual_disk" />
+    <bpmn:sequenceFlow id="manual_flow_791" sourceRef="manual_disk" targetRef="manual_build" name="Tak" />
+    <bpmn:sequenceFlow id="manual_flow_799" sourceRef="manual_disk" targetRef="manual_nospace" name="Nie" />
+    <bpmn:sequenceFlow id="manual_flow_809" sourceRef="manual_nospace" targetRef="manual_archend" />
+    <bpmn:sequenceFlow id="manual_flow_817" sourceRef="manual_build" targetRef="manual_archend" />
+  </bpmn:process>
+  <bpmn:process id="manual_publication" isExecutable="false" name="PUBLIKACJA W TLE — osobne zadania zależne od zdarzenia zapisu / oceny">
+    <bpmn:startEvent id="manual_pubstart" name="Odebrano odpowiednie zlecenie">
+      <bpmn:outgoing>manual_flow_846</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="manual_pubtasks" name="Wykonaj zlecone aktualizacje ES/API, RDF i powiadomień">
+      <bpmn:incoming>manual_flow_846</bpmn:incoming>
+      <bpmn:outgoing>manual_flow_854</bpmn:outgoing>
+      <bpmn:documentation>To agregacja niezależnych zadań, a nie ich kolejność. Zapis/zmiana stanu może zlecić publikację przed ukończeniem przygotowania. Końcowe odświeżenie po ocenie zleca ES/RDF, nie automatycznie każdy rodzaj powiadomienia. Szczegóły mapy sygnałów i odbiorców w modelach szczegółowych.</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="manual_pubend" name="Koniec danego zadania publikacji">
+      <bpmn:incoming>manual_flow_854</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="manual_flow_846" sourceRef="manual_pubstart" targetRef="manual_pubtasks" />
+    <bpmn:sequenceFlow id="manual_flow_854" sourceRef="manual_pubtasks" targetRef="manual_pubend" />
+  </bpmn:process>
+</bpmn:definitions>

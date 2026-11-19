@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="142.0 70.0 1406.0 445.0" role="img" aria-label="Ponownie zweryfikuj dane tabelaryczne"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="142.0" y="70.0" width="1406.0" height="445.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 423.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="477.0,180.0 605.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="546.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="477.0,180.0 502.0,180.0 502.0,109.0 1407.0,109.0 1407.0,180.0 1432.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="507.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie — pomiń dane</text><polyline points="795.0,180.0 923.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="977.0,180.0 1105.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1046.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="977.0,180.0 1080.0,180.0 1080.0,370.0 1105.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1085.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1295.0,180.0 1432.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1295.0,370.0 1320.0,370.0 1320.0,180.0 1432.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Plik do przetwarzania danych
+Źródło HTML: #tab=xml&amp;node=ODATA
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-311</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Plik do przetwarzania danych</tspan></text></g><g class="node"><title>Plik główny, dozwolony format i instytucja nie developer?
+is_data_processable: csv/tsv/xls/xlsx/ods/shp, także w obsługiwanym archiwum; wymagany plik główny; developer wykluczony. Nie zakładamy, że każdy plik wymaga tabeli.
+
+Źródło HTML: #tab=xml&amp;node=ODATA
+
+Źródło HTML: #tab=pliki&amp;id=SECTION-pliki-7
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-311</title><polygon points="450.0,153.0 477.0,180.0 450.0,207.0 423.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="450.0" y="185.0" text-anchor="middle">×</text><text x="450.0" y="128.0" text-anchor="middle"><tspan x="450.0" dy="0">Plik główny, dozwolony format</tspan><tspan x="450.0" dy="15">i instytucja nie developer?</tspan></text></g><g class="node"><title>Odczytaj, zweryfikuj i zindeksuj dane tabeli
+Synchroniczna .apply() w entrypoint. Indeks wierszy resource-ID jest inny niż dokument metadanych. Błędy danych zapisane/logowane; brak gwarancji podglądu/konwersji.
+
+Źródło HTML: #tab=xml&amp;node=ODATA
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-311</title><rect x="605.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="177.0" text-anchor="middle"><tspan x="700.0" dy="0">Odczytaj, zweryfikuj i</tspan><tspan x="700.0" dy="15">zindeksuj dane tabeli</tspan></text></g><g class="node"><title>Indeksowanie danych zakończone sukcesem?
+Źródło HTML: #tab=xml&amp;node=ODATA
+
+Źródło HTML: #tab=katalog&amp;id=PR-02
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-311</title><polygon points="950.0,153.0 977.0,180.0 950.0,207.0 923.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="185.0" text-anchor="middle">×</text><text x="950.0" y="128.0" text-anchor="middle"><tspan x="950.0" dy="0">Indeksowanie danych zakończone</tspan><tspan x="950.0" dy="15">sukcesem?</tspan></text></g><g class="node"><title>Zleć osobne zadanie plików pochodnych
+increase_openness_score_task jest osobnym zleceniem resources, bez bariery oczekiwania entrypoint.
+
+Źródło HTML: #tab=xml&amp;node=OINCREASE
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-320</title><rect x="1105.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="177.0" text-anchor="middle"><tspan x="1200.0" dy="0">Zleć osobne zadanie plików</tspan><tspan x="1200.0" dy="15">pochodnych</tspan></text></g><g class="node"><title>Zapamiętaj lub zaloguj problem danych
+W entrypoint wynik i ewentualne deferred_exceptions są obsługiwane po przewidzianych etapach. Nie zmienia to statusu importu metadanych.
+
+Źródło HTML: #tab=xml&amp;node=OFAIL
+
+Źródło HTML: #tab=katalog&amp;id=PR-02
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-319</title><rect x="1105.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="367.0" text-anchor="middle"><tspan x="1200.0" dy="0">Zapamiętaj lub zaloguj</tspan><tspan x="1200.0" dy="15">problem danych</tspan></text></g><g class="node"><title>Koniec tego etapu danych
+Źródło HTML: #tab=xml&amp;node=ODATA
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-311</title><circle cx="1450.0" cy="180.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1450.0" y="215.0" text-anchor="middle"><tspan x="1450.0" dy="0">Koniec tego etapu danych</tspan></text></g></svg>

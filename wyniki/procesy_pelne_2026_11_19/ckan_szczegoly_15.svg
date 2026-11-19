@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="142.0 70.0 906.0 255.0" role="img" aria-label="Wycofaj każdą nieobecną pozycję"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="142.0" y="70.0" width="906.0" height="255.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 605.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="795.0,180.0 932.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Kolejna nieaktualna pozycja
+Źródło HTML: #tab=ckan&amp;node=BDREMOVE
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-217</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Kolejna nieaktualna pozycja</tspan></text></g><g class="node"><title>Oznacz jako trwale usuniętą, bez kosza
+is_removed=True i is_permanently_removed=True. Wiersz zostaje; nie jest to fizyczny DELETE. Zbiór usuwa swoje zasoby. Testy potwierdzają pozostawanie części plików na dysku i ResourceFile w bazie; losu wszystkich dokumentów/M2M nie zweryfikowano.
+
+Źródło HTML: #tab=ckan&amp;node=BDREMOVE
+
+Źródło HTML: #tab=usuw&amp;id=SECTION-usuw-6
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-217</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Oznacz jako trwale</tspan><tspan x="450.0" dy="15">usuniętą, bez kosza</tspan></text></g><g class="node"><title>Zleć usunięcie publikacji i powiązane skutki
+ES/RDF, indeks danych tabelarycznych zasobu, anulowanie planu auto-daty, archiwum i powiadomienia stosownie do obiektu i stanu. Nie zakładamy automatycznego sprzątania wszystkich plików.
+
+Źródło HTML: #tab=usuw&amp;id=SECTION-usuw-8</title><rect x="605.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="177.0" text-anchor="middle"><tspan x="700.0" dy="0">Zleć usunięcie publikacji i</tspan><tspan x="700.0" dy="15">powiązane skutki</tspan></text></g><g class="node"><title>Pozycja wycofana w bazie; zlecono dalsze prace
+Źródło HTML: #tab=ckan&amp;node=BDREMOVE
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-217</title><circle cx="950.0" cy="180.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="950.0" y="215.0" text-anchor="middle"><tspan x="950.0" dy="0">Pozycja wycofana w bazie;</tspan><tspan x="950.0" dy="15">zlecono dalsze prace</tspan></text></g></svg>

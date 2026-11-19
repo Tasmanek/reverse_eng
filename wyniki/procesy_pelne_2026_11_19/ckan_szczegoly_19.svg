@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="65.0 65.0 1483.0 803.0" role="img" aria-label="Oceń zasób CKAN bez tworzenia kopii"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="65.0" y="65.0" width="1483.0" height="803.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 605.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="795.0,180.0 850.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1050.0,180.0 1075.0,180.0 1075.0,300.0 200.0,300.0 200.0,325.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="295.0,370.0 355.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,370.0 673.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="727.0,370.0 923.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="830.0" y="362.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="727.0,370.0 821.0,370.0 821.0,560.0 923.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="826.0" y="362.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="977.0,370.0 1105.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1046.0" y="362.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="977.0,370.0 1002.0,370.0 1002.0,299.0 1407.0,299.0 1407.0,370.0 1432.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1007.0" y="362.0" paint-order="stroke" stroke="white" stroke-width="4">nie — bez odświeżenia</text><polyline points="1295.0,370.0 1432.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="977.0,560.0 1079.0,560.0 1079.0,750.0 1182.0,750.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1084.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="977.0,560.0 1105.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1046.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1295.0,560.0 1432.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Zadanie zasobu odebrane
+Źródło HTML: #tab=ckan&amp;node=O3
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-211</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Zadanie zasobu odebrane</tspan></text></g><g class="node"><title>Zwróć sukces etapu URL bez pobrania kopii
+is_imported_from_ckan → return {}. Nie zmienia type ani format i nie tworzy ResourceFile; nie oznacza sprawdzenia zawartości pliku.
+
+Źródło HTML: #tab=ckan&amp;node=OURL
+
+Źródło HTML: #tab=stany&amp;id=SECTION-stany-8
+
+Źródło HTML: #tab=pelne&amp;id=T-F
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-302</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Zwróć sukces etapu URL bez</tspan><tspan x="450.0" dy="15">pobrania kopii</tspan></text></g><g class="node"><title>Pomiń kontrolę zawartości pliku i danych
+W opisanym przebiegu CKAN brak pliku głównego, więc brak podglądu tabeli i konwersji. Nie wyklucza pobrania przy braku deklaracji formatu, kontroli DGA ani pobrania do oceny.
+
+Źródło HTML: #tab=biz&amp;id=SECTION-biz-9
+
+Źródło HTML: #tab=pelne&amp;id=T-F</title><rect x="605.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="177.0" text-anchor="middle"><tspan x="700.0" dy="0">Pomiń kontrolę zawartości</tspan><tspan x="700.0" dy="15">pliku i danych</tspan></text></g><g class="node"><title>Wyznacz ocenę otwartości
+Źródło HTML: #tab=ckan&amp;node=O9
+
+Źródło HTML: #tab=ocena&amp;id=SECTION-ocena-5
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-309</title><rect x="850.0" y="130.0" width="200.0" height="100.0" rx="8" fill="#fff0d4" stroke="#46637f"/><text x="950.0" y="226.0" text-anchor="middle" font-weight="bold">⊞</text><text x="950.0" y="184.0" text-anchor="middle"><tspan x="950.0" dy="0">Wyznacz ocenę otwartości</tspan></text></g><g class="node"><title>Zapisz ocenę zasobu i ocenianych plików
+Bezpośredni UPDATE, bez sygnałów. Następuje przed zleceniem końcowego odświeżenia ES/RDF.
+
+Źródło HTML: #tab=ckan&amp;node=O9
+
+Źródło HTML: #tab=ckan&amp;node=O15
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-309
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-310</title><rect x="105.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff0d4" stroke="#46637f"/><text x="200.0" y="367.0" text-anchor="middle"><tspan x="200.0" dy="0">Zapisz ocenę zasobu i</tspan><tspan x="200.0" dy="15">ocenianych plików</tspan></text></g><g class="node"><title>Zapisz datę weryfikacji, jeżeli żądana
+Warunek update_verification_date=True. Nie jest to potwierdzenie merytorycznej aktualności danych.
+
+Źródło HTML: #tab=ckan&amp;node=O15
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-310</title><rect x="355.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="367.0" text-anchor="middle"><tspan x="450.0" dy="0">Zapisz datę weryfikacji,</tspan><tspan x="450.0" dy="15">jeżeli żądana</tspan></text></g><g class="node"><title>URL i wymagane kontrole udane; brak odroczonych wyjątków?
+Dopiero ten warunek umożliwia końcowe zlecenie odświeżenia. Ocena i data mogły już zostać zapisane mimo problemu.
+
+Źródło HTML: #tab=ckan&amp;node=OALL</title><polygon points="700.0,343.0 727.0,370.0 700.0,397.0 673.0,370.0" fill="#fff0d4" stroke="#b58030"/><text x="700.0" y="375.0" text-anchor="middle">×</text><text x="700.0" y="318.0" text-anchor="middle"><tspan x="700.0" dy="0">URL i wymagane kontrole udane;</tspan><tspan x="700.0" dy="15">brak odroczonych wyjątków?</tspan></text></g><g class="node"><title>Zasób nadal opublikowany i nieusunięty?
+Źródło HTML: #tab=ckan&amp;node=PB4
+
+Źródło HTML: #tab=stany&amp;id=SECTION-stany-8
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-311</title><polygon points="950.0,343.0 977.0,370.0 950.0,397.0 923.0,370.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="375.0" text-anchor="middle">×</text><text x="950.0" y="318.0" text-anchor="middle"><tspan x="950.0" dy="0">Zasób nadal opublikowany i</tspan><tspan x="950.0" dy="15">nieusunięty?</tspan></text></g><g class="node"><title>Zleć ES i RDF z aktualną oceną
+Nie zleca ponownego powiadomienia obserwujących tylko z powodu wyliczenia oceny.
+
+Źródło HTML: #tab=ckan&amp;node=PB4
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-311</title><rect x="1105.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="367.0" text-anchor="middle"><tspan x="1200.0" dy="0">Zleć ES i RDF z aktualną</tspan><tspan x="1200.0" dy="15">oceną</tspan></text></g><g class="node"><title>Zadanie zasobu zakończone
+Źródło HTML: #tab=ckan&amp;node=O3
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-211</title><circle cx="1450.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1450.0" y="405.0" text-anchor="middle"><tspan x="1450.0" dy="0">Zadanie zasobu zakończone</tspan></text></g><g class="node"><title>Są odroczone wyjątki do zgłoszenia?
+Źródło HTML: #tab=ckan&amp;node=OFAIL
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-312</title><polygon points="950.0,533.0 977.0,560.0 950.0,587.0 923.0,560.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="565.0" text-anchor="middle">×</text><text x="950.0" y="508.0" text-anchor="middle"><tspan x="950.0" dy="0">Są odroczone wyjątki do</tspan><tspan x="950.0" dy="15">zgłoszenia?</tspan></text></g><g class="node"><title>Zaloguj problem; bez końcowego odświeżenia
+Nieudany status URL/pliku bez deferred_exceptions może jedynie blokować odświeżenie; nie zamieniamy go automatycznie w wyjątek.
+
+Źródło HTML: #tab=ckan&amp;node=OFAIL
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-312</title><rect x="1105.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="557.0" text-anchor="middle"><tspan x="1200.0" dy="0">Zaloguj problem; bez</tspan><tspan x="1200.0" dy="15">końcowego odświeżenia</tspan></text></g><g class="node"><title>Zadanie zakończone z problemem w etapach
+Źródło HTML: #tab=ckan&amp;node=OFAIL
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-312</title><circle cx="1450.0" cy="560.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1450.0" y="595.0" text-anchor="middle"><tspan x="1450.0" dy="0">Zadanie zakończone z</tspan><tspan x="1450.0" dy="15">problemem w etapach</tspan></text></g><g class="node"><title>Zgłoś pierwszy odroczony wyjątek
+Po przewidzianym zapisie oceny i daty. Wynik importu opisów pozostaje odrębny.
+
+Źródło HTML: #tab=ckan&amp;node=OFAIL
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-312</title><circle cx="1200.0" cy="750.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1200.0" y="785.0" text-anchor="middle"><tspan x="1200.0" dy="0">Zgłoś pierwszy odroczony</tspan><tspan x="1200.0" dy="15">wyjątek</tspan></text></g></svg>

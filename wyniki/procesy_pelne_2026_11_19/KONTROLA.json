@@ -1,0 +1,42 @@
+{
+  "structural_validation": [
+    {
+      "file": "ckan_szczegoly.bpmn",
+      "ids": 980,
+      "diagrams": 21,
+      "errors": []
+    },
+    {
+      "file": "ckan_uzupelniony.bpmn",
+      "ids": 183,
+      "diagrams": 1,
+      "errors": []
+    },
+    {
+      "file": "manual_szczegoly.bpmn",
+      "ids": 569,
+      "diagrams": 9,
+      "errors": []
+    },
+    {
+      "file": "manual_uzupelniony.bpmn",
+      "ids": 321,
+      "diagrams": 1,
+      "errors": []
+    },
+    {
+      "file": "xml_szczegoly.bpmn",
+      "ids": 1588,
+      "diagrams": 30,
+      "errors": []
+    },
+    {
+      "file": "xml_uzupelniony.bpmn",
+      "ids": 297,
+      "diagrams": 1,
+      "errors": []
+    }
+  ],
+  "runtime_test": false,
+  "visual_paradigm_import_test": false
+}

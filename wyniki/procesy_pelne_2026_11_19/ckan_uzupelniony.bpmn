@@ -1,0 +1,617 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="VIEW_ckan" targetNamespace="urn:mcod:as-is:2026-11-19" exporter="Lokalna analiza kodu" exporterVersion="2.0">
+  <bpmn:collaboration id="VIEW_ckan_coll" name="1. CKAN — import, ocena i publikacja">
+    <bpmn:participant id="ckan_setup_pool" name="ADMINISTRATOR I HARMONOGRAM — aktywacja lub należny termin" processRef="ckan_setup" />
+    <bpmn:participant id="ckan_import_pool" name="HARWESTER I KATALOG — import metadanych; koniec importu nie czeka na ocenę" processRef="ckan_import" />
+    <bpmn:messageFlow id="ckan_flow_238" sourceRef="ckan_sendimport" targetRef="ckan_importstart" />
+    <bpmn:messageFlow id="ckan_flow_246" sourceRef="ckan_timersend" targetRef="ckan_importstart" />
+    <bpmn:participant id="ckan_dispatch_pool" name="ZAPIS ZASOBU — decyzja o przygotowaniu; zlecenie po zatwierdzeniu transakcji" processRef="ckan_dispatch" />
+    <bpmn:messageFlow id="ckan_flow_295" sourceRef="ckan_save" targetRef="ckan_dispatchstart" />
+    <bpmn:participant id="ckan_prep_url_pool" name="PRZYGOTOWANIE W TLE — CKAN: link i zapisany format" processRef="ckan_prep_url" />
+    <bpmn:messageFlow id="ckan_flow_428" sourceRef="ckan_prepsend" targetRef="ckan_url_start" />
+    <bpmn:participant id="ckan_publication_pool" name="PUBLIKACJA W TLE — osobne zadania zależne od zdarzenia zapisu / oceny" processRef="ckan_publication" />
+    <bpmn:messageFlow id="ckan_flow_466" sourceRef="ckan_save" targetRef="ckan_pubstart" name="Według zdarzenia zapisu" />
+    <bpmn:messageFlow id="ckan_flow_474" sourceRef="ckan_url_refresh" targetRef="ckan_pubstart" name="ES/RDF" />
+  </bpmn:collaboration>
+  <bpmndi:BPMNDiagram id="VIEW_ckan_diagram" name="1. CKAN — import, ocena i publikacja">
+    <bpmndi:BPMNPlane id="VIEW_ckan_plane" bpmnElement="VIEW_ckan_coll">
+      <bpmndi:BPMNShape id="ckan_setup_pool_di" bpmnElement="ckan_setup_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="70" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_config_di" bpmnElement="ckan_config">
+        <dc:Bounds x="110" y="135" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_activation_di" bpmnElement="ckan_activation">
+        <dc:Bounds x="350" y="135" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_sendimport_di" bpmnElement="ckan_sendimport">
+        <dc:Bounds x="590" y="135" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_setupend_di" bpmnElement="ckan_setupend">
+        <dc:Bounds x="830" y="135" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="ckan_flow_21_di" bpmnElement="ckan_flow_21">
+        <di:waypoint x="300" y="173.0" />
+        <di:waypoint x="325.0" y="173.0" />
+        <di:waypoint x="325.0" y="164.0" />
+        <di:waypoint x="350" y="164.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_29_di" bpmnElement="ckan_flow_29">
+        <di:waypoint x="408" y="164.0" />
+        <di:waypoint x="499.0" y="164.0" />
+        <di:waypoint x="499.0" y="173.0" />
+        <di:waypoint x="590" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_37_di" bpmnElement="ckan_flow_37">
+        <di:waypoint x="379.0" y="193" />
+        <di:waypoint x="379.0" y="220" />
+        <di:waypoint x="852.0" y="220" />
+        <di:waypoint x="852.0" y="179" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_45_di" bpmnElement="ckan_flow_45">
+        <di:waypoint x="780" y="173.0" />
+        <di:waypoint x="805.0" y="173.0" />
+        <di:waypoint x="805.0" y="157.0" />
+        <di:waypoint x="830" y="157.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ckan_timer_di" bpmnElement="ckan_timer">
+        <dc:Bounds x="1070" y="135" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_due_di" bpmnElement="ckan_due">
+        <dc:Bounds x="1310" y="135" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_duetest_di" bpmnElement="ckan_duetest">
+        <dc:Bounds x="1550" y="135" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_timersend_di" bpmnElement="ckan_timersend">
+        <dc:Bounds x="1790" y="135" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_timerend_di" bpmnElement="ckan_timerend">
+        <dc:Bounds x="2030" y="135" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="ckan_flow_68_di" bpmnElement="ckan_flow_68">
+        <di:waypoint x="1114" y="157.0" />
+        <di:waypoint x="1212.0" y="157.0" />
+        <di:waypoint x="1212.0" y="173.0" />
+        <di:waypoint x="1310" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_76_di" bpmnElement="ckan_flow_76">
+        <di:waypoint x="1500" y="173.0" />
+        <di:waypoint x="1525.0" y="173.0" />
+        <di:waypoint x="1525.0" y="164.0" />
+        <di:waypoint x="1550" y="164.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_84_di" bpmnElement="ckan_flow_84">
+        <di:waypoint x="1608" y="164.0" />
+        <di:waypoint x="1699.0" y="164.0" />
+        <di:waypoint x="1699.0" y="173.0" />
+        <di:waypoint x="1790" y="173.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_92_di" bpmnElement="ckan_flow_92">
+        <di:waypoint x="1579.0" y="193" />
+        <di:waypoint x="1579.0" y="232" />
+        <di:waypoint x="2052.0" y="232" />
+        <di:waypoint x="2052.0" y="179" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_100_di" bpmnElement="ckan_flow_100">
+        <di:waypoint x="1980" y="173.0" />
+        <di:waypoint x="2005.0" y="173.0" />
+        <di:waypoint x="2005.0" y="157.0" />
+        <di:waypoint x="2030" y="157.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ckan_import_pool_di" bpmnElement="ckan_import_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="370" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_importstart_di" bpmnElement="ckan_importstart">
+        <dc:Bounds x="110" y="435" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_active_di" bpmnElement="ckan_active">
+        <dc:Bounds x="350" y="435" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_fetch_di" bpmnElement="ckan_fetch">
+        <dc:Bounds x="590" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_validate_di" bpmnElement="ckan_validate">
+        <dc:Bounds x="830" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_valid_di" bpmnElement="ckan_valid">
+        <dc:Bounds x="1070" y="435" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_rules_di" bpmnElement="ckan_rules">
+        <dc:Bounds x="1310" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_save_di" bpmnElement="ckan_save">
+        <dc:Bounds x="1550" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_sync_di" bpmnElement="ckan_sync">
+        <dc:Bounds x="1790" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_result_di" bpmnElement="ckan_result">
+        <dc:Bounds x="2030" y="435" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_importend_di" bpmnElement="ckan_importend">
+        <dc:Bounds x="2270" y="435" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_inputerr_di" bpmnElement="ckan_inputerr">
+        <dc:Bounds x="1070" y="540" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_inputerrend_di" bpmnElement="ckan_inputerrend">
+        <dc:Bounds x="1310" y="540" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="ckan_flow_148_di" bpmnElement="ckan_flow_148">
+        <di:waypoint x="154" y="457.0" />
+        <di:waypoint x="252.0" y="457.0" />
+        <di:waypoint x="252.0" y="464.0" />
+        <di:waypoint x="350" y="464.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_156_di" bpmnElement="ckan_flow_156">
+        <di:waypoint x="408" y="464.0" />
+        <di:waypoint x="499.0" y="464.0" />
+        <di:waypoint x="499.0" y="473.0" />
+        <di:waypoint x="590" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_164_di" bpmnElement="ckan_flow_164">
+        <di:waypoint x="408" y="464.0" />
+        <di:waypoint x="859.0" y="464.0" />
+        <di:waypoint x="859.0" y="562.0" />
+        <di:waypoint x="1310" y="562.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_172_di" bpmnElement="ckan_flow_172">
+        <di:waypoint x="780" y="473.0" />
+        <di:waypoint x="830" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_178_di" bpmnElement="ckan_flow_178">
+        <di:waypoint x="1020" y="473.0" />
+        <di:waypoint x="1045.0" y="473.0" />
+        <di:waypoint x="1045.0" y="464.0" />
+        <di:waypoint x="1070" y="464.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_186_di" bpmnElement="ckan_flow_186">
+        <di:waypoint x="1128" y="464.0" />
+        <di:waypoint x="1219.0" y="464.0" />
+        <di:waypoint x="1219.0" y="473.0" />
+        <di:waypoint x="1310" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_194_di" bpmnElement="ckan_flow_194">
+        <di:waypoint x="1128" y="464.0" />
+        <di:waypoint x="1143" y="464.0" />
+        <di:waypoint x="1143" y="638" />
+        <di:waypoint x="1055" y="638" />
+        <di:waypoint x="1055" y="578.0" />
+        <di:waypoint x="1070" y="578.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_204_di" bpmnElement="ckan_flow_204">
+        <di:waypoint x="1260" y="578.0" />
+        <di:waypoint x="1285.0" y="578.0" />
+        <di:waypoint x="1285.0" y="562.0" />
+        <di:waypoint x="1310" y="562.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_212_di" bpmnElement="ckan_flow_212">
+        <di:waypoint x="1500" y="473.0" />
+        <di:waypoint x="1550" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_218_di" bpmnElement="ckan_flow_218">
+        <di:waypoint x="1740" y="473.0" />
+        <di:waypoint x="1790" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_224_di" bpmnElement="ckan_flow_224">
+        <di:waypoint x="1980" y="473.0" />
+        <di:waypoint x="2030" y="473.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_230_di" bpmnElement="ckan_flow_230">
+        <di:waypoint x="2220" y="473.0" />
+        <di:waypoint x="2245.0" y="473.0" />
+        <di:waypoint x="2245.0" y="457.0" />
+        <di:waypoint x="2270" y="457.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_238_di" bpmnElement="ckan_flow_238">
+        <di:waypoint x="685.0" y="211" />
+        <di:waypoint x="685.0" y="360" />
+        <di:waypoint x="3908" y="360" />
+        <di:waypoint x="3908" y="412" />
+        <di:waypoint x="132.0" y="412" />
+        <di:waypoint x="132.0" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_246_di" bpmnElement="ckan_flow_246">
+        <di:waypoint x="1885.0" y="211" />
+        <di:waypoint x="1885.0" y="360" />
+        <di:waypoint x="3926" y="360" />
+        <di:waypoint x="3926" y="412" />
+        <di:waypoint x="132.0" y="412" />
+        <di:waypoint x="132.0" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ckan_dispatch_pool_di" bpmnElement="ckan_dispatch_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="670" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_dispatchstart_di" bpmnElement="ckan_dispatchstart">
+        <dc:Bounds x="110" y="735" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_condition_di" bpmnElement="ckan_condition">
+        <dc:Bounds x="350" y="735" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_prepsend_di" bpmnElement="ckan_prepsend">
+        <dc:Bounds x="590" y="735" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_dispatchend_di" bpmnElement="ckan_dispatchend">
+        <dc:Bounds x="830" y="735" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="ckan_flow_271_di" bpmnElement="ckan_flow_271">
+        <di:waypoint x="154" y="757.0" />
+        <di:waypoint x="252.0" y="757.0" />
+        <di:waypoint x="252.0" y="764.0" />
+        <di:waypoint x="350" y="764.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_279_di" bpmnElement="ckan_flow_279">
+        <di:waypoint x="379.0" y="793" />
+        <di:waypoint x="379.0" y="832" />
+        <di:waypoint x="852.0" y="832" />
+        <di:waypoint x="852.0" y="779" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_287_di" bpmnElement="ckan_flow_287">
+        <di:waypoint x="780" y="773.0" />
+        <di:waypoint x="805.0" y="773.0" />
+        <di:waypoint x="805.0" y="757.0" />
+        <di:waypoint x="830" y="757.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_295_di" bpmnElement="ckan_flow_295">
+        <di:waypoint x="1645.0" y="511" />
+        <di:waypoint x="1645.0" y="660" />
+        <di:waypoint x="3944" y="660" />
+        <di:waypoint x="3944" y="712" />
+        <di:waypoint x="132.0" y="712" />
+        <di:waypoint x="132.0" y="735" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_303_di" bpmnElement="ckan_flow_303">
+        <di:waypoint x="408" y="764.0" />
+        <di:waypoint x="499.0" y="764.0" />
+        <di:waypoint x="499.0" y="773.0" />
+        <di:waypoint x="590" y="773.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ckan_prep_url_pool_di" bpmnElement="ckan_prep_url_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="970" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_url_start_di" bpmnElement="ckan_url_start">
+        <dc:Bounds x="110" y="1035" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_url_url_di" bpmnElement="ckan_url_url">
+        <dc:Bounds x="350" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_url_skip_di" bpmnElement="ckan_url_skip">
+        <dc:Bounds x="590" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_url_score_di" bpmnElement="ckan_url_score">
+        <dc:Bounds x="830" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_url_date_di" bpmnElement="ckan_url_date">
+        <dc:Bounds x="1070" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_url_ok_di" bpmnElement="ckan_url_ok">
+        <dc:Bounds x="1310" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_url_pub_di" bpmnElement="ckan_url_pub">
+        <dc:Bounds x="1550" y="1035" width="58" height="58" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_url_refresh_di" bpmnElement="ckan_url_refresh">
+        <dc:Bounds x="1790" y="1035" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_url_end_di" bpmnElement="ckan_url_end">
+        <dc:Bounds x="2030" y="1035" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_url_problem_di" bpmnElement="ckan_url_problem">
+        <dc:Bounds x="1550" y="1140" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="ckan_flow_346_di" bpmnElement="ckan_flow_346">
+        <di:waypoint x="154" y="1057.0" />
+        <di:waypoint x="252.0" y="1057.0" />
+        <di:waypoint x="252.0" y="1073.0" />
+        <di:waypoint x="350" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_354_di" bpmnElement="ckan_flow_354">
+        <di:waypoint x="540" y="1073.0" />
+        <di:waypoint x="590" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_360_di" bpmnElement="ckan_flow_360">
+        <di:waypoint x="780" y="1073.0" />
+        <di:waypoint x="830" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_366_di" bpmnElement="ckan_flow_366">
+        <di:waypoint x="1020" y="1073.0" />
+        <di:waypoint x="1070" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_372_di" bpmnElement="ckan_flow_372">
+        <di:waypoint x="1260" y="1073.0" />
+        <di:waypoint x="1285.0" y="1073.0" />
+        <di:waypoint x="1285.0" y="1064.0" />
+        <di:waypoint x="1310" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_380_di" bpmnElement="ckan_flow_380">
+        <di:waypoint x="1368" y="1064.0" />
+        <di:waypoint x="1550" y="1064.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_386_di" bpmnElement="ckan_flow_386">
+        <di:waypoint x="1368" y="1064.0" />
+        <di:waypoint x="1459.0" y="1064.0" />
+        <di:waypoint x="1459.0" y="1178.0" />
+        <di:waypoint x="1550" y="1178.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_394_di" bpmnElement="ckan_flow_394">
+        <di:waypoint x="1608" y="1064.0" />
+        <di:waypoint x="1699.0" y="1064.0" />
+        <di:waypoint x="1699.0" y="1073.0" />
+        <di:waypoint x="1790" y="1073.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_402_di" bpmnElement="ckan_flow_402">
+        <di:waypoint x="1579.0" y="1093" />
+        <di:waypoint x="1579.0" y="1120" />
+        <di:waypoint x="2052.0" y="1120" />
+        <di:waypoint x="2052.0" y="1079" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_410_di" bpmnElement="ckan_flow_410">
+        <di:waypoint x="1980" y="1073.0" />
+        <di:waypoint x="2005.0" y="1073.0" />
+        <di:waypoint x="2005.0" y="1057.0" />
+        <di:waypoint x="2030" y="1057.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_418_di" bpmnElement="ckan_flow_418">
+        <di:waypoint x="1740" y="1178.0" />
+        <di:waypoint x="1885.0" y="1178.0" />
+        <di:waypoint x="1885.0" y="1057.0" />
+        <di:waypoint x="2030" y="1057.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_428_di" bpmnElement="ckan_flow_428">
+        <di:waypoint x="685.0" y="811" />
+        <di:waypoint x="685.0" y="960" />
+        <di:waypoint x="3962" y="960" />
+        <di:waypoint x="3962" y="1012" />
+        <di:waypoint x="132.0" y="1012" />
+        <di:waypoint x="132.0" y="1035" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ckan_publication_pool_di" bpmnElement="ckan_publication_pool" isHorizontal="true">
+        <dc:Bounds x="40" y="1270" width="3800" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_pubstart_di" bpmnElement="ckan_pubstart">
+        <dc:Bounds x="110" y="1335" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_pubtasks_di" bpmnElement="ckan_pubtasks">
+        <dc:Bounds x="350" y="1335" width="190" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ckan_pubend_di" bpmnElement="ckan_pubend">
+        <dc:Bounds x="590" y="1335" width="44" height="44" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="ckan_flow_449_di" bpmnElement="ckan_flow_449">
+        <di:waypoint x="154" y="1357.0" />
+        <di:waypoint x="252.0" y="1357.0" />
+        <di:waypoint x="252.0" y="1373.0" />
+        <di:waypoint x="350" y="1373.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_457_di" bpmnElement="ckan_flow_457">
+        <di:waypoint x="540" y="1373.0" />
+        <di:waypoint x="565.0" y="1373.0" />
+        <di:waypoint x="565.0" y="1357.0" />
+        <di:waypoint x="590" y="1357.0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_466_di" bpmnElement="ckan_flow_466">
+        <di:waypoint x="1645.0" y="511" />
+        <di:waypoint x="1645.0" y="660" />
+        <di:waypoint x="3980" y="660" />
+        <di:waypoint x="3980" y="1312" />
+        <di:waypoint x="132.0" y="1312" />
+        <di:waypoint x="132.0" y="1335" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="ckan_flow_474_di" bpmnElement="ckan_flow_474">
+        <di:waypoint x="1885.0" y="1111" />
+        <di:waypoint x="1885.0" y="1260" />
+        <di:waypoint x="3998" y="1260" />
+        <di:waypoint x="3998" y="1312" />
+        <di:waypoint x="132.0" y="1312" />
+        <di:waypoint x="132.0" y="1335" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmn:documentation>AS-IS mcod 2.62.3. Pule oznaczają niezależne przebiegi; linie przerywane to zlecenia bez oczekiwania. Widok rozwinięty uzupełnia szczegółowy plik *_szczegoly.bpmn. Nie obejmuje projektowanych blokad i nowej flagi is_archive.</bpmn:documentation>
+  <bpmn:process id="ckan_setup" isExecutable="false" name="ADMINISTRATOR I HARMONOGRAM — aktywacja lub należny termin">
+    <bpmn:serviceTask id="ckan_config" name="Skonfiguruj i zapisz źródło CKAN">
+      <bpmn:outgoing>ckan_flow_21</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="ckan_activation" name="Nowe aktywne źródło / aktywacja?">
+      <bpmn:incoming>ckan_flow_21</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_29</bpmn:outgoing>
+      <bpmn:outgoing>ckan_flow_37</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="ckan_sendimport" name="Zleć import po zatwierdzeniu zapisu">
+      <bpmn:incoming>ckan_flow_29</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_45</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="ckan_setupend" name="Koniec konfiguracji">
+      <bpmn:incoming>ckan_flow_37</bpmn:incoming>
+      <bpmn:incoming>ckan_flow_45</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="ckan_flow_21" sourceRef="ckan_config" targetRef="ckan_activation" />
+    <bpmn:sequenceFlow id="ckan_flow_29" sourceRef="ckan_activation" targetRef="ckan_sendimport" name="Tak" />
+    <bpmn:sequenceFlow id="ckan_flow_37" sourceRef="ckan_activation" targetRef="ckan_setupend" name="Nie" />
+    <bpmn:sequenceFlow id="ckan_flow_45" sourceRef="ckan_sendimport" targetRef="ckan_setupend" />
+    <bpmn:startEvent id="ckan_timer" name="Termin przeglądu źródeł">
+      <bpmn:outgoing>ckan_flow_68</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="ckan_due" name="Sprawdź aktywność i termin importu">
+      <bpmn:incoming>ckan_flow_68</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_76</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="ckan_duetest" name="Import należny?">
+      <bpmn:incoming>ckan_flow_76</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_84</bpmn:outgoing>
+      <bpmn:outgoing>ckan_flow_92</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="ckan_timersend" name="Zleć import">
+      <bpmn:incoming>ckan_flow_84</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_100</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="ckan_timerend" name="Koniec cyklu">
+      <bpmn:incoming>ckan_flow_92</bpmn:incoming>
+      <bpmn:incoming>ckan_flow_100</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="ckan_flow_68" sourceRef="ckan_timer" targetRef="ckan_due" />
+    <bpmn:sequenceFlow id="ckan_flow_76" sourceRef="ckan_due" targetRef="ckan_duetest" />
+    <bpmn:sequenceFlow id="ckan_flow_84" sourceRef="ckan_duetest" targetRef="ckan_timersend" name="Tak" />
+    <bpmn:sequenceFlow id="ckan_flow_92" sourceRef="ckan_duetest" targetRef="ckan_timerend" name="Nie" />
+    <bpmn:sequenceFlow id="ckan_flow_100" sourceRef="ckan_timersend" targetRef="ckan_timerend" />
+  </bpmn:process>
+  <bpmn:process id="ckan_import" isExecutable="false" name="HARWESTER I KATALOG — import metadanych; koniec importu nie czeka na ocenę">
+    <bpmn:startEvent id="ckan_importstart" name="Odebrano zlecenie importu">
+      <bpmn:outgoing>ckan_flow_148</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="ckan_active" name="Źródło nadal aktywne?">
+      <bpmn:incoming>ckan_flow_148</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_156</bpmn:outgoing>
+      <bpmn:outgoing>ckan_flow_164</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="ckan_fetch" name="Pobierz API i odczytaj JSON">
+      <bpmn:incoming>ckan_flow_156</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_172</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="ckan_validate" name="Zweryfikuj cały wykaz i opisy zasobów">
+      <bpmn:incoming>ckan_flow_172</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_178</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="ckan_valid" name="Wymagane kontrole poprawne?">
+      <bpmn:incoming>ckan_flow_178</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_186</bpmn:outgoing>
+      <bpmn:outgoing>ckan_flow_194</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="ckan_rules" name="Oceń zbiory osobno: licencja i reguły HVD/DGA">
+      <bpmn:incoming>ckan_flow_186</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_212</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="ckan_save" name="Zapisz przyjęte zbiory i każdy zasób; obsłuż sygnały">
+      <bpmn:incoming>ckan_flow_212</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_218</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="ckan_sync" name="Wycofaj pozycje nieobecne na przyjętej liście">
+      <bpmn:incoming>ckan_flow_218</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_224</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="ckan_result" name="Zapisz wynik, liczniki i koniec importu">
+      <bpmn:incoming>ckan_flow_224</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_230</bpmn:outgoing>
+      <bpmn:documentation>CKAN: OK / OK_PARTIAL zależnie od odrzuconych zbiorów. XML: błąd wymaganej walidacji wykazu zatrzymuje przyjęcie; szczegóły i błędy zapisu w *_szczegoly.bpmn.</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="ckan_importend" name="Koniec importu metadanych">
+      <bpmn:incoming>ckan_flow_230</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="ckan_inputerr" name="Zapisz błąd importu; nie zastępuj katalogu błędnym wykazem">
+      <bpmn:incoming>ckan_flow_194</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_204</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="ckan_inputerrend" name="Koniec z błędem / pominięcie">
+      <bpmn:incoming>ckan_flow_164</bpmn:incoming>
+      <bpmn:incoming>ckan_flow_204</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="ckan_flow_148" sourceRef="ckan_importstart" targetRef="ckan_active" />
+    <bpmn:sequenceFlow id="ckan_flow_156" sourceRef="ckan_active" targetRef="ckan_fetch" name="Tak" />
+    <bpmn:sequenceFlow id="ckan_flow_164" sourceRef="ckan_active" targetRef="ckan_inputerrend" name="Nie" />
+    <bpmn:sequenceFlow id="ckan_flow_172" sourceRef="ckan_fetch" targetRef="ckan_validate" />
+    <bpmn:sequenceFlow id="ckan_flow_178" sourceRef="ckan_validate" targetRef="ckan_valid" />
+    <bpmn:sequenceFlow id="ckan_flow_186" sourceRef="ckan_valid" targetRef="ckan_rules" name="Tak" />
+    <bpmn:sequenceFlow id="ckan_flow_194" sourceRef="ckan_valid" targetRef="ckan_inputerr" name="Nie" />
+    <bpmn:sequenceFlow id="ckan_flow_204" sourceRef="ckan_inputerr" targetRef="ckan_inputerrend" />
+    <bpmn:sequenceFlow id="ckan_flow_212" sourceRef="ckan_rules" targetRef="ckan_save" />
+    <bpmn:sequenceFlow id="ckan_flow_218" sourceRef="ckan_save" targetRef="ckan_sync" />
+    <bpmn:sequenceFlow id="ckan_flow_224" sourceRef="ckan_sync" targetRef="ckan_result" />
+    <bpmn:sequenceFlow id="ckan_flow_230" sourceRef="ckan_result" targetRef="ckan_importend" />
+  </bpmn:process>
+  <bpmn:process id="ckan_dispatch" isExecutable="false" name="ZAPIS ZASOBU — decyzja o przygotowaniu; zlecenie po zatwierdzeniu transakcji">
+    <bpmn:startEvent id="ckan_dispatchstart" name="Obsługa zapisu / sygnału zasobu">
+      <bpmn:outgoing>ckan_flow_271</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="ckan_condition" name="Stan i zmiana wymagają przygotowania?">
+      <bpmn:incoming>ckan_flow_271</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_279</bpmn:outgoing>
+      <bpmn:outgoing>ckan_flow_303</bpmn:outgoing>
+      <bpmn:documentation>Zapis nie oznacza zawsze nowej oceny. Nowy opublikowany zasób / zmiana linku lub dostępności / właściwa zmiana wymuszonego typu / przywrócenie; nowy główny plik opublikowanego zasobu ma osobny sygnał. Sam opis lub format nie gwarantuje oceny. Zmiana znaków umownych ma odrębną ścieżkę. Szczegółowe warunki w modelu szczegółowym.</bpmn:documentation>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="ckan_prepsend" name="Zleć właściwe zadanie przygotowania">
+      <bpmn:outgoing>ckan_flow_287</bpmn:outgoing>
+      <bpmn:incoming>ckan_flow_303</bpmn:incoming>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="ckan_dispatchend" name="Koniec obsługi zapisu">
+      <bpmn:incoming>ckan_flow_279</bpmn:incoming>
+      <bpmn:incoming>ckan_flow_287</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="ckan_flow_271" sourceRef="ckan_dispatchstart" targetRef="ckan_condition" />
+    <bpmn:sequenceFlow id="ckan_flow_279" sourceRef="ckan_condition" targetRef="ckan_dispatchend" name="Nie — m.in. nowy szkic" />
+    <bpmn:sequenceFlow id="ckan_flow_287" sourceRef="ckan_prepsend" targetRef="ckan_dispatchend" />
+    <bpmn:sequenceFlow id="ckan_flow_303" sourceRef="ckan_condition" targetRef="ckan_prepsend" name="Tak" />
+  </bpmn:process>
+  <bpmn:process id="ckan_prep_url" isExecutable="false" name="PRZYGOTOWANIE W TLE — CKAN: link i zapisany format">
+    <bpmn:startEvent id="ckan_url_start" name="Odebrano zlecenie">
+      <bpmn:outgoing>ckan_flow_346</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="ckan_url_url" name="Pomiń pobranie lokalnej kopii CKAN; etap kończy się sukcesem">
+      <bpmn:incoming>ckan_flow_346</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_354</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="ckan_url_skip" name="Standardowo brak pliku głównego: bez lokalnej kontroli i tabeli">
+      <bpmn:incoming>ckan_flow_354</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_360</bpmn:outgoing>
+      <bpmn:documentation>Standardowe nowe zasoby CKAN nie dostają kopii. Wspólny entrypoint ma warunki kontroli istniejącego pliku; nietypowe wcześniej istniejące pliki wymagają analizy aktualnego stanu. Nie jest to globalny zakaz konwersji w całym systemie.</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="ckan_url_score" name="Oblicz i zapisz stopień z formatu i treści linku">
+      <bpmn:incoming>ckan_flow_360</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_366</bpmn:outgoing>
+      <bpmn:documentation>Brak wartości formatu całego zasobu: 0. Brak pliku głównego i istniejący link: ocena linku. W przeciwnym razie maksimum ocen pliku głównego i pochodnych. Błąd obliczenia może przerwać zadanie przed nowym zapisem. Reguły archiwów i formatów są rozwinięte w szczegółach. Ocena nie stanowi blokady publikacji w obecnym kodzie.</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="ckan_url_date" name="Zapisz datę weryfikacji, jeżeli żądana">
+      <bpmn:incoming>ckan_flow_366</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_372</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="ckan_url_ok" name="Przygotowanie udane, bez odroczonych wyjątków?">
+      <bpmn:incoming>ckan_flow_372</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_380</bpmn:outgoing>
+      <bpmn:outgoing>ckan_flow_386</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="ckan_url_pub" name="Nadal opublikowany i nieusunięty?">
+      <bpmn:incoming>ckan_flow_380</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_394</bpmn:outgoing>
+      <bpmn:outgoing>ckan_flow_402</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="ckan_url_refresh" name="Zleć odświeżenie ES/RDF">
+      <bpmn:incoming>ckan_flow_394</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_410</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="ckan_url_end" name="Koniec zadania">
+      <bpmn:incoming>ckan_flow_402</bpmn:incoming>
+      <bpmn:incoming>ckan_flow_410</bpmn:incoming>
+      <bpmn:incoming>ckan_flow_418</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="ckan_url_problem" name="Obsłuż błąd; brak końcowego odświeżenia">
+      <bpmn:incoming>ckan_flow_386</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_418</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="ckan_flow_346" sourceRef="ckan_url_start" targetRef="ckan_url_url" />
+    <bpmn:sequenceFlow id="ckan_flow_354" sourceRef="ckan_url_url" targetRef="ckan_url_skip" />
+    <bpmn:sequenceFlow id="ckan_flow_360" sourceRef="ckan_url_skip" targetRef="ckan_url_score" />
+    <bpmn:sequenceFlow id="ckan_flow_366" sourceRef="ckan_url_score" targetRef="ckan_url_date" />
+    <bpmn:sequenceFlow id="ckan_flow_372" sourceRef="ckan_url_date" targetRef="ckan_url_ok" />
+    <bpmn:sequenceFlow id="ckan_flow_380" sourceRef="ckan_url_ok" targetRef="ckan_url_pub" name="Tak" />
+    <bpmn:sequenceFlow id="ckan_flow_386" sourceRef="ckan_url_ok" targetRef="ckan_url_problem" name="Nie" />
+    <bpmn:sequenceFlow id="ckan_flow_394" sourceRef="ckan_url_pub" targetRef="ckan_url_refresh" name="Tak" />
+    <bpmn:sequenceFlow id="ckan_flow_402" sourceRef="ckan_url_pub" targetRef="ckan_url_end" name="Nie" />
+    <bpmn:sequenceFlow id="ckan_flow_410" sourceRef="ckan_url_refresh" targetRef="ckan_url_end" />
+    <bpmn:sequenceFlow id="ckan_flow_418" sourceRef="ckan_url_problem" targetRef="ckan_url_end" />
+  </bpmn:process>
+  <bpmn:process id="ckan_publication" isExecutable="false" name="PUBLIKACJA W TLE — osobne zadania zależne od zdarzenia zapisu / oceny">
+    <bpmn:startEvent id="ckan_pubstart" name="Odebrano odpowiednie zlecenie">
+      <bpmn:outgoing>ckan_flow_449</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="ckan_pubtasks" name="Wykonaj zlecone aktualizacje ES/API, RDF i powiadomień">
+      <bpmn:incoming>ckan_flow_449</bpmn:incoming>
+      <bpmn:outgoing>ckan_flow_457</bpmn:outgoing>
+      <bpmn:documentation>To agregacja niezależnych zadań, a nie ich kolejność. Zapis/zmiana stanu może zlecić publikację przed ukończeniem przygotowania. Końcowe odświeżenie po ocenie zleca ES/RDF, nie automatycznie każdy rodzaj powiadomienia. Szczegóły mapy sygnałów i odbiorców w modelach szczegółowych.</bpmn:documentation>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="ckan_pubend" name="Koniec danego zadania publikacji">
+      <bpmn:incoming>ckan_flow_457</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="ckan_flow_449" sourceRef="ckan_pubstart" targetRef="ckan_pubtasks" />
+    <bpmn:sequenceFlow id="ckan_flow_457" sourceRef="ckan_pubtasks" targetRef="ckan_pubend" />
+  </bpmn:process>
+</bpmn:definitions>

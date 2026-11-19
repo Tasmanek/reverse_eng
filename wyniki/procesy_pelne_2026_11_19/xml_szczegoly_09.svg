@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60.0 -45.0 1738.0 560.0" role="img" aria-label="Pobierz zasób i zweryfikuj format"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="60.0" y="-45.0" width="1738.0" height="560.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 673.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="727.0,180.0 855.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="796.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="727.0,180.0 821.0,180.0 821.0,300.0 700.0,300.0 700.0,325.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="826.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1045.0,180.0 1173.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1227.0,180.0 1252.0,180.0 1252.0,136.0 1071.0,136.0 1071.0,300.0 700.0,300.0 700.0,325.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1257.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1227.0,180.0 1355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1296.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1545.0,180.0 1682.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="795.0,370.0 1576.0,370.0 1576.0,180.0 1682.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Zasób do sprawdzenia
+Źródło HTML: #tab=xml&amp;node=X14
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-128</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Zasób do sprawdzenia</tspan></text></g><g class="node"><title>Pobierz zasób i sprawdź odpowiedź
+Pobranie: poprawny URL i HTTPS także po przekierowaniach; dokładnie HTTP 200; poprawny i dozwolony Content-Type (octet-stream akceptowany), treść niepusta i bez niebezpiecznego załącznika. Heurystyka formatu walidacji: URL → magic → Content-Type → Content-Disposition. Nie jest to heurystyka późniejszego przygotowania pliku.
+
+Źródło HTML: #tab=xml&amp;node=X14
+
+Źródło HTML: #tab=katalog&amp;id=HTTP-PATH-4
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-128</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Pobierz zasób i sprawdź</tspan><tspan x="450.0" dy="15">odpowiedź</tspan></text></g><g class="node"><title>Pobranie i typ odpowiedzi poprawne?
+Źródło HTML: #tab=xml&amp;node=X14
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-128</title><polygon points="700.0,153.0 727.0,180.0 700.0,207.0 673.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="700.0" y="185.0" text-anchor="middle">×</text><text x="700.0" y="128.0" text-anchor="middle"><tspan x="700.0" dy="0">Pobranie i typ odpowiedzi</tspan><tspan x="700.0" dy="15">poprawne?</tspan></text></g><g class="node"><title>Dopisz błąd pozycji do listy
+Nie rzucaj tutaj błędu odrzucającego cały import. Gromadzenie błędów kontynuuje się dla pozostałych dostępnych pól i pozycji.
+
+Źródło HTML: #tab=xml&amp;node=XERR
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-132</title><rect x="605.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="367.0" text-anchor="middle"><tspan x="700.0" dy="0">Dopisz błąd pozycji do</tspan><tspan x="700.0" dy="15">listy</tspan></text></g><g class="node"><title>Rozpoznaj format z odpowiedzi
+Pobranie: poprawny URL i HTTPS także po przekierowaniach; dokładnie HTTP 200; poprawny i dozwolony Content-Type (octet-stream akceptowany), treść niepusta i bez niebezpiecznego załącznika. Heurystyka formatu walidacji: URL → magic → Content-Type → Content-Disposition. Nie jest to heurystyka późniejszego przygotowania pliku.
+
+Źródło HTML: #tab=xml&amp;node=X14
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-128</title><rect x="855.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="950.0" y="177.0" text-anchor="middle"><tspan x="950.0" dy="0">Rozpoznaj format z</tspan><tspan x="950.0" dy="15">odpowiedzi</tspan></text></g><g class="node"><title>Rozpoznany nieobsługiwany format i flaga włączona?
+harvester_file_validation.be: blokuje rozpoznany niedopuszczony format. Format nieznany (None) przechodzi niezależnie od flagi. Stan flagi produkcyjnej nieznany.
+
+Źródło HTML: #tab=xml&amp;node=X14
+
+Źródło HTML: #tab=cmp&amp;id=U-5
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-128</title><polygon points="1200.0,153.0 1227.0,180.0 1200.0,207.0 1173.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="1200.0" y="185.0" text-anchor="middle">×</text><text x="1200.0" y="128.0" text-anchor="middle"><tspan x="1200.0" dy="0">Rozpoznany nieobsługiwany</tspan><tspan x="1200.0" dy="15">format i flaga włączona?</tspan></text></g><g class="node"><title>Przekaż wynik rozpoznania
+Rozpoznany format służy walidacji; nie jest zapisywany jako format zasobu XML. Ustali go późniejsze przygotowanie.
+
+Źródło HTML: #tab=xml&amp;node=X14
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-128</title><rect x="1355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1450.0" y="184.0" text-anchor="middle"><tspan x="1450.0" dy="0">Przekaż wynik rozpoznania</tspan></text></g><g class="node"><title>Kontrola zakończona; błędy zapamiętane
+Źródło HTML: #tab=xml&amp;node=XERR
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-132</title><circle cx="1700.0" cy="180.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1700.0" y="215.0" text-anchor="middle"><tspan x="1700.0" dy="0">Kontrola zakończona; błędy</tspan><tspan x="1700.0" dy="15">zapamiętane</tspan></text></g><g class="node"><title>Pobranie: poprawny URL i HTTPS także po przekierowaniach; dokładnie HTTP 200; poprawny i dozwolony Content-Type (octet-stream akceptowany), treść niepusta i bez niebezpiecznego załącznika. Heurystyka formatu walidacji: URL → magic → Content-Type → Content-Disposition. Nie jest to heurystyka późniejszego przygotowania pliku. Nieznany format przechodzi; rozpoznany nieobsługiwany jest blokowany tylko przy włączonej fladze.
+</title><text x="909.0" y="36.0" text-anchor="middle"><tspan x="909.0" dy="0">Pobranie: poprawny URL i HTTPS także po przekierowaniach; dokładnie HTTP 200; poprawny i dozwolony Content-Type (octet-stream akceptowany), treść niepusta i bez niebezpiecznego załącznika. Heurystyka formatu walidacji: URL → magic</tspan><tspan x="909.0" dy="15">→ Content-Type → Content-Disposition. Nie jest to heurystyka późniejszego przygotowania pliku. Nieznany format przechodzi; rozpoznany nieobsługiwany jest blokowany tylko przy włączonej fladze.</tspan></text></g></svg>

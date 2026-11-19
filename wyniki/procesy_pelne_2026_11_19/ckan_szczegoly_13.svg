@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60.0 -45.0 1988.0 750.0" role="img" aria-label="Obsłuż publikację i potrzebne zlecenia"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="60.0" y="-45.0" width="1988.0" height="750.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 423.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="477.0,180.0 605.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="546.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">published / updated / restored</text><polyline points="477.0,180.0 580.0,180.0 580.0,560.0 605.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="585.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">removed</text><polyline points="477.0,180.0 574.0,180.0 574.0,370.0 682.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="579.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">brak stanu</text><polyline points="795.0,560.0 932.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="795.0,180.0 1173.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1227.0,180.0 1355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1296.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1227.0,180.0 1330.0,180.0 1330.0,370.0 1355.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1335.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1545.0,180.0 1932.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1545.0,370.0 1570.0,370.0 1570.0,180.0 1932.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Obiekt po zapisie
+Źródło HTML: #tab=ckan&amp;node=PB2
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-207</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Obiekt po zapisie</tspan></text></g><g class="node"><title>Jaki stan zmiany wyznaczył zapis?
+Stan wyznaczany synchronicznie w procesie zapisującym. published: głównie nowy obiekt; updated: publikacja → publikacja; restored: przywrócenie, również pierwsza publikacja szkicu (T-08); removed: publikacja → szkic/usunięcie. Brak stanu: np. nowy szkic.
+
+Źródło HTML: #tab=ckan&amp;node=PB2
+
+Źródło HTML: #tab=stany&amp;id=SECTION-stany-6
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-207</title><polygon points="450.0,153.0 477.0,180.0 450.0,207.0 423.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="450.0" y="185.0" text-anchor="middle">×</text><text x="450.0" y="128.0" text-anchor="middle"><tspan x="450.0" dy="0">Jaki stan zmiany wyznaczył</tspan><tspan x="450.0" dy="15">zapis?</tspan></text></g><g class="node"><title>Zleć ES, RDF i powiadomienie odpowiednie do stanu
+Osobne, warunkowe zlecenia według SIGNALS_MAP. Publikacja opisów nie czeka na przygotowanie pliku. Zlecenie nie gwarantuje wykonania. Kolejki indexing/graphs/watchers.
+
+Źródło HTML: #tab=ckan&amp;node=PB3
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-15</title><rect x="605.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="170.0" text-anchor="middle"><tspan x="700.0" dy="0">Zleć ES, RDF i</tspan><tspan x="700.0" dy="15">powiadomienie odpowiednie</tspan><tspan x="700.0" dy="15">do stanu</tspan></text></g><g class="node"><title>Zleć wycofanie publikacji i skutki usunięcia
+ES/RDF: usunięcie; powiadomienie removed. Anuluj automatyczną datę, zleć archiwum; przy trwałym usunięciu usuń indeks tabeli. Rekord i plik nie są przez to fizycznie kasowane.
+
+Źródło HTML: #tab=ckan&amp;node=PBd
+
+Źródło HTML: #tab=ckan&amp;node=PB3
+
+Źródło HTML: #tab=usuw&amp;id=SECTION-usuw-8
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-212
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-15</title><rect x="605.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="557.0" text-anchor="middle"><tspan x="700.0" dy="0">Zleć wycofanie publikacji i</tspan><tspan x="700.0" dy="15">skutki usunięcia</tspan></text></g><g class="node"><title>Brak publikacji nowego szkicu
+Źródło HTML: #tab=ckan&amp;node=PBd
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-212</title><circle cx="700.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="700.0" y="405.0" text-anchor="middle"><tspan x="700.0" dy="0">Brak publikacji nowego</tspan><tspan x="700.0" dy="15">szkicu</tspan></text></g><g class="node"><title>Obsłużono skutki zapisu; bez oczekiwania na kolejki
+Źródło HTML: #tab=ckan&amp;node=PB3
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-15</title><circle cx="1950.0" cy="180.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1950.0" y="215.0" text-anchor="middle"><tspan x="1950.0" dy="0">Obsłużono skutki zapisu; bez</tspan><tspan x="1950.0" dy="15">oczekiwania na kolejki</tspan></text></g><g class="node"><title>Zlecono wycofanie
+Źródło HTML: #tab=ckan&amp;node=PBd
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-212</title><circle cx="950.0" cy="560.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="950.0" y="595.0" text-anchor="middle"><tspan x="950.0" dy="0">Zlecono wycofanie</tspan></text></g><g class="node"><title>Spełniony warunek ponownego przygotowania?
+Nowy lub zmieniony link; zmiana availability; zmiana forced_file_type z wartości niepustej; zewnętrzny link i restored. Sama zmiana tytułu/opisu/formatu nie spełnia warunku (U-3).
+
+Źródło HTML: #tab=ckan&amp;node=O2
+
+Źródło HTML: #tab=stany&amp;id=SECTION-stany-7</title><polygon points="1200.0,153.0 1227.0,180.0 1200.0,207.0 1173.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="1200.0" y="185.0" text-anchor="middle">×</text><text x="1200.0" y="128.0" text-anchor="middle"><tspan x="1200.0" dy="0">Spełniony warunek ponownego</tspan><tspan x="1200.0" dy="15">przygotowania?</tspan></text></g><g class="node"><title>Zleć zadanie zasobu po commicie
+W CKAN zadanie także może zostać zlecone, lecz jego etap URL pomija pobranie kopii głównej. Koniec importu nie czeka na ten task.
+
+Źródło HTML: #tab=ckan&amp;node=O3
+
+Źródło HTML: #tab=ckan&amp;node=O2
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-211</title><rect x="1355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1450.0" y="177.0" text-anchor="middle"><tspan x="1450.0" dy="0">Zleć zadanie zasobu po</tspan><tspan x="1450.0" dy="15">commicie</tspan></text></g><g class="node"><title>Obsłuż pozostałe przypadki przywrócenia lub przeniesienia
+Bez pełnego pobrania: restored może zlecić walidację pliku głównego; zmiana zbioru może zlecić archiwa obu zbiorów. Sama zmiana formatu nie przelicza oceny. To udokumentowane alternatywy sygnału, nie dodatkowa interakcja administratora.
+
+Źródło HTML: #tab=ckan&amp;node=O2n</title><rect x="1355.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1450.0" y="360.0" text-anchor="middle"><tspan x="1450.0" dy="0">Obsłuż pozostałe przypadki</tspan><tspan x="1450.0" dy="15">przywrócenia lub</tspan><tspan x="1450.0" dy="15">przeniesienia</tspan></text></g><g class="node"><title>Nowy szkic: bez publikacji; publikacja→szkic: wycofanie; szkic→publikacja: restored i przygotowanie zewnętrznego zasobu. Ponowne przygotowanie: link, availability, odpowiednia zmiana wymuszonego typu lub zewnętrzny link i restored. Sam format/opis nie przelicza oceny (U-3).
+</title><text x="1034.0" y="36.0" text-anchor="middle"><tspan x="1034.0" dy="0">Nowy szkic: bez publikacji; publikacja→szkic: wycofanie; szkic→publikacja: restored i przygotowanie zewnętrznego zasobu. Ponowne przygotowanie: link, availability, odpowiednia zmiana wymuszonego typu lub zewnętrzny link i restored. Sam format/opis nie przelicza</tspan><tspan x="1034.0" dy="15">oceny (U-3).</tspan></text></g></svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60.0 -45.0 2238.0 750.0" role="img" aria-label="Oceń i przyjmij albo odrzuć każdy zbiór"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="60.0" y="-45.0" width="2238.0" height="750.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="1795.0,560.0 1932.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="218.0,180.0 321.0,180.0 321.0,300.0 200.0,300.0 200.0,325.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="295.0,370.0 423.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="477.0,370.0 579.0,370.0 579.0,560.0 1605.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="584.0" y="362.0" paint-order="stroke" stroke="white" stroke-width="4">nie — pierwsza niespełniona reguła</text><polyline points="477.0,370.0 605.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="546.0" y="362.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="795.0,370.0 923.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="977.0,370.0 1079.0,370.0 1079.0,516.0 1580.0,516.0 1580.0,560.0 1605.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1084.0" y="362.0" paint-order="stroke" stroke="white" stroke-width="4">nie — pierwsza niespełniona reguła</text><polyline points="977.0,370.0 1105.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1046.0" y="362.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1295.0,370.0 1423.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1477.0,370.0 1580.0,370.0 1580.0,560.0 1605.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1585.0" y="362.0" paint-order="stroke" stroke="white" stroke-width="4">nie — pierwsza niespełniona reguła</text><polyline points="1774.0,438.0 1774.0,490.0 1700.0,490.0 1700.0,515.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1477.0,370.0 1600.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1543.5" y="362.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1800.0,370.0 1855.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2045.0,370.0 2182.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Kolejny zbiór
+Źródło HTML: #tab=ckan&amp;node=K14
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-118</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Kolejny zbiór</tspan></text></g><g class="node"><title>Pomiń zbiór; dopisz błąd i zwiększ liczbę odrzuceń
+Lista przyjętych nie zawiera identyfikatora tego zbioru. Wynik OK_PARTIAL przy odrzuceniach, także gdy nic nie przyjęto; wynik wynika z error_desc i datasets_rejected_count.
+
+Źródło HTML: #tab=ckan&amp;node=K14r
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-119</title><rect x="1605.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1700.0" y="557.0" text-anchor="middle"><tspan x="1700.0" dy="0">Pomiń zbiór; dopisz błąd i</tspan><tspan x="1700.0" dy="15">zwiększ liczbę odrzuceń</tspan></text></g><g class="node"><title>Przejdź do następnego zbioru
+Źródło HTML: #tab=ckan&amp;node=K14r
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-119</title><circle cx="1950.0" cy="560.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1950.0" y="595.0" text-anchor="middle"><tspan x="1950.0" dy="0">Przejdź do następnego zbioru</tspan></text></g><g class="node"><title>Sprawdź license_id
+Dozwolone cc-zero, cc-by, cc-by-sa, cc-nc. Inny license_id odrzuca cały zbiór; nie pojedynczy zasób.
+
+Źródło HTML: #tab=ckan&amp;node=K14
+
+Źródło HTML: #tab=bledy&amp;id=SECTION-bledy-10
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-118</title><rect x="105.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="200.0" y="374.0" text-anchor="middle"><tspan x="200.0" dy="0">Sprawdź license_id</tspan></text></g><g class="node"><title>Licencja na białej liście?
+Źródło HTML: #tab=ckan&amp;node=K14
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-118</title><polygon points="450.0,343.0 477.0,370.0 450.0,397.0 423.0,370.0" fill="#fff0d4" stroke="#b58030"/><text x="450.0" y="375.0" text-anchor="middle">×</text><text x="450.0" y="331.0" text-anchor="middle"><tspan x="450.0" dy="0">Licencja na białej liście?</tspan></text></g><g class="node"><title>Sprawdź instytucję i zbiór na portalu
+Reguły ORGANIZATION_IN_TRASH / DATASET_IN_TRASH. Nie utożsamiamy kosza z permanentnym usunięciem.
+
+Źródło HTML: #tab=ckan&amp;node=K14
+
+Źródło HTML: #tab=bledy&amp;id=SECTION-bledy-10
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-118</title><rect x="605.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="367.0" text-anchor="middle"><tspan x="700.0" dy="0">Sprawdź instytucję i zbiór</tspan><tspan x="700.0" dy="15">na portalu</tspan></text></g><g class="node"><title>Instytucja i zbiór poza koszem?
+Źródło HTML: #tab=ckan&amp;node=K14
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-118</title><polygon points="950.0,343.0 977.0,370.0 950.0,397.0 923.0,370.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="375.0" text-anchor="middle">×</text><text x="950.0" y="318.0" text-anchor="middle"><tspan x="950.0" dy="0">Instytucja i zbiór poza</tspan><tspan x="950.0" dy="15">koszem?</tspan></text></g><g class="node"><title>Sprawdź HVD zbioru i zasobów
+HVD z wykazu KE: typ instytucji state/local/other i hasHighValueData=true; sprawdzane osobno dla zbioru i zasobu. Samo hasHighValueData nie ma tych dodatkowych warunków.
+
+Źródło HTML: #tab=ckan&amp;node=K14
+
+Źródło HTML: #tab=bledy&amp;id=SECTION-bledy-10
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-118</title><rect x="1105.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="367.0" text-anchor="middle"><tspan x="1200.0" dy="0">Sprawdź HVD zbioru i</tspan><tspan x="1200.0" dy="15">zasobów</tspan></text></g><g class="node"><title>Reguły HVD spełnione?
+Źródło HTML: #tab=ckan&amp;node=K14
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-118</title><polygon points="1450.0,343.0 1477.0,370.0 1450.0,397.0 1423.0,370.0" fill="#fff0d4" stroke="#b58030"/><text x="1450.0" y="375.0" text-anchor="middle">×</text><text x="1450.0" y="331.0" text-anchor="middle"><tspan x="1450.0" dy="0">Reguły HVD spełnione?</tspan></text></g><g class="node"><title>Sprawdź oznaczone zasoby DGA zbioru
+
+Pierwsza niespełniona reguła DGA odrzuca zbiór. Tylko state/local; inne flagi dynamic/research/HVD/KE false lub brak. GET: dokładnie 200; Content-Type odpowiada xls/xlsx/csv. Dokładnie 5 kolumn w kolejności: Lp.; Zasób chronionych danych; Format danych; Rozmiar danych; Warunki ponownego wykorzystywania. Najwyżej jeden DGA w całym XML, a w CKAN jeden na instytucję w imporcie. Sprawdzenie istniejących opublikowanych DGA: brak więcej niż jednego i brak DGA dodanego ręcznie lub innym źródłem.
+
+Źródło HTML: #tab=ckan&amp;node=K14
+
+Źródło HTML: #tab=inst&amp;id=SECTION-inst-7
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-118</title><rect x="1600.0" y="320.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1700.0" y="416.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1700.0" y="367.0" text-anchor="middle"><tspan x="1700.0" dy="0">Sprawdź oznaczone zasoby DGA</tspan><tspan x="1700.0" dy="15">zbioru</tspan></text></g><g class="node"><title>
+Źródło HTML: #tab=ckan&amp;node=K14
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-118</title><circle cx="1774.0" cy="420.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="1774.0" y="455.0" text-anchor="middle"></text></g><g class="node"><title>Dodaj zbiór do listy przyjętych
+Źródło HTML: #tab=ckan&amp;node=K15
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-120</title><rect x="1855.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1950.0" y="367.0" text-anchor="middle"><tspan x="1950.0" dy="0">Dodaj zbiór do listy</tspan><tspan x="1950.0" dy="15">przyjętych</tspan></text></g><g class="node"><title>Przejdź do następnego zbioru
+Źródło HTML: #tab=ckan&amp;node=K15
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-120</title><circle cx="2200.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="2200.0" y="405.0" text-anchor="middle"><tspan x="2200.0" dy="0">Przejdź do następnego zbioru</tspan></text></g><g class="node"><title>Pierwsza niespełniona reguła odrzuca zbiór; kolejne zbiory są nadal oceniane. Licencje: cc-zero / cc-by / cc-by-sa / cc-nc. HVD z wykazu KE: typ instytucji state/local/other i hasHighValueData=true; sprawdzane osobno dla zbioru i zasobu. Samo hasHighValueData nie ma tych dodatkowych warunków. Odrzucony wcześniejszy zbiór może zostać trwale wycofany podczas synchronizacji (U-7).
+</title><text x="1159.0" y="36.0" text-anchor="middle"><tspan x="1159.0" dy="0">Pierwsza niespełniona reguła odrzuca zbiór; kolejne zbiory są nadal oceniane. Licencje: cc-zero / cc-by / cc-by-sa / cc-nc. HVD z wykazu KE: typ instytucji state/local/other i hasHighValueData=true; sprawdzane osobno dla zbioru i zasobu. Samo hasHighValueData nie ma tych dodatkowych warunków.</tspan><tspan x="1159.0" dy="15">Odrzucony wcześniejszy zbiór może zostać trwale wycofany podczas synchronizacji (U-7).</tspan></text></g></svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="142.0 65.0 1156.0 423.0" role="img" aria-label="Zweryfikuj wszystkie opisy i adresy"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="142.0" y="65.0" width="1156.0" height="423.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 600.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="800.0,180.0 923.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="977.0,180.0 1076.0,180.0 1076.0,370.0 1182.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1081.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="977.0,180.0 1182.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1084.5" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><g class="node"><title>Lista pakietów z API
+Źródło HTML: #tab=ckan&amp;node=K4
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-116</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Lista pakietów z API</tspan></text></g><g class="node"><title>Przygotuj schemat całej listy i wspólny kontekst
+many=True, organization i new_institution_type. Nieznane pola ignorowane; state/private/groups itd. wykluczone zgodnie z tabelą pól. license_url — sprzeczne opisy, nie dodano pewnej kontroli (V-02 README).
+
+Źródło HTML: #tab=ckan&amp;node=K4
+
+Źródło HTML: #tab=cmp&amp;id=U-1
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-116</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Przygotuj schemat całej</tspan><tspan x="450.0" dy="15">listy i wspólny kontekst</tspan></text></g><g class="node"><title>Sprawdź każdy pakiet i jego zasoby
+Źródło HTML: #tab=ckan&amp;node=K5
+
+Źródło HTML: #tab=ckan&amp;node=K6
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-108</title><rect x="600.0" y="130.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="700.0" y="226.0" text-anchor="middle" font-weight="bold">⊞</text><text x="700.0" y="177.0" text-anchor="middle"><tspan x="700.0" dy="0">Sprawdź każdy pakiet i jego</tspan><tspan x="700.0" dy="15">zasoby</tspan></text></g><g class="node"><title>Jest błąd podstawowej walidacji gdziekolwiek?
+Źródło HTML: #tab=ckan&amp;node=K12
+
+Źródło HTML: #tab=cmp&amp;id=U-4
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-114</title><polygon points="950.0,153.0 977.0,180.0 950.0,207.0 923.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="185.0" text-anchor="middle">×</text><text x="950.0" y="128.0" text-anchor="middle"><tspan x="950.0" dy="0">Jest błąd podstawowej</tspan><tspan x="950.0" dy="15">walidacji gdziekolwiek?</tspan></text></g><g class="node"><title>Odrzuć całą listę CKAN
+Nie uruchamiaj walidacji częściowej. Nie zapisuj nowych zbiorów i nie usuwaj wcześniejszych jako nieaktualnych.
+
+Źródło HTML: #tab=ckan&amp;node=KS
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-115</title><circle cx="1200.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1200.0" y="405.0" text-anchor="middle"><tspan x="1200.0" dy="0">Odrzuć całą listę CKAN</tspan></text></g><g class="node"><title>Cała lista przechodzi do reguł biznesowych
+Źródło HTML: #tab=ckan&amp;node=K12
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-114</title><circle cx="1200.0" cy="180.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1200.0" y="215.0" text-anchor="middle"><tspan x="1200.0" dy="0">Cała lista przechodzi do</tspan><tspan x="1200.0" dy="15">reguł biznesowych</tspan></text></g></svg>

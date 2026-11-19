@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="142.0 70.0 1906.0 635.0" role="img" aria-label="Sprawdź każdy zasób pakietu"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="142.0" y="70.0" width="1906.0" height="635.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 673.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="727.0,180.0 923.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="830.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="727.0,180.0 824.0,180.0 824.0,299.0 1580.0,299.0 1580.0,370.0 1605.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="829.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="977.0,180.0 1105.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1046.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="977.0,180.0 1074.0,180.0 1074.0,318.0 950.0,318.0 950.0,343.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1079.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="977.0,370.0 1100.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1043.5" y="362.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="977.0,370.0 1080.0,370.0 1080.0,560.0 1105.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1085.0" y="362.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1295.0,560.0 1320.0,560.0 1320.0,441.0 1580.0,441.0 1580.0,370.0 1605.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1545.0,370.0 1605.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1295.0,180.0 1580.0,180.0 1580.0,370.0 1605.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1795.0,370.0 1932.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1300.0,370.0 1325.0,370.0 1325.0,560.0 1423.0,560.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1450.0,533.0 1450.0,508.0 1570.0,508.0 1570.0,370.0 1545.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1455.0" y="500.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1477.0,560.0 1580.0,560.0 1580.0,370.0 1605.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1585.0" y="552.0" paint-order="stroke" stroke="white" stroke-width="4">nie — kontekst bez nowego wyniku</text><g class="node"><title>Kolejny zasób
+Źródło HTML: #tab=ckan&amp;node=K6
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-108</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Kolejny zasób</tspan></text></g><g class="node"><title>Sprawdź id, name, URL; zmniejsz litery formatu
+id wymagany ≤36, name wymagany, poprawność URL. Wymóg https w opisanej kontroli tylko gdy URL zawiera ://. Nie dopowiadamy poprawionej walidacji dla linków bez ://.
+
+Źródło HTML: #tab=ckan&amp;node=K6
+
+Źródło HTML: #tab=cmp&amp;id=U-6
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-108</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Sprawdź id, name, URL;</tspan><tspan x="450.0" dy="15">zmniejsz litery formatu</tspan></text></g><g class="node"><title>Pola pozwalają uruchomić walidator formatu?
+Źródło HTML: #tab=ckan&amp;node=KERR
+
+Źródło HTML: #tab=bledy&amp;id=SECTION-bledy-8
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-113</title><polygon points="700.0,153.0 727.0,180.0 700.0,207.0 673.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="700.0" y="185.0" text-anchor="middle">×</text><text x="700.0" y="128.0" text-anchor="middle"><tspan x="700.0" dy="0">Pola pozwalają uruchomić</tspan><tspan x="700.0" dy="15">walidator formatu?</tspan></text></g><g class="node"><title>Zapamiętaj błędy zasobu
+Źródło HTML: #tab=ckan&amp;node=KERR
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-113</title><rect x="1605.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1700.0" y="374.0" text-anchor="middle"><tspan x="1700.0" dy="0">Zapamiętaj błędy zasobu</tspan></text></g><g class="node"><title>Podano niepusty format?
+Źródło HTML: #tab=ckan&amp;node=K7</title><polygon points="950.0,153.0 977.0,180.0 950.0,207.0 923.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="185.0" text-anchor="middle">×</text><text x="950.0" y="141.0" text-anchor="middle"><tspan x="950.0" dy="0">Podano niepusty format?</tspan></text></g><g class="node"><title>Przyjmij deklarację bez porównania z plikiem
+Nie egzekwuje choices modelu; save/get_or_create bez full_clean. DGA ma odrębne późniejsze kontrole, nawet przy podanym formacie.
+
+Źródło HTML: #tab=ckan&amp;node=K8
+
+Źródło HTML: #tab=cmp&amp;id=U-2
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-109</title><rect x="1105.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="177.0" text-anchor="middle"><tspan x="1200.0" dy="0">Przyjmij deklarację bez</tspan><tspan x="1200.0" dy="15">porównania z plikiem</tspan></text></g><g class="node"><title>Jest link do rozpoznania formatu?
+Źródło HTML: #tab=ckan&amp;node=K10
+
+Źródło HTML: #tab=katalog&amp;id=CS-02
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-111</title><polygon points="950.0,343.0 977.0,370.0 950.0,397.0 923.0,370.0" fill="#fff0d4" stroke="#b58030"/><text x="950.0" y="375.0" text-anchor="middle">×</text><text x="950.0" y="318.0" text-anchor="middle"><tspan x="950.0" dy="0">Jest link do rozpoznania</tspan><tspan x="950.0" dy="15">formatu?</tspan></text></g><g class="node"><title>Dopisz „Link cannot be empty”
+Źródło HTML: #tab=ckan&amp;node=K10
+
+Źródło HTML: #tab=katalog&amp;id=CS-02
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-111</title><rect x="1105.0" y="515.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="557.0" text-anchor="middle"><tspan x="1200.0" dy="0">Dopisz „Link cannot be</tspan><tspan x="1200.0" dy="15">empty”</tspan></text></g><g class="node"><title>Pobierz i rozpoznaj brakujący format
+
+Pobranie: poprawny URL i HTTPS także po przekierowaniach; dokładnie HTTP 200; poprawny i dozwolony Content-Type (octet-stream akceptowany), treść niepusta i bez niebezpiecznego załącznika. Heurystyka formatu walidacji: URL → magic → Content-Type → Content-Disposition. Nie jest to heurystyka późniejszego przygotowania pliku. Nieznany format przechodzi; flaga może blokować rozpoznany nieobsługiwany. Przekazanie wyniku do kontekstu następuje po udanej kontroli.
+
+Źródło HTML: #tab=ckan&amp;node=K10
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-111</title><rect x="1100.0" y="320.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1200.0" y="416.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1200.0" y="367.0" text-anchor="middle"><tspan x="1200.0" dy="0">Pobierz i rozpoznaj</tspan><tspan x="1200.0" dy="15">brakujący format</tspan></text></g><g class="node"><title>Przekaż wykryty format / None do kontekstu
+Wynik udanego rozpoznania zapisuje się w context[format]. Po błędzie pobrania walidacja gromadzi błąd; dane nie zostaną przyjęte.
+
+Źródło HTML: #tab=ckan&amp;node=K11
+
+Źródło HTML: #tab=cmp&amp;id=U-1
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-112</title><rect x="1355.0" y="325.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1450.0" y="367.0" text-anchor="middle"><tspan x="1450.0" dy="0">Przekaż wykryty format /</tspan><tspan x="1450.0" dy="15">None do kontekstu</tspan></text></g><g class="node"><title>Przejdź do następnego zasobu
+Źródło HTML: #tab=ckan&amp;node=KRNEXT</title><circle cx="1950.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1950.0" y="405.0" text-anchor="middle"><tspan x="1950.0" dy="0">Przejdź do następnego zasobu</tspan></text></g><g class="node"><title>Rozpoznanie zakończone bez błędu?
+Źródło HTML: #tab=ckan&amp;node=K10
+
+Źródło HTML: #tab=ckan&amp;node=K11
+
+Źródło HTML: #tab=ckan&amp;node=KERR
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-111
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-112
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-113</title><polygon points="1450.0,533.0 1477.0,560.0 1450.0,587.0 1423.0,560.0" fill="#fff0d4" stroke="#b58030"/><text x="1450.0" y="565.0" text-anchor="middle">×</text><text x="1450.0" y="508.0" text-anchor="middle"><tspan x="1450.0" dy="0">Rozpoznanie zakończone bez</tspan><tspan x="1450.0" dy="15">błędu?</tspan></text></g></svg>

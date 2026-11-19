@@ -1,0 +1,29 @@
+{
+  "snapshot": "mcod 2.62.3",
+  "date": "2026-11-19",
+  "source_root": "/home/wojtek/ba-code-mapper/source_snapshots/mcod/backend/2.62.3/98b9855d7b47cb8fd8680ab70c6114f138ac46123ea1541fbce2664866f09578-tree/mcod",
+  "sha256": {
+    "resources/models.py": "b6edb927eceb779cea13a86d4c656aa399c2c821fd49234293411f7f2b569e2b",
+    "resources/admin.py": "9dba7ada05b1d2cce975a7fa643eb9f6240796bbb6e0672b5d0a475c8eb4885e",
+    "resources/forms.py": "8680de776c1019b9d0d870910540d7b5d5c94edc1cdca0ebdf9832a96e85554c",
+    "resources/link_validation.py": "f840bc9e7063c3661747d3184eedd5fdc80f9d3a73f33052c6b813c22bc2e820",
+    "resources/tasks/entrypoint_res.py": "27c50f3035d9f0e46f1c73804219b6c5c72c2f6c4b9ac347eb11cbc8aef34e09",
+    "resources/tasks/entrypoint_res_file.py": "5526d2f6dc7ec5ba1415f5f33518cc93aa4dec4d48bd5fa9ad94860ec15dcb6f",
+    "resources/tasks/process_resource_from_url.py": "386c9c10131732dbf08a6c065a8a52d4657fe53086e19e5f1d252c4eee3fd87a",
+    "resources/tasks/process_resource_file.py": "67d751ac92e4f8ffc353933c69412f495c9a0ac220aa06404ea29e8d889e7239",
+    "resources/tasks/process_resource_file_data.py": "9bd28d0d8f93c1cfd5a975d3adf193ef7ba2a53bac876d0009e8d54fe955b2dc",
+    "resources/tasks/common.py": "3bec2b6d32c1df4c97dc7e6e62bf3a04259e5ecb7d5983750d90bde231a46f77",
+    "resources/score_computation/score_calculation.py": "eaa9d41abcc311cd2c111a015c6006a143856915376922853f9f915546289ced",
+    "harvester/models.py": "54bcf9e9a3465e2c5bac8ac357cc8c8866fc48633f575d8abf0df4e38b9091f1",
+    "harvester/tasks.py": "5c00afb42c594b1d1914ad2f0c42304096eb81703c8ceff32f39823d3adf2bd1",
+    "harvester/serializers.py": "ced13a61032b70e223f058b0ce8df0a8fa9c3cca38235e55ebdc0bacd3f1de07",
+    "datasets/models.py": "35c9a1ed76e7581204549d2f9ec159440b864e3a167c20b8d6bd9c89938162fb",
+    "datasets/tasks.py": "3849e00bb3b10b1217671854a924b526f3da7765329b2e21d6216e6292b2ac5e"
+  },
+  "screenshots": {
+    "1": "1fa8adc289af1fbe8942dde816a29f033d69b3f68730a163cc034d0bd3a9cb72",
+    "2": "77476bf51eb46e53c8c98dabda4f75e0516874065d671bca303ddb9fe9bd1d21",
+    "3": "afa1eaae1272503eaf0ab675ef4441ad2eb0c46c48d1d7cebd68f06dbbdb0032"
+  },
+  "note": "Źródła lokalne, bez publikacji; podstawowe modele szczegółowe odziedziczone z wcześniejszych opracowań."
+}

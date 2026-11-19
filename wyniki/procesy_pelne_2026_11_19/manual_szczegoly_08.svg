@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="40.0 1495.0 1806.0 251.0" role="img" aria-label="3. Portal — opcjonalne podniesienie oceny po konwersji"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="40.0" y="1495.0" width="1806.0" height="251.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="126.0,1603.0 300.0,1603.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="520.0,1603.0 600.0,1603.0 600.0,1602.0 680.0,1602.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><g class="node"><title>Zlecenie po indeksacji danych
+Źródło HTML: #tab=xml&amp;node=OINCREASE
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-320</title><circle cx="103.0" cy="1603.0" r="23.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="103.0" y="1643.0" text-anchor="middle"><tspan x="103.0" dy="0">Zlecenie po indeksacji</tspan><tspan x="103.0" dy="15">danych</tspan></text></g><g class="node"><title>Spróbuj utworzyć pochodne formaty danych
+Źródło HTML: #tab=xml&amp;node=OINCREASE
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-320</title><rect x="300.0" y="1560.0" width="220.0" height="86.0" rx="8" fill="#fff" stroke="#46637f"/><text x="410.0" y="1642.0" text-anchor="middle" font-weight="bold">⊞</text><text x="410.0" y="1600.0" text-anchor="middle"><tspan x="410.0" dy="0">Spróbuj utworzyć pochodne</tspan><tspan x="410.0" dy="15">formaty danych</tspan></text></g><g class="node"><title>Próba konwersji zakończona
+Źródło HTML: #tab=xml&amp;node=OINCREASE
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-320</title><circle cx="1743.0" cy="1603.0" r="23.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1743.0" y="1643.0" text-anchor="middle"><tspan x="1743.0" dy="0">Próba konwersji zakończona</tspan></text></g></svg>

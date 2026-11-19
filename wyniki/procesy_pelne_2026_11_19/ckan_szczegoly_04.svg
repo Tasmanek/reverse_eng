@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60.0 -45.0 1488.0 533.0" role="img" aria-label="Pobierz i odczytaj odpowiedź API"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="60.0" y="-45.0" width="1488.0" height="533.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><polyline points="218.0,180.0 355.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="545.0,180.0 673.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="727.0,180.0 855.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="796.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="727.0,180.0 824.0,180.0 824.0,370.0 1182.0,370.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="829.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="1045.0,180.0 1173.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1227.0,180.0 1432.0,180.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1334.5" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1227.0,180.0 1324.0,180.0 1324.0,327.0 1200.0,327.0 1200.0,352.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1329.0" y="172.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><g class="node"><title>Adres API źródła
+Źródło HTML: #tab=ckan&amp;node=K1
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-102</title><circle cx="200.0" cy="180.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="200.0" y="215.0" text-anchor="middle"><tspan x="200.0" dy="0">Adres API źródła</tspan></text></g><g class="node"><title>Wywołaj GET skonfigurowanego API CKAN
+api_url + opcjonalne API_URL_PARAMS. Dokument nie narzuca endpointu package_search ani stronicowania. HTTP OK, nie wyłącznie 200; wyjątek sieci lub błędny kod kończy tę próbę.
+
+Źródło HTML: #tab=ckan&amp;node=K1
+
+Źródło HTML: #tab=katalog&amp;id=HTTP-PATH-5
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-102</title><rect x="355.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="450.0" y="177.0" text-anchor="middle"><tspan x="450.0" dy="0">Wywołaj GET</tspan><tspan x="450.0" dy="15">skonfigurowanego API CKAN</tspan></text></g><g class="node"><title>Pobranie odpowiedzi udane?
+Źródło HTML: #tab=ckan&amp;node=K1
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-102</title><polygon points="700.0,153.0 727.0,180.0 700.0,207.0 673.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="700.0" y="185.0" text-anchor="middle">×</text><text x="700.0" y="141.0" text-anchor="middle"><tspan x="700.0" dy="0">Pobranie odpowiedzi udane?</tspan></text></g><g class="node"><title>Odczytaj JSON: result.results albo result
+Niepoprawny JSON, brak result lub niewłaściwa struktura kończą pobranie; nie dopowiadamy kontroli pola success.
+
+Źródło HTML: #tab=ckan&amp;node=K2
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-105</title><rect x="855.0" y="135.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="950.0" y="177.0" text-anchor="middle"><tspan x="950.0" dy="0">Odczytaj JSON:</tspan><tspan x="950.0" dy="15">result.results albo result</tspan></text></g><g class="node"><title>Uzyskano listę pakietów?
+Źródło HTML: #tab=ckan&amp;node=K2
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-105</title><polygon points="1200.0,153.0 1227.0,180.0 1200.0,207.0 1173.0,180.0" fill="#fff0d4" stroke="#b58030"/><text x="1200.0" y="185.0" text-anchor="middle">×</text><text x="1200.0" y="141.0" text-anchor="middle"><tspan x="1200.0" dy="0">Uzyskano listę pakietów?</tspan></text></g><g class="node"><title>Błąd pobrania lub budowy odpowiedzi
+Źródło HTML: #tab=ckan&amp;node=K1Reject
+
+Źródło HTML: #tab=ckan&amp;node=K2Reject</title><circle cx="1200.0" cy="370.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1200.0" y="405.0" text-anchor="middle"><tspan x="1200.0" dy="0">Błąd pobrania lub budowy</tspan><tspan x="1200.0" dy="15">odpowiedzi</tspan></text></g><g class="node"><title>Lista gotowa do walidacji
+Źródło HTML: #tab=ckan&amp;node=K4
+
+Źródło HTML: #tab=ckan-seq&amp;id=SC-116</title><circle cx="1450.0" cy="180.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1450.0" y="215.0" text-anchor="middle"><tspan x="1450.0" dy="0">Lista gotowa do walidacji</tspan></text></g><g class="node"><title>Odczyt result.results albo result z JSON. Brak odpowiedzi, niepoprawny JSON lub niewłaściwa struktura odrzuca całą próbę. Endpoint i parametry wynikają z konfiguracji, bez dopisanego stronicowania.
+</title><text x="784.0" y="36.0" text-anchor="middle"><tspan x="784.0" dy="0">Odczyt result.results albo result z JSON. Brak odpowiedzi, niepoprawny JSON lub niewłaściwa struktura odrzuca całą próbę. Endpoint i parametry wynikają z konfiguracji, bez dopisanego</tspan><tspan x="784.0" dy="15">stronicowania.</tspan></text></g></svg>

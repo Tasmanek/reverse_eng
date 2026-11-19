@@ -1,0 +1,239 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="210.0 25.0 3030.0 4745.0" role="img" aria-label="XML_L2 — widok główny"><defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0 0 L10 4 L0 8Z" fill="#344c67"/></marker></defs><rect x="210.0" y="25.0" width="3030.0" height="4745.0" fill="white"/><style>text{font-family:Arial,sans-serif;fill:#20334b;font-size:13px}.node{cursor:pointer}.node:hover rect{stroke:#147e75;stroke-width:3}</style><rect x="250.0" y="90.0" width="2910.0" height="685.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="114.0" font-weight="bold">Portal — konfiguracja i harmonogram</text><rect x="280.0" y="90.0" width="2880.0" height="400.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="295.0" y="114.0" font-weight="bold">Administrator i panel</text><rect x="280.0" y="490.0" width="2880.0" height="285.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="295.0" y="514.0" font-weight="bold">Harmonogram portalu</text><rect x="250.0" y="815.0" width="2910.0" height="685.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="839.0" font-weight="bold">Portal — import metadanych XML</text><rect x="250.0" y="1540.0" width="2910.0" height="685.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="1564.0" font-weight="bold">Portal — niezależne zadania publikacji</text><rect x="280.0" y="1540.0" width="2880.0" height="210.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="295.0" y="1564.0" font-weight="bold">Wyszukiwarka / API</text><rect x="280.0" y="1750.0" width="2880.0" height="190.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="295.0" y="1774.0" font-weight="bold">Katalog RDF</text><rect x="280.0" y="1940.0" width="2880.0" height="285.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="295.0" y="1964.0" font-weight="bold">Obserwujący</text><rect x="250.0" y="2265.0" width="2910.0" height="685.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="2289.0" font-weight="bold">Portal — niezależne zadania zasobów</text><rect x="250.0" y="2990.0" width="2910.0" height="305.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="3014.0" font-weight="bold">Portal — osobne zadanie konwersji</text><rect x="250.0" y="3335.0" width="2910.0" height="495.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="3359.0" font-weight="bold">Portal — osobne zadanie archiwizacji</text><rect x="250.0" y="3870.0" width="2910.0" height="265.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="3894.0" font-weight="bold">Instytucja — serwer XML, zasobów i dokumentów</text><rect x="250.0" y="4175.0" width="2910.0" height="495.0" fill="#f5f8fc" stroke="#bac8d8"/><text x="265.0" y="4199.0" font-weight="bold">Portal — opcjonalna walidacja URL w panelu</text><polyline points="498.0,205.0 630.0,205.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,205.0 953.0,205.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1007.0,205.0 1135.0,205.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1076.0" y="197.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1325.0,205.0 1462.0,205.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1007.0,205.0 1104.0,205.0 1104.0,395.0 1212.0,395.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1109.0" y="197.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="804.0,273.0 804.0,395.0 962.0,395.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="498.0,585.0 630.0,585.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,585.0 962.0,585.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,205.0 855.0,205.0 855.0,351.0 1673.0,351.0 1673.0,395.0 1698.0,395.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><polyline points="498.0,930.0 703.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="757.0,930.0 854.0,930.0 854.0,1077.0 730.0,1077.0 730.0,1102.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="859.0" y="922.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="757.0,930.0 880.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="823.5" y="922.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1080.0,930.0 1130.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1330.0,930.0 1635.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1825.0,930.0 1880.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2080.0,930.0 2130.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2330.0,930.0 2385.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2575.0,930.0 2712.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1054.0,998.0 1054.0,1310.0 1385.0,1310.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1304.0,998.0 1304.0,1023.0 1360.0,1023.0 1360.0,1310.0 1385.0,1310.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1575.0,1310.0 1712.0,1310.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="2575.0,930.0 2600.0,930.0 2600.0,1310.0 2698.0,1310.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><polyline points="2080.0,930.0 2105.0,930.0 2105.0,1120.0 2448.0,1120.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><polyline points="498.0,1655.0 635.0,1655.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="825.0,1655.0 962.0,1655.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="498.0,1845.0 635.0,1845.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="825.0,1845.0 962.0,1845.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="498.0,2035.0 635.0,2035.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="825.0,2035.0 962.0,2035.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="498.0,2380.0 630.0,2380.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,2380.0 962.0,2380.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="804.0,2448.0 804.0,2570.0 962.0,2570.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="498.0,2760.0 630.0,2760.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,2760.0 962.0,2760.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,2380.0 855.0,2380.0 855.0,2526.0 1173.0,2526.0 1173.0,2570.0 1198.0,2570.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><polyline points="498.0,3105.0 630.0,3105.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,3105.0 962.0,3105.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="498.0,3450.0 635.0,3450.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="825.0,3450.0 953.0,3450.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1007.0,3450.0 1135.0,3450.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1076.0" y="3442.0" paint-order="stroke" stroke="white" stroke-width="4">tak</text><polyline points="1325.0,3450.0 1462.0,3450.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1007.0,3450.0 1104.0,3450.0 1104.0,3640.0 1212.0,3640.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><text x="1109.0" y="3442.0" paint-order="stroke" stroke="white" stroke-width="4">nie</text><polyline points="498.0,4290.0 630.0,4290.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="830.0,4290.0 885.0,4290.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1075.0,4290.0 1212.0,4290.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="804.0,4358.0 804.0,4480.0 885.0,4480.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="1075.0,4480.0 1212.0,4480.0" fill="none" stroke="#344c67" stroke-width="1.6"  marker-end="url(#arrow)"/><polyline points="250.0,140.0 20.0,140.0 20.0,930.0 462.0,930.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="25.0" y="132.0" paint-order="stroke" stroke="white" stroke-width="4">Zlecenie importu źródła</text><polyline points="250.0,865.0 28.0,865.0 28.0,1655.0 462.0,1655.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="33.0" y="857.0" paint-order="stroke" stroke="white" stroke-width="4">Zlecenie ES</text><polyline points="250.0,965.0 36.0,965.0 36.0,1845.0 462.0,1845.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="41.0" y="957.0" paint-order="stroke" stroke="white" stroke-width="4">Zlecenie RDF</text><polyline points="250.0,1065.0 44.0,1065.0 44.0,2035.0 462.0,2035.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="49.0" y="1057.0" paint-order="stroke" stroke="white" stroke-width="4">Zlecenie powiadomienia</text><polyline points="250.0,1165.0 52.0,1165.0 52.0,2380.0 462.0,2380.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="57.0" y="1157.0" paint-order="stroke" stroke="white" stroke-width="4">Zlecenie zasobu po commicie</text><polyline points="250.0,2315.0 60.0,2315.0 60.0,1655.0 462.0,1655.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="65.0" y="2307.0" paint-order="stroke" stroke="white" stroke-width="4">Odświeżenie ES po ocenie</text><polyline points="250.0,2465.0 68.0,2465.0 68.0,1845.0 462.0,1845.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="73.0" y="2457.0" paint-order="stroke" stroke="white" stroke-width="4">Odświeżenie RDF po ocenie</text><polyline points="250.0,1265.0 76.0,1265.0 76.0,2760.0 462.0,2760.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="81.0" y="1257.0" paint-order="stroke" stroke="white" stroke-width="4">Rewalidacja danych</text><polyline points="250.0,2615.0 84.0,2615.0 84.0,3105.0 462.0,3105.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="89.0" y="2607.0" paint-order="stroke" stroke="white" stroke-width="4">Zlecenie konwersji</text><polyline points="250.0,3040.0 92.0,3040.0 92.0,1655.0 462.0,1655.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="97.0" y="3032.0" paint-order="stroke" stroke="white" stroke-width="4">Odświeżenie ES po konwersji</text><polyline points="250.0,3150.0 100.0,3150.0 100.0,1845.0 462.0,1845.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="105.0" y="3142.0" paint-order="stroke" stroke="white" stroke-width="4">Odświeżenie RDF po konwersji</text><polyline points="250.0,3260.0 108.0,3260.0 108.0,3450.0 462.0,3450.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="113.0" y="3252.0" paint-order="stroke" stroke="white" stroke-width="4">Archiwum po konwersji</text><polyline points="250.0,1365.0 116.0,1365.0 116.0,3450.0 462.0,3450.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="121.0" y="1357.0" paint-order="stroke" stroke="white" stroke-width="4">Archiwum po wycofaniu</text><polyline points="250.0,2765.0 124.0,2765.0 124.0,3450.0 462.0,3450.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="129.0" y="2757.0" paint-order="stroke" stroke="white" stroke-width="4">Archiwum przy przeniesieniu zasobu</text><polyline points="250.0,1465.0 132.0,1465.0 132.0,4002.5 250.0,4002.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="137.0" y="1457.0" paint-order="stroke" stroke="white" stroke-width="4">Żądania HTTP importu</text><polyline points="250.0,3920.0 140.0,3920.0 140.0,1157.5 250.0,1157.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="145.0" y="3912.0" paint-order="stroke" stroke="white" stroke-width="4">Odpowiedzi HTTP</text><polyline points="250.0,2915.0 148.0,2915.0 148.0,4002.5 250.0,4002.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="153.0" y="2907.0" paint-order="stroke" stroke="white" stroke-width="4">Pobranie zasobu lub treści do oceny</text><polyline points="250.0,4010.0 156.0,4010.0 156.0,2607.5 250.0,2607.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="161.0" y="4002.0" paint-order="stroke" stroke="white" stroke-width="4">Treść odpowiedzi na potrzeby zadania</text><polyline points="250.0,740.0 164.0,740.0 164.0,4290.0 462.0,4290.0" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="169.0" y="732.0" paint-order="stroke" stroke="white" stroke-width="4">Opcjonalna walidacja XML</text><polyline points="250.0,4225.0 172.0,4225.0 172.0,432.5 250.0,432.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="177.0" y="4217.0" paint-order="stroke" stroke="white" stroke-width="4">Wynik dla widżetu XML</text><polyline points="250.0,4635.0 180.0,4635.0 180.0,4002.5 250.0,4002.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="185.0" y="4627.0" paint-order="stroke" stroke="white" stroke-width="4">Żądania kontroli XML i .md5</text><polyline points="250.0,4100.0 188.0,4100.0 188.0,4422.5 250.0,4422.5" fill="none" stroke="#344c67" stroke-width="1.6" stroke-dasharray="7 5" marker-end="url(#arrow)"/><text x="193.0" y="4092.0" paint-order="stroke" stroke="white" stroke-width="4">Odpowiedzi kontroli wykazu</text><g class="node"><title>Konfiguracja źródła
+Źródło HTML: #tab=xml&amp;node=A1
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-01</title><circle cx="480.0" cy="205.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="240.0" text-anchor="middle"><tspan x="480.0" dy="0">Konfiguracja źródła</tspan></text></g><g class="node"><title>Skonfiguruj źródło XML
+
+Formularz i ewentualne kontrole; nie jest to import danych.
+
+Źródło HTML: #tab=xml&amp;node=A1
+
+Źródło HTML: #tab=xml&amp;node=A9
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-01
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-04</title><rect x="630.0" y="155.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="251.0" text-anchor="middle" font-weight="bold">⊞</text><text x="730.0" y="209.0" text-anchor="middle"><tspan x="730.0" dy="0">Skonfiguruj źródło XML</tspan></text></g><g class="node"><title>Nowe aktywne źródło lub aktywacja?
+Źródło HTML: #tab=xml&amp;node=A9
+
+Źródło HTML: #tab=testy&amp;id=T-ADMIN
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-04</title><polygon points="980.0,178.0 1007.0,205.0 980.0,232.0 953.0,205.0" fill="#fff0d4" stroke="#b58030"/><text x="980.0" y="210.0" text-anchor="middle">×</text><text x="980.0" y="153.0" text-anchor="middle"><tspan x="980.0" dy="0">Nowe aktywne źródło lub</tspan><tspan x="980.0" dy="15">aktywacja?</tspan></text></g><g class="node"><title>Zleć import po commicie
+Źródło HTML: #tab=xml&amp;node=B6
+
+Źródło HTML: #tab=xml&amp;node=A9
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-05
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-04</title><rect x="1135.0" y="160.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1230.0" y="209.0" text-anchor="middle"><tspan x="1230.0" dy="0">Zleć import po commicie</tspan></text></g><g class="node"><title>Import zlecony
+Źródło HTML: #tab=xml&amp;node=B6
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-05</title><circle cx="1480.0" cy="205.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1480.0" y="240.0" text-anchor="middle"><tspan x="1480.0" dy="0">Import zlecony</tspan></text></g><g class="node"><title>Zapisano; bez zlecenia importu
+Źródło HTML: #tab=scen&amp;id=SCEN-18
+
+Źródło HTML: #tab=testy&amp;id=T-ADMIN</title><circle cx="1230.0" cy="395.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1230.0" y="430.0" text-anchor="middle"><tspan x="1230.0" dy="0">Zapisano; bez zlecenia</tspan><tspan x="1230.0" dy="15">importu</tspan></text></g><g class="node"><title>
+Źródło HTML: #tab=xml&amp;node=AERR
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-03</title><circle cx="804.0" cy="255.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="804.0" y="290.0" text-anchor="middle"></text></g><g class="node"><title>Źródło niezapisane
+Źródło HTML: #tab=xml&amp;node=AERR
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-03</title><circle cx="980.0" cy="395.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="430.0" text-anchor="middle"><tspan x="980.0" dy="0">Źródło niezapisane</tspan></text></g><g class="node"><title>Codzienny przegląd o 03:00
+Godzina opisana w ustawieniach; działanie i konfiguracja produkcyjnego beat nieznane. Wyrażenie opisowe: model niewykonywalny.
+
+Źródło HTML: #tab=xml&amp;node=B1
+
+Źródło HTML: #tab=xml&amp;node=B3
+
+Źródło HTML: #tab=cmp&amp;id=UNVERIFIED</title><circle cx="480.0" cy="585.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="620.0" text-anchor="middle"><tspan x="480.0" dy="0">Codzienny przegląd o 03:00</tspan></text></g><g class="node"><title>Przejrzyj aktywne źródła i zleć należne importy
+
+Dla każdego aktywnego źródła osobno. Brak terminu / nieaktywny to pominięcie, nie błąd importu.
+
+Źródło HTML: #tab=xml&amp;node=B1
+
+Źródło HTML: #tab=xml&amp;node=B3
+
+Źródło HTML: #tab=xml&amp;node=B6
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-05</title><rect x="630.0" y="535.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="631.0" text-anchor="middle" font-weight="bold">⊞</text><text x="730.0" y="582.0" text-anchor="middle"><tspan x="730.0" dy="0">Przejrzyj aktywne źródła i</tspan><tspan x="730.0" dy="15">zleć należne importy</tspan></text></g><g class="node"><title>Zakończono przegląd
+Źródło HTML: #tab=xml&amp;node=B1</title><circle cx="980.0" cy="585.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="620.0" text-anchor="middle"><tspan x="980.0" dy="0">Zakończono przegląd</tspan></text></g><g class="node"><title>Ustawienia źródła
+Źródło HTML: #tab=pola&amp;id=SECTION-pola-5</title><rect x="1698.0" y="363.0" width="64.0" height="64.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1730.0" y="392.0" text-anchor="middle"><tspan x="1730.0" dy="0">Ustawienia</tspan><tspan x="1730.0" dy="15">źródła</tspan></text></g><g class="node"><title>Nowe aktywne źródło albo aktywacja uruchamia import wymuszony po commicie. Zwykła edycja nie zleca importu. Harmonogram przegląda aktywne źródła i warunek ostatni import + częstotliwość ≤ teraz. Produkcyjny beat niepotwierdzony.
+</title><text x="1071.0" y="118.0" text-anchor="middle"><tspan x="1071.0" dy="0">Nowe aktywne źródło albo aktywacja uruchamia import wymuszony po commicie. Zwykła edycja nie zleca importu. Harmonogram przegląda aktywne źródła i warunek ostatni import + częstotliwość ≤ teraz.</tspan><tspan x="1071.0" dy="15">Produkcyjny beat niepotwierdzony.</tspan></text></g><g class="node"><title>Zlecenie importu odebrane
+Źródło HTML: #tab=xml&amp;node=B6
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-05</title><circle cx="480.0" cy="930.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="965.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie importu odebrane</tspan></text></g><g class="node"><title>Źródło nadal aktywne?
+Źródło HTML: #tab=xml&amp;node=B5
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-101</title><polygon points="730.0,903.0 757.0,930.0 730.0,957.0 703.0,930.0" fill="#fff0d4" stroke="#b58030"/><text x="730.0" y="935.0" text-anchor="middle">×</text><text x="730.0" y="891.0" text-anchor="middle"><tspan x="730.0" dy="0">Źródło nadal aktywne?</tspan></text></g><g class="node"><title>Pominięto: źródło nieaktywne
+Log i return; bez DataSourceImport. Istniejące publikacje pozostają.
+
+Źródło HTML: #tab=xml&amp;node=B5
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-101</title><circle cx="730.0" cy="1120.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="730.0" y="1155.0" text-anchor="middle"><tspan x="730.0" dy="0">Pominięto: źródło nieaktywne</tspan></text></g><g class="node"><title>Pobierz i sprawdź wykaz XML
+
+Wersje XSD: 1.0-rc1 oraz 1.1–1.13. HEAD i pobranie XML/.md5 używają response.ok; pobranie zasobu wymaga dokładnie 200. Każde niepowodzenie tej kontroli odrzuca cały import.
+
+Źródło HTML: #tab=xml&amp;node=X1
+
+Źródło HTML: #tab=xml&amp;node=X10
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-06
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-135</title><rect x="880.0" y="880.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="980.0" y="976.0" text-anchor="middle" font-weight="bold">⊞</text><text x="980.0" y="934.0" text-anchor="middle"><tspan x="980.0" dy="0">Pobierz i sprawdź wykaz XML</tspan></text></g><g class="node"><title>Zweryfikuj wszystkie opisy i adresy
+Źródło HTML: #tab=xml&amp;node=X19
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-133</title><rect x="1130.0" y="880.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1230.0" y="976.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1230.0" y="927.0" text-anchor="middle"><tspan x="1230.0" dy="0">Zweryfikuj wszystkie opisy i</tspan><tspan x="1230.0" dy="15">adresy</tspan></text></g><g class="node"><title>Utwórz historię próby i zapisz czas importu źródła
+Początek próby opisuje czas rozpoczęcia, lecz rekord powstaje po pobraniu/walidacji, przed zapisem zbiorów. status wyliczany z error_desc i liczby odrzuceń. last_import_timestamp także przy błędach; brak natychmiastowego automatycznego retry.
+
+Źródło HTML: #tab=xml&amp;node=Brecord
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-201</title><rect x="1635.0" y="885.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1730.0" y="927.0" text-anchor="middle"><tspan x="1730.0" dy="0">Utwórz historię próby i</tspan><tspan x="1730.0" dy="15">zapisz czas importu źródła</tspan></text></g><g class="node"><title>Zapisz przyjęte zbiory, zasoby i skutki publikacji
+Źródło HTML: #tab=xml&amp;node=B10
+
+Źródło HTML: #tab=xml&amp;node=PB3
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-12</title><rect x="1880.0" y="880.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1980.0" y="976.0" text-anchor="middle" font-weight="bold">⊞</text><text x="1980.0" y="927.0" text-anchor="middle"><tspan x="1980.0" dy="0">Zapisz przyjęte zbiory,</tspan><tspan x="1980.0" dy="15">zasoby i skutki publikacji</tspan></text></g><g class="node"><title>Wycofaj pozycje spoza przyjętej listy
+Źródło HTML: #tab=xml&amp;node=B12
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-215</title><rect x="2130.0" y="880.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="2230.0" y="976.0" text-anchor="middle" font-weight="bold">⊞</text><text x="2230.0" y="927.0" text-anchor="middle"><tspan x="2230.0" dy="0">Wycofaj pozycje spoza</tspan><tspan x="2230.0" dy="15">przyjętej listy</tspan></text></g><g class="node"><title>Zapisz koniec, liczniki i wynik źródła
+datasets/resources_updated_count obejmuje również obiekty bez zmiany. Usunięte zasoby kaskadowo wraz ze zbiorem nie muszą być w liczniku zasobów. Zakończenie nie potwierdza ukończenia innych kolejek.
+
+Źródło HTML: #tab=xml&amp;node=B13
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-218</title><rect x="2385.0" y="885.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="2480.0" y="927.0" text-anchor="middle"><tspan x="2480.0" dy="0">Zapisz koniec, liczniki i</tspan><tspan x="2480.0" dy="15">wynik źródła</tspan></text></g><g class="node"><title>OK — import metadanych zakończony
+Źródło HTML: #tab=xml&amp;node=B13
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-218</title><circle cx="2730.0" cy="930.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="2730.0" y="965.0" text-anchor="middle"><tspan x="2730.0" dy="0">OK — import metadanych</tspan><tspan x="2730.0" dy="15">zakończony</tspan></text></g><g class="node"><title>Zapisz ERROR i czas próby; zachowaj poprzednie dane
+Błąd pobrania lub walidacji podstawowej: items=[]; error_desc; bez update_from_items i bez delete_stale. Przewidziany koniec próby i wynik źródła; last_import_timestamp przesuwa następny termin.
+
+Źródło HTML: #tab=xml&amp;node=XS
+
+Źródło HTML: #tab=xml&amp;node=Brecord
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-134
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-201</title><rect x="1385.0" y="1265.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1480.0" y="1307.0" text-anchor="middle"><tspan x="1480.0" dy="0">Zapisz ERROR i czas próby;</tspan><tspan x="1480.0" dy="15">zachowaj poprzednie dane</tspan></text></g><g class="node"><title>ERROR — cały import odrzucony
+Źródło HTML: #tab=xml&amp;node=XS
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-134</title><circle cx="1730.0" cy="1310.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1730.0" y="1345.0" text-anchor="middle"><tspan x="1730.0" dy="0">ERROR — cały import</tspan><tspan x="1730.0" dy="15">odrzucony</tspan></text></g><g class="node"><title>
+Źródło HTML: #tab=xml&amp;node=X3Reject
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-106</title><circle cx="1054.0" cy="980.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="1054.0" y="1015.0" text-anchor="middle"></text></g><g class="node"><title>
+Źródło HTML: #tab=xml&amp;node=XS
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-134</title><circle cx="1304.0" cy="980.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="1304.0" y="1015.0" text-anchor="middle"></text></g><g class="node"><title>Historia prób importu
+Źródło HTML: #tab=pola&amp;id=SECTION-pola-7</title><rect x="2698.0" y="1278.0" width="64.0" height="64.0" rx="8" fill="#fff" stroke="#46637f"/><text x="2730.0" y="1307.0" text-anchor="middle"><tspan x="2730.0" dy="0">Historia prób</tspan><tspan x="2730.0" dy="15">importu</tspan></text></g><g class="node"><title>Zbiory, zasoby i powiązania
+Źródło HTML: #tab=xml&amp;node=B10</title><rect x="2448.0" y="1088.0" width="64.0" height="64.0" rx="8" fill="#fff" stroke="#46637f"/><text x="2480.0" y="1117.0" text-anchor="middle"><tspan x="2480.0" dy="0">Zbiory, zasoby i</tspan><tspan x="2480.0" dy="15">powiązania</tspan></text></g><g class="node"><title>Wynik dotyczy pobrania, walidacji, zapisu i synchronizacji metadanych. Nie czeka na indeksy, pliki, ocenę, konwersję ani archiwum.
+</title><text x="1571.0" y="843.0" text-anchor="middle"><tspan x="1571.0" dy="0">Wynik dotyczy pobrania, walidacji, zapisu i synchronizacji metadanych. Nie czeka na indeksy, pliki, ocenę, konwersję ani archiwum.</tspan></text></g><g class="node"><title>Zlecenie ES
+Źródło HTML: #tab=xml&amp;node=PES
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-208</title><circle cx="480.0" cy="1655.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="1690.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie ES</tspan></text></g><g class="node"><title>Zaktualizuj lub usuń opis w wyszukiwarce i API
+Odrębne zadanie zgodnie ze stanem obiektu. Publikacja obejmuje tylko obiekty kwalifikujące się do widoczności; nie jest potwierdzeniem gotowości pliku.
+
+Źródło HTML: #tab=xml&amp;node=PES
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-208</title><rect x="635.0" y="1610.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="1652.0" text-anchor="middle"><tspan x="730.0" dy="0">Zaktualizuj lub usuń opis w</tspan><tspan x="730.0" dy="15">wyszukiwarce i API</tspan></text></g><g class="node"><title>Zlecenie obsłużone
+Źródło HTML: #tab=xml&amp;node=PES
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-208</title><circle cx="980.0" cy="1655.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="1690.0" text-anchor="middle"><tspan x="980.0" dy="0">Zlecenie obsłużone</tspan></text></g><g class="node"><title>Zlecenie RDF
+Źródło HTML: #tab=xml&amp;node=PRDF
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-209</title><circle cx="480.0" cy="1845.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="1880.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie RDF</tspan></text></g><g class="node"><title>Zaktualizuj lub usuń opis RDF
+Odrębne zadanie zgodnie ze stanem obiektu. Publikacja obejmuje tylko obiekty kwalifikujące się do widoczności; nie jest potwierdzeniem gotowości pliku.
+
+Źródło HTML: #tab=xml&amp;node=PRDF
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-209</title><rect x="635.0" y="1800.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="1842.0" text-anchor="middle"><tspan x="730.0" dy="0">Zaktualizuj lub usuń opis</tspan><tspan x="730.0" dy="15">RDF</tspan></text></g><g class="node"><title>Zlecenie obsłużone
+Źródło HTML: #tab=xml&amp;node=PRDF
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-209</title><circle cx="980.0" cy="1845.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="1880.0" text-anchor="middle"><tspan x="980.0" dy="0">Zlecenie obsłużone</tspan></text></g><g class="node"><title>Zlecenie powiadomienia
+Źródło HTML: #tab=xml&amp;node=PWATCH
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-210</title><circle cx="480.0" cy="2035.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="2070.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie powiadomienia</tspan></text></g><g class="node"><title>Obsłuż powiadomienie odpowiednie do zmiany
+Odrębne zadanie zgodnie ze stanem obiektu. Publikacja obejmuje tylko obiekty kwalifikujące się do widoczności; nie jest potwierdzeniem gotowości pliku.
+
+Źródło HTML: #tab=xml&amp;node=PWATCH
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-210</title><rect x="635.0" y="1990.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="2032.0" text-anchor="middle"><tspan x="730.0" dy="0">Obsłuż powiadomienie</tspan><tspan x="730.0" dy="15">odpowiednie do zmiany</tspan></text></g><g class="node"><title>Zlecenie obsłużone
+Źródło HTML: #tab=xml&amp;node=PWATCH
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-210</title><circle cx="980.0" cy="2035.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="2070.0" text-anchor="middle"><tspan x="980.0" dy="0">Zlecenie obsłużone</tspan></text></g><g class="node"><title>Każde zlecenie uruchamia właściwe zadanie. ES, RDF i powiadomienia mogą kończyć się w różnym czasie. Brak wspólnej bariery zakończenia.
+</title><text x="805.0" y="1573.0" text-anchor="middle"><tspan x="805.0" dy="0">Każde zlecenie uruchamia właściwe zadanie. ES, RDF i powiadomienia mogą kończyć się w różnym czasie. Brak wspólnej</tspan><tspan x="805.0" dy="15">bariery zakończenia.</tspan></text></g><g class="node"><title>Zlecenie przygotowania zasobu
+Źródło HTML: #tab=xml&amp;node=O3
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-211</title><circle cx="480.0" cy="2380.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="2415.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie przygotowania</tspan><tspan x="480.0" dy="15">zasobu</tspan></text></g><g class="node"><title>Przygotuj zasób i oblicz ocenę
+Źródło HTML: #tab=xml&amp;node=O3
+
+Źródło HTML: #tab=xml&amp;node=O9
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-211
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-316</title><rect x="630.0" y="2330.0" width="200.0" height="100.0" rx="8" fill="#fff0d4" stroke="#46637f"/><text x="730.0" y="2426.0" text-anchor="middle" font-weight="bold">⊞</text><text x="730.0" y="2377.0" text-anchor="middle"><tspan x="730.0" dy="0">Przygotuj zasób i oblicz</tspan><tspan x="730.0" dy="15">ocenę</tspan></text></g><g class="node"><title>Zadanie zasobu zakończone
+Źródło HTML: #tab=xml&amp;node=O3
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-211</title><circle cx="980.0" cy="2380.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="2415.0" text-anchor="middle"><tspan x="980.0" dy="0">Zadanie zasobu zakończone</tspan></text></g><g class="node"><title>
+Źródło HTML: #tab=xml&amp;node=OFAIL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-319</title><circle cx="804.0" cy="2430.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="804.0" y="2465.0" text-anchor="middle"></text></g><g class="node"><title>Zadanie zasobu przerwane wyjątkiem
+Źródło HTML: #tab=xml&amp;node=OFAIL
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-319</title><circle cx="980.0" cy="2570.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="2605.0" text-anchor="middle"><tspan x="980.0" dy="0">Zadanie zasobu przerwane</tspan><tspan x="980.0" dy="15">wyjątkiem</tspan></text></g><g class="node"><title>Zlecenie danych po zmianie znaków
+Źródło HTML: #tab=zmiany&amp;id=ROW-zmiany-007</title><circle cx="480.0" cy="2760.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="2795.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie danych po zmianie</tspan><tspan x="480.0" dy="15">znaków</tspan></text></g><g class="node"><title>Ponownie zweryfikuj dane tabelaryczne
+Źródło HTML: #tab=xml&amp;node=ODATA
+
+Źródło HTML: #tab=zmiany&amp;id=ROW-zmiany-007
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-311</title><rect x="630.0" y="2710.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="2806.0" text-anchor="middle" font-weight="bold">⊞</text><text x="730.0" y="2757.0" text-anchor="middle"><tspan x="730.0" dy="0">Ponownie zweryfikuj dane</tspan><tspan x="730.0" dy="15">tabelaryczne</tspan></text></g><g class="node"><title>Rewalidacja danych zakończona
+Źródło HTML: #tab=xml&amp;node=ODATA
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-311</title><circle cx="980.0" cy="2760.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="2795.0" text-anchor="middle"><tspan x="980.0" dy="0">Rewalidacja danych</tspan><tspan x="980.0" dy="15">zakończona</tspan></text></g><g class="node"><title>Zapisane dane zasobu i ocena
+Źródło HTML: #tab=xml&amp;node=O9
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-316</title><rect x="1198.0" y="2538.0" width="64.0" height="64.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1230.0" y="2567.0" text-anchor="middle"><tspan x="1230.0" dy="0">Zapisane dane</tspan><tspan x="1230.0" dy="15">zasobu i ocena</tspan></text></g><g class="node"><title>Każda instancja dotyczy pojedynczego zasobu. Nie jest częścią oczekiwania importu metadanych. Błąd zadania nie przelicza statusu wcześniejszego importu.
+</title><text x="821.0" y="2293.0" text-anchor="middle"><tspan x="821.0" dy="0">Każda instancja dotyczy pojedynczego zasobu. Nie jest częścią oczekiwania importu metadanych. Błąd zadania nie przelicza</tspan><tspan x="821.0" dy="15">statusu wcześniejszego importu.</tspan></text></g><g class="node"><title>Zlecenie po indeksacji danych
+Źródło HTML: #tab=xml&amp;node=OINCREASE
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-320</title><circle cx="480.0" cy="3105.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="3140.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie po indeksacji</tspan><tspan x="480.0" dy="15">danych</tspan></text></g><g class="node"><title>Spróbuj utworzyć pochodne formaty danych
+Źródło HTML: #tab=xml&amp;node=OINCREASE
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-320</title><rect x="630.0" y="3055.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="3151.0" text-anchor="middle" font-weight="bold">⊞</text><text x="730.0" y="3102.0" text-anchor="middle"><tspan x="730.0" dy="0">Spróbuj utworzyć pochodne</tspan><tspan x="730.0" dy="15">formaty danych</tspan></text></g><g class="node"><title>Próba konwersji zakończona
+Źródło HTML: #tab=xml&amp;node=OINCREASE
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-320</title><circle cx="980.0" cy="3105.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="980.0" y="3140.0" text-anchor="middle"><tspan x="980.0" dy="0">Próba konwersji zakończona</tspan></text></g><g class="node"><title>Zlecane po udanym indeksowaniu danych. Nie zakładamy, że każda konwersja tworzy plik. Gotowość niezależna od importu i pierwotnego entrypoint.
+</title><text x="805.0" y="3018.0" text-anchor="middle"><tspan x="805.0" dy="0">Zlecane po udanym indeksowaniu danych. Nie zakładamy, że każda konwersja tworzy plik. Gotowość niezależna od importu i</tspan><tspan x="805.0" dy="15">pierwotnego entrypoint.</tspan></text></g><g class="node"><title>Zlecenie archiwum
+Źródło HTML: #tab=xml&amp;node=OARCH
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-321</title><circle cx="480.0" cy="3450.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="3485.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie archiwum</tspan></text></g><g class="node"><title>Sprawdź wolne miejsce na dysku
+Źródło HTML: #tab=xml&amp;node=OARCH
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-321</title><rect x="635.0" y="3405.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="3447.0" text-anchor="middle"><tspan x="730.0" dy="0">Sprawdź wolne miejsce na</tspan><tspan x="730.0" dy="15">dysku</tspan></text></g><g class="node"><title>Można przygotować archiwum?
+Źródło HTML: #tab=xml&amp;node=OARCH
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-321</title><polygon points="980.0,3423.0 1007.0,3450.0 980.0,3477.0 953.0,3450.0" fill="#fff0d4" stroke="#b58030"/><text x="980.0" y="3455.0" text-anchor="middle">×</text><text x="980.0" y="3411.0" text-anchor="middle"><tspan x="980.0" dy="0">Można przygotować archiwum?</tspan></text></g><g class="node"><title>Przygotuj archiwum plików zbioru
+Źródło HTML: #tab=xml&amp;node=OARCH
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-321</title><rect x="1135.0" y="3405.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="1230.0" y="3447.0" text-anchor="middle"><tspan x="1230.0" dy="0">Przygotuj archiwum plików</tspan><tspan x="1230.0" dy="15">zbioru</tspan></text></g><g class="node"><title>Archiwum przygotowane
+Źródło HTML: #tab=xml&amp;node=OARCH
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-321</title><circle cx="1480.0" cy="3450.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1480.0" y="3485.0" text-anchor="middle"><tspan x="1480.0" dy="0">Archiwum przygotowane</tspan></text></g><g class="node"><title>Archiwum nieprzygotowane
+Dokument potwierdza kontrolę miejsca; nie opisuje kompletnej polityki błędów/retry. Nie dopisano automatycznych ponowień.
+
+Źródło HTML: #tab=xml&amp;node=OARCH
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-321</title><circle cx="1230.0" cy="3640.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1230.0" y="3675.0" text-anchor="middle"><tspan x="1230.0" dy="0">Archiwum nieprzygotowane</tspan></text></g><g class="node"><title>Zadanie opóźnione. Nie stanowi warunku zakończenia importu ani konwersji.
+</title><text x="939.0" y="3368.0" text-anchor="middle"><tspan x="939.0" dy="0">Zadanie opóźnione. Nie stanowi warunku zakończenia importu ani konwersji.</tspan></text></g><g class="node"><title>Zlecenie walidacji URL
+Źródło HTML: #tab=broken&amp;id=ROW-broken-003</title><circle cx="480.0" cy="4290.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="480.0" y="4325.0" text-anchor="middle"><tspan x="480.0" dy="0">Zlecenie walidacji URL</tspan></text></g><g class="node"><title>Sprawdź XML według kontroli wykazu
+Źródło HTML: #tab=xml&amp;node=X1
+
+Źródło HTML: #tab=xml&amp;node=X9
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-06
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-119</title><rect x="630.0" y="4240.0" width="200.0" height="100.0" rx="8" fill="#fff" stroke="#46637f"/><text x="730.0" y="4336.0" text-anchor="middle" font-weight="bold">⊞</text><text x="730.0" y="4287.0" text-anchor="middle"><tspan x="730.0" dy="0">Sprawdź XML według kontroli</tspan><tspan x="730.0" dy="15">wykazu</tspan></text></g><g class="node"><title>Udostępnij widżetowi wynik i source_hash
+Źródło HTML: #tab=pola&amp;id=DataSource.source_hash
+
+Źródło HTML: #tab=broken&amp;id=ROW-broken-003</title><rect x="885.0" y="4245.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="980.0" y="4287.0" text-anchor="middle"><tspan x="980.0" dy="0">Udostępnij widżetowi wynik</tspan><tspan x="980.0" dy="15">i source_hash</tspan></text></g><g class="node"><title>Wynik walidacji dostępny
+Źródło HTML: #tab=broken&amp;id=ROW-broken-003</title><circle cx="1230.0" cy="4290.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1230.0" y="4325.0" text-anchor="middle"><tspan x="1230.0" dy="0">Wynik walidacji dostępny</tspan></text></g><g class="node"><title>
+Źródło HTML: #tab=xml&amp;node=X3Reject
+
+Źródło HTML: #tab=xml-seq&amp;id=SX-106</title><circle cx="804.0" cy="4340.0" r="18.0" fill="#e3f2ed" stroke="#344c67" stroke-width="1.6"/><text x="804.0" y="4375.0" text-anchor="middle"></text></g><g class="node"><title>Udostępnij widżetowi błąd walidacji
+Źródło HTML: #tab=bledy&amp;id=SECTION-bledy-7</title><rect x="885.0" y="4435.0" width="190.0" height="90.0" rx="8" fill="#fff" stroke="#46637f"/><text x="980.0" y="4477.0" text-anchor="middle"><tspan x="980.0" dy="0">Udostępnij widżetowi błąd</tspan><tspan x="980.0" dy="15">walidacji</tspan></text></g><g class="node"><title>Wynik: niepoprawny URL lub XML
+Źródło HTML: #tab=broken&amp;id=ROW-broken-003</title><circle cx="1230.0" cy="4480.0" r="18.0" fill="#f5d9df" stroke="#344c67" stroke-width="3"/><text x="1230.0" y="4515.0" text-anchor="middle"><tspan x="1230.0" dy="0">Wynik: niepoprawny URL lub</tspan><tspan x="1230.0" dy="15">XML</tspan></text></g><g class="node"><title>Samodzielny task validate_xml_url_task. Wynik dla widżetu, bez zapisu zbiorów i bez blokowania konfiguracji źródła.
+</title><text x="814.0" y="4203.0" text-anchor="middle"><tspan x="814.0" dy="0">Samodzielny task validate_xml_url_task. Wynik dla widżetu, bez zapisu zbiorów i bez blokowania konfiguracji źródła.</tspan></text></g></svg>
